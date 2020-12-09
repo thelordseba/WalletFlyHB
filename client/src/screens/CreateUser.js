@@ -8,6 +8,18 @@ const StyledScrollView = styled.ScrollView`
   padding: 2rem;
 `;
 
+const Button = styled.TouchableOpacity`
+  margin-top: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: 0.5rem;
+  background-color: #582d66;
+`;
+
+const StyledTextInput = styled.TextInput`
+  color: #22074d;
+`;
+
 const StyledView = styled.View`
   flex: 1.5rem;
   padding: 0rem;
@@ -16,23 +28,14 @@ const StyledView = styled.View`
   border-bottom-color: #cccccc;
 `;
 
-const Button = styled.TouchableOpacity`
-  margin-top: 2.5rem;
-  height: 2.5rem;
-  padding: 0;
-  border-radius: 0.5rem;
-  background-color: ${(props) => (props.primary ? "#582d66" : "white")};
-  border-color: ${(props) => (props.primary ? "white" : "#582d66")};
-`;
-
 const WhiteText = styled.Text`
   font-size: 1rem;
-  color: ${(props) => (props.primary ? "#fafafa" : "#582d66")};
+  color: #fafafa;
   padding: 0.5rem;
   text-align: center;
 `;
 
-const Login = (props) => {
+const CreateUserScreen = (props) => {
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -41,19 +44,19 @@ const Login = (props) => {
     setState({ ...state, [name]: value });
   };
 
-  const validateUser = () => {
+  const next = () => {
     if (state.email === "" || state.password === "") {
       alert("Debes completar todos los campos antes de continuar.");
     } else {
       console.log(state);
-      props.navigation.navigate("Main");
+      props.navigation.navigate("UpdateUser");
     }
   };
 
   return (
     <StyledScrollView>
       <StyledView>
-        <TextInput
+        <StyledTextInput
           placeholder="Email"
           onChangeText={(value) => handleTextChange("email", value)}
         />
@@ -65,17 +68,12 @@ const Login = (props) => {
         />
       </StyledView>
       <View>
-        <Button onPress={() => validateUser()}>
+        <Button onPress={() => next()}>
           <WhiteText>Ingresar</WhiteText>
-        </Button>
-      </View>
-      <View>
-        <Button primary onPress={() => props.navigation.navigate("CreateUser")}>
-          <WhiteText primary>Crear Usuario</WhiteText>
         </Button>
       </View>
     </StyledScrollView>
   );
 };
 
-export default Login;
+export default CreateUserScreen;

@@ -10,11 +10,11 @@ const server = express();
 
 server.name = 'API';
 
-server.use(cors());
-server.use(bodyParser.urlencoded({ extended: true }));
-server.use(bodyParser.json());
-server.use(morgan('dev'));
 server.use('/', routes);
+server.use(bodyParser.json());
+server.use(bodyParser.urlencoded({ extended: true }));
+server.use(morgan('dev'));
+server.use(cors());
 
 
 // Error catching endware.

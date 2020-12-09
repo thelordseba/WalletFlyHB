@@ -12,9 +12,9 @@ server.post("/", (req, res, next) => {
   }
   User.create({
     email: email,
-    password: password
+    password: password,
   })
-    .then((user) => res.status(200).json(user))
+    .then((user) => res.status(200).json({ user }))
     .catch(next);
 });
 
@@ -73,3 +73,4 @@ server.get('/:id', async(req, res, next)=>{
 })
 
 module.exports = server;
+
