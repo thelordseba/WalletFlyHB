@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 // importar todas los enrutadores;
 const userRouter = require("./user.js");
+const accountRouter = require("./account.js");
 
 //const productRouter = require("./product"); //ESTO ES UN EJEMPLO - BORRAR
 
@@ -9,9 +10,8 @@ const userRouter = require("./user.js");
 // i.e: router.use('/auth', authRouter);
 
 
-//router.use("/products", productRouter);  //ESTO ES UN EJEMPLO - BORRAR
-//router.use("/categories", categoryRouter);  //ESTO ES UN EJEMPLO - BORRAR
-router.use("/user", userRouter);
+router.use("/users", userRouter);    
+router.use('/accounts', accountRouter);
 
 
 module.exports = router;
