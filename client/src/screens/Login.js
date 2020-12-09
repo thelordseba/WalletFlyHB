@@ -8,18 +8,6 @@ const StyledScrollView = styled.ScrollView`
   padding: 2rem;
 `;
 
-const Button = styled.TouchableOpacity`
-  margin-top: 2.5rem;
-  height: 2.5rem;
-  padding: 0;
-  border-radius: 0.5rem;
-  background-color: #582d66;
-`;
-
-const StyledTextInput = styled.TextInput`
-  color: #22074d;
-`;
-
 const StyledView = styled.View`
   flex: 1.5rem;
   padding: 0rem;
@@ -28,14 +16,23 @@ const StyledView = styled.View`
   border-bottom-color: #cccccc;
 `;
 
+const Button = styled.TouchableOpacity`
+  margin-top: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border-radius: 0.5rem;
+  background-color: ${(props) => (props.primary ? "#582d66" : "white")};
+  border-color: ${(props) => (props.primary ? "white" : "#582d66")};
+`;
+
 const WhiteText = styled.Text`
   font-size: 1rem;
-  color: #fafafa;
+  color: ${(props) => (props.primary ? "#fafafa" : "#582d66")};
   padding: 0.5rem;
   text-align: center;
 `;
 
-const CreateUserScreen = (props) => {
+const Login = (props) => {
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -44,19 +41,19 @@ const CreateUserScreen = (props) => {
     setState({ ...state, [name]: value });
   };
 
-  const next = () => {
+  const validateUser = () => {
     if (state.email === "" || state.password === "") {
       alert("Debes completar todos los campos antes de continuar.");
     } else {
       console.log(state);
-      props.navigation.navigate("UpdateUser");
+      props.navigation.navigate("Main");
     }
   };
 
   return (
     <StyledScrollView>
       <StyledView>
-        <StyledTextInput
+        <TextInput
           placeholder="Email"
           onChangeText={(value) => handleTextChange("email", value)}
         />
@@ -68,12 +65,17 @@ const CreateUserScreen = (props) => {
         />
       </StyledView>
       <View>
-        <Button onPress={() => next()}>
+        <Button onPress={() => validateUser()}>
           <WhiteText>Ingresar</WhiteText>
+        </Button>
+      </View>
+      <View>
+        <Button primary onPress={() => props.navigation.navigate("CreateUser")}>
+          <WhiteText primary>Crear Usuario</WhiteText>
         </Button>
       </View>
     </StyledScrollView>
   );
 };
 
-export default CreateUserScreen;
+export default Login;
