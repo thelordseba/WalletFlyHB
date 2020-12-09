@@ -2,79 +2,69 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { Avatar } from '@material-ui/core'
-import styled from 'styled-components';
 
-export default function UserProfile(props){
+export default function UserProfile(props) {
 
     return (
 
         <SafeAreaView>
             <View style={s.container}>
-                <View style={s.containerMain}>
-                    <View style={s.container_img}>
-                        <Avatar style={{ width: 200, height: 200, borderRadius: "50%" }} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU'/>
-                        <Text style={s.textUser}>Maico Loncomilla</Text>
-                        <Text style={s.textEmail}>maicoloncomilla@gmail.com</Text>
-                    </View>
-                    <View style={s.container_buttons}>
-                        <ButtonLink>
-                            Mi Código QR
-                                <NavigateNextIcon />
-                        </ButtonLink>
-                        <ButtonLink>
-                            Mi CVU
-                                <NavigateNextIcon />
-                        </ButtonLink>
-                        <ButtonLink onClick={() => props.navigation.navigate("CreateUser")}>
-                            Datos Personales
-                                <NavigateNextIcon />
-                        </ButtonLink>
-                    </View>
+                <View style={s.containerImg}>
+                    <Avatar style={{ width: 200, height: 200, borderRadius: "50%" }} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU' />
+                    <Text style={s.textUser}>Maico Loncomilla</Text>
+                    <Text style={s.textEmail}>maicoloncomilla@gmail.com</Text>
+                </View>
+                <View style={s.containerButtonIcon} onClick={() => alert("hola")}>
+                    <Text style={s.ButtonText}>Mi Código QR</Text>
+                    <NavigateNextIcon />
+                </View>
+                <View style={s.containerButtonIcon} onClick={() => alert("hola")}>
+                    <Text style={s.ButtonText}>Mi CVU</Text>
+                    <NavigateNextIcon />
+                </View>
+                <View style={s.containerButtonIcon} onClick={() => props.navigation.navigate('DatosPersonales')}>
+                    <Text style={s.ButtonText}>Datos Personales</Text>
+                    <NavigateNextIcon />
                 </View>
             </View>
         </SafeAreaView>
-       
+
     )
 }
-const ButtonLink = styled.div`
-    max-width: 320px;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 30px;
-    color: #fff;
-    margin: 5px 0px;
-    border-radius: 5px;
-    font-size: 14px;
-`
+
 const s = StyleSheet.create({
-    container:{
+    container: {
         width: '100%',
-        height: '100vh',
-        backgroundColor: '#232323'
+        backgroundColor: '#232323',
+        height: '100vh'
     },
-    containerMain:{
-        flex: 1,
+    containerImg: {
+        display: 'flex',
+        justifyContent: 'center',
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        width: '100%',
-        marginTop: 10,
-    },
-    container_img: {
-        textAlign: "center",
-    },
-    container_buttons:{
-        flex: 1,
-        width: '100%',
+        marginTop: 15
     },
     textUser: {
-        fontSize: '18px',
+        fontSize: 18,
         color: "#fff",
-        marginTop: '8px'
+        marginTop: 8
     },
-    textEmail:{
+    textEmail: {
         color: "#fff",
-        marginBottom: 20
+        marginBottom: 20,
+        fontSize: 14,
     },
+    containerButtonIcon: {
+        display: 'flex',
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: '95%',
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        marginTop: 20,
+        color: "#fff",
+    },
+    ButtonText: {
+        color: '#fff'
+    }
 })
