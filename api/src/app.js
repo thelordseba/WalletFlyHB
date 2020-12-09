@@ -1,24 +1,41 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const morgan = require('morgan');
-const routes = require('./routes/index.js');
+const express = require("express");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
+const routes = require("./routes/index.js");
 const cors = require("cors");
 
-require('./db.js');
+require("./db.js");
 
 const server = express();
 
-server.name = 'API';
+server.name = "API";
 
-server.use('/', routes);
+server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
+server.use(bodyParser.json({ limit: "50mb" }));
 server.use(bodyParser.json());
 server.use(bodyParser.urlencoded({ extended: true }));
-server.use(morgan('dev'));
-server.use(cors());
+server.use(morgan("dev"));
+server.use(
+  cors({
+    origin: "http://localhost:19006",
+    credentials: true,
+  })
+);
+server.use("/", routes);
 
+/* server.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+}); */
 
 // Error catching endware.
-server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
+server.use((err, req, res, next) => {
+  // eslint-disable-line no-unused-vars
   const status = err.status || 500;
   const message = err.message || err;
   console.error(err);
