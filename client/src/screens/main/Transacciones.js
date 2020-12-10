@@ -1,12 +1,11 @@
 import React from "react";
 import { SafeAreaView, Text, View, Button, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import styled from "styled-components/native";
 import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import { array } from '../../utils/ArrayMovimientos'
 
-export default function Main(){
+export default function Transacciones(){
 
   return (
     <SafeAreaView>
