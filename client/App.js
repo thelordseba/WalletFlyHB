@@ -10,6 +10,7 @@ import CreateUser from "./src/screens/CreateUser";
 import UserProfile from "./src/screens/userProfile/UserProfile";
 import Footer from './src/screens/footer/Footer';
 import DatosPersonales from "./src/screens/userProfile/DatosPersonales";
+import Main from './src/screens/main/Main'
 
 
 const Stack = createStackNavigator();
@@ -17,6 +18,7 @@ const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="Home" component={Main}/>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="CreateUser" component={CreateUser} />
       <Stack.Screen name="UpdateUser" component={UpdateUser} />
