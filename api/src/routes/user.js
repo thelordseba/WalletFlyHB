@@ -14,8 +14,8 @@ server.post("/", (req, res, next) => {
     email: email,
     password: password,
   })
-    .then((user) => res.status(200).json({ user }))
-    .catch(next);
+  .then((user) => res.status(200).json({ user }))
+  .catch(next);
 });
 
 //Ruta para modificar usuario
