@@ -13,8 +13,6 @@ const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator>
-      {/* <Stack.Screen name="Home" component={Home}/>
-      <Stack.Screen name="Transacciones" component={Transacciones}/> */}
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="CreateUser" component={CreateUser} />
       <Stack.Screen name="UpdateUser" component={UpdateUser} />
