@@ -26,24 +26,14 @@ function MyStack() {
 const user = true;
 
 const App = () => (
-  <>
-    {
-      user ? (
-        // Usuario Logeado
-        <Router>
-          <NavigationContainer>
-            <Footer />
-          </NavigationContainer>
-        </Router>
-      ) : (
-        // Usuario deslogeado
-          <Router>
-            <NavigationContainer>
-              <MyStack />
-            </NavigationContainer>
-          </Router>
-        )
-    }
-  </>
+  <Router>
+    <NavigationContainer>
+      {user ?
+        <Footer />
+        :
+        <MyStack />
+      }
+    </NavigationContainer>
+  </Router>
 );
 export default App;
