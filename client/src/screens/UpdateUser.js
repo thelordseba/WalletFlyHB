@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { View, TextInput } from "react-native";
 import styled from "styled-components/native";
 
@@ -36,6 +37,7 @@ const WhiteText = styled.Text`
 `;
 
 const UpdateUserScreen = (props) => {
+  console.log(props);
   const [state, setState] = useState({
     firstName: "",
     lastName: "",
@@ -44,6 +46,7 @@ const UpdateUserScreen = (props) => {
     documentNumber: "",
     phone: "",
   });
+  const userID = props.route.params.user.user.id;
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
@@ -60,7 +63,10 @@ const UpdateUserScreen = (props) => {
       alert("Debes completar todos los campos antes de continuar.");
     } else {
       console.log(state);
-      props.navigation.navigate("UpdateUserScreen2");
+      axios.put(`http://localhost:3001/users/${userID}`, state).then(() => {
+        props.navigation.navigate("UpdateUser2", { user: userID });
+        console.log(userID);
+      });
     }
   };
 

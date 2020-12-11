@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { View, TextInput } from "react-native";
 import styled from "styled-components/native";
 
@@ -32,6 +33,7 @@ const WhiteText = styled.Text`
 `;
 
 const UpdateUserScreen = (props) => {
+  console.log(props);
   const [state, setState] = useState({
     address: "",
     addressNumber: "",
@@ -43,6 +45,54 @@ const UpdateUserScreen = (props) => {
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
+
+  const validateLoc = () => {
+    if (
+      state.address === "" ||
+      state.addressNumber === "" ||
+      state.postalCode === "" ||
+      state.city === "" ||
+      state.province === "" ||
+      state.country === ""
+    ) {
+      alert("Debes completar todos los campos antes de continuar.");
+    } else {
+      let loc =
+        state.address +
+        "%20" +
+        state.addressNumber +
+        "," +
+        state.city.replace(" ", "%20");
+      let locURL = loc.replace(" ", "%20");
+      fetch(
+        `http://servicios.usig.buenosaires.gob.ar/normalizar/?direccion=${locURL}`
+      )
+        .then((res) => res.json())
+        .then((respuesta) => {
+          if (respuesta.errorMessage) {
+            alert(
+              respuesta.errorMessage,
+              "Volver a ingresar los datos correctamente"
+            );
+            setState({
+              address: "",
+              addressNumber: "",
+              postalCode: "",
+              city: "",
+              province: "",
+              country: "",
+            });
+          } else {
+            respuesta.direccionesNormalizadas.forEach((dir) => {
+              console.log(dir.direccion);
+            });
+            createUser();
+          }
+        });
+    }
+  };
+
+  const userID = props.route.params.user;
 
   const createUser = () => {
     if (
@@ -56,7 +106,9 @@ const UpdateUserScreen = (props) => {
       alert("Debes completar todos los campos antes de continuar.");
     } else {
       console.log(state);
-      props.navigation.navigate("Login");
+      axios.put(`http://localhost:3001/users/${userID}`, state).then(() => {
+        props.navigation.navigate("Login");
+      });
     }
   };
 

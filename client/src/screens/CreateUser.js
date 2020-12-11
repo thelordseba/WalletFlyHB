@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import { View, TextInput } from "react-native";
 import styled from "styled-components/native";
 
@@ -49,7 +50,14 @@ const CreateUserScreen = (props) => {
       alert("Debes completar todos los campos antes de continuar.");
     } else {
       console.log(state);
-      props.navigation.navigate("UpdateUser");
+      axios
+        .post(`http://localhost:3001/users/`, state)
+        .then(({ data }) => {
+          console.log(data);
+
+          props.navigation.navigate("UpdateUser", { user: data });
+        })
+        .catch((error) => console.log(error));
     }
   };
 

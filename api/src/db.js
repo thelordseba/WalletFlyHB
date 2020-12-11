@@ -2,12 +2,15 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
+const crypto = require('crypto');
 
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
 
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
-  dialect: 'mysql'
+  dialect: 'mysql',
+  logging: false, // set to console.log to see the raw SQL queries
+  native: false, // lets Sequelize know we can use pg-native for ~30% more speed
 });
 
 const basename = path.basename(__filename);
@@ -57,6 +60,38 @@ User.hasOne(Card);
 
 Transaction.belongsTo(Account);
 Account.hasMany(Transaction)
+
+
+// FUNCIONES PARA ENCRIPTADO DE CONTRASEÑA
+// FUNCION QUE GENERA EL SALT
+User.generateSalt = function() {
+    return crypto.randomBytes(16).toString('base64')
+}
+
+User.encryptPassword = function(plainText, salt) {
+    return crypto
+        .createHash('RSA-SHA256')
+        .update(plainText)
+        .update(salt)
+        .digest('hex')
+}
+
+const setSaltAndPassword = user => {
+    if (user.changed('password')) {
+        user.salt = User.generateSalt()
+        user.password = User.encryptPassword(user.password(), user.salt())
+    }
+}
+
+User.beforeCreate(setSaltAndPassword)
+User.beforeUpdate(setSaltAndPassword)
+
+
+// FUNCION PARA VERIFICAR MAS ADELANTE QUE LO QUE LE PASAN ES LA CONTRASEÑA ORIGINAL
+User.prototype.correctPassword = function(enteredPassword) {
+    return User.encryptPassword(enteredPassword, this.salt()) === this.password()
+}
+
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
