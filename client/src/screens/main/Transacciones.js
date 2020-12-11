@@ -8,7 +8,7 @@ import { array } from '../../utils/ArrayMovimientos'
 export default function Transacciones(){
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <View style={s.containerUsd}>
         <Text style={s.textUsd}>$ 5.000.00 USD</Text>
         <Text style={s.textBalance}>Balance de cuenta</Text>
@@ -22,14 +22,15 @@ export default function Transacciones(){
           <Text style={s.textMovimientos}>Movimientos</Text>
           {
             array && array.map(pagos => (
-              <View style={s.container}>
+              <View style={s.container} key={pagos.id}>
                 <View style={s.containerIconDireccion}>
                   <View style={pagos.tipo === "ingresa" ? s.containerIconIngresaDinero : s.containerIconSaleDinero}>
                     {pagos.tipo === "ingresa" ? <AttachMoneyIcon fontSize="small" /> : <MoneyOffIcon fontSize="small" />}
                   </View>
                   <Text style={s.textDireccion}>{pagos.direccion}</Text>
                 </View>
-                <View style={pagos.tipo === "ingresa" ? s.ingresaDinero : s.saleDinero}>${pagos.dinero} USD</View>
+                <Text style={pagos.tipo === "ingresa" ? s.ingresaDinero : s.saleDinero}>${pagos.dinero} USD
+                </Text>
               </View>
             ))
           }
