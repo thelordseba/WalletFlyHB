@@ -6,28 +6,27 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./src/screens/Login";
 import UpdateUser from "./src/screens/UpdateUser";
 import UpdateUser2 from "./src/screens/UpdateUser2";
-import CreateUser from "./src/screens/CreateUser";
+import Register from "./src/screens/Register";
 import UserProfile from "./src/screens/userProfile/UserProfile";
-import Footer from './src/screens/footer/Footer';
+import Footer from "./src/screens/footer/Footer";
 import DatosPersonales from "./src/screens/userProfile/DatosPersonales";
-import Transacciones from './src/screens/main/Transacciones';
-import Home from './src/screens/main/Home';
-
+import Transacciones from "./src/screens/main/Transacciones";
+import Home from "./src/screens/main/Home";
 
 const Stack = createStackNavigator();
 
 function MyStack() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home}/>
-      <Stack.Screen name="Transacciones" component={Transacciones}/>
       <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="CreateUser" component={CreateUser} />
+      <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="UpdateUser" component={UpdateUser} />
       <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
-      <Stack.Screen name="DatosPersonales" component={DatosPersonales}/>
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="Transacciones" component={Transacciones} />
+      <Stack.Screen name="DatosPersonales" component={DatosPersonales} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
-      <Stack.Screen name="footer" component={Footer}/>
+      <Stack.Screen name="footer" component={Footer} />
     </Stack.Navigator>
   );
 }

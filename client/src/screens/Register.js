@@ -75,10 +75,21 @@ const CreateUserScreen = (props) => {
           onChangeText={(value) => handleTextChange("password", value)}
         />
       </StyledView>
+      <StyledView>
+        <TextInput
+          placeholder="Repite tu contraseña"
+          // onChangeText={(value) => reviewPassword()} Esta hay que crearla!!
+        />
+      </StyledView>
       <View>
         <Button onPress={() => next()}>
-          <WhiteText>Ingresar</WhiteText>
+          <WhiteText>Registrarme</WhiteText>
         </Button>
+      </View>
+      <View>
+        <WhiteText {/*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */} >
+          ¿Necesitas ayuda?
+        </WhiteText>
       </View>
     </StyledScrollView>
   );

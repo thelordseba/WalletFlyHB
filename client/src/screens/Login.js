@@ -60,9 +60,13 @@ const Login = (props) => {
       </StyledView>
       <StyledView>
         <TextInput
+          secureTextEntry={true}
           placeholder="Contraseña"
           onChangeText={(value) => handleTextChange("password", value)}
         />
+         <WhiteText {/*onPress={() => props.navigation.navigate("ForgotPassword")}*/}> 
+          ¿Olvidaste tu contraseña?
+        </WhiteText>
       </StyledView>
       <View>
         <Button onPress={() => validateUser()}>
@@ -71,8 +75,13 @@ const Login = (props) => {
       </View>
       <View>
         <Button primary onPress={() => props.navigation.navigate("CreateUser")}>
-          <WhiteText primary>Crear Usuario</WhiteText>
+          <WhiteText primary>Registrarme</WhiteText>
         </Button>
+      </View>
+      <View>
+      <WhiteText {/*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */} >
+          ¿Necesitas ayuda?
+        </WhiteText>
       </View>
     </StyledScrollView>
   );
