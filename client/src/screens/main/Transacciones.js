@@ -14,8 +14,8 @@ export default function Transacciones(){
         <Text style={s.textBalance}>Balance de cuenta</Text>
       </View>
       <View style={s.containerButton}>
-        <Button style={s.ButtonRecargar} title="Recargar" />
-        <Button style={s.ButtonTransferir} title="Transferir" />
+        <Button title="Recargar" />
+        <Button title="Transferir" />
       </View>
       <ScrollView>
         <View style={s.containerMovimientos}>
