@@ -17,7 +17,6 @@ function MyStack() {
       <Stack.Screen name="CreateUser" component={CreateUser} />
       <Stack.Screen name="UpdateUser" component={UpdateUser} />
       <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
-      
       <Stack.Screen name="UserProfile" component={UserProfile} />
     </Stack.Navigator>
   );
