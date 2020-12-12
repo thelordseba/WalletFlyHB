@@ -155,9 +155,10 @@ const UpdateUserScreen = (props) => {
           <WhiteText>Crear Usuario</WhiteText>
         </Button>
       </View>
-      <WhiteText {/*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */} >
-          ¿Necesitas ayuda?
-        </WhiteText>
+      <WhiteText /*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */
+      >
+        ¿Necesitas ayuda?
+      </WhiteText>
     </StyledScrollView>
   );
 };
