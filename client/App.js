@@ -21,7 +21,9 @@ function MyStack() {
     </Stack.Navigator>
   );
 }
-// Si el usuaario no tiene un Token mostrara la pantalla
+
+// Si el usuaario no tiene un Token mostrara la pantalla 
+
 const user = false;
 
 const App = () => (
