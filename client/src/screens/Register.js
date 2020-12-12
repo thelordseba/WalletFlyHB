@@ -61,7 +61,9 @@ const CreateUserScreen = (props) => {
         .then(({ data }) => {
           props.navigation.navigate("UpdateUser", { user: data });
         })
-        .catch((error) => console.log(error));
+        .catch((error) => {
+          console.log(error), alert("Este mail ya esta en uso");
+        });
     }
   };
 
@@ -93,7 +95,9 @@ const CreateUserScreen = (props) => {
         </Button>
       </View>
       <View>
+
         <WhiteText /*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */ >
+
           ¿Necesitas ayuda?
         </WhiteText>
       </View>

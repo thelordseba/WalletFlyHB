@@ -64,7 +64,9 @@ const Login = (props) => {
           placeholder="Contraseña"
           onChangeText={(value) => handleTextChange("password", value)}
         />
+
          <WhiteText /*onPress={() => props.navigation.navigate("ForgotPassword")}*/> 
+
           ¿Olvidaste tu contraseña?
         </WhiteText>
       </StyledView>
@@ -79,7 +81,9 @@ const Login = (props) => {
         </Button>
       </View>
       <View>
+
       <WhiteText /*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */ >
+
           ¿Necesitas ayuda?
         </WhiteText>
       </View>

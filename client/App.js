@@ -7,7 +7,7 @@ import UpdateUser from "./src/screens/UpdateUser";
 import UpdateUser2 from "./src/screens/UpdateUser2";
 import Register from "./src/screens/Register";
 import UserProfile from "./src/screens/userProfile/UserProfile";
-import Footer from './src/screens/footer/Footer';
+import Footer from "./src/screens/footer/Footer";
 
 const Stack = createStackNavigator();
 function MyStack() {
@@ -21,18 +21,14 @@ function MyStack() {
     </Stack.Navigator>
   );
 }
+
 // Si el usuaario no tiene un Token mostrara la pantalla 
+
 const user = false;
 
 const App = () => (
   <Router>
-    <NavigationContainer>
-      {user ?
-        <Footer />
-        :
-        <MyStack />
-      }
-    </NavigationContainer>
+    <NavigationContainer>{user ? <Footer /> : <MyStack />}</NavigationContainer>
   </Router>
 );
 export default App;
