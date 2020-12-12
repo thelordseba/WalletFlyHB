@@ -40,21 +40,25 @@ const CreateUserScreen = (props) => {
   const [state, setState] = useState({
     email: "",
     password: "",
+    passwordRepeat: ""
   });
+
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
 
   const next = () => {
-    if (state.email === "" || state.password === "") {
+    if (state.email === "" || state.password === "" || state.passwordRepeat === "") {
       alert("Debes completar todos los campos antes de continuar.");
-    } else {
-      console.log(state);
-      axios
-        .post(`http://localhost:3001/users/`, state)
+    } else if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(state.email)){
+      alert("Ha introducido una dirección de email no valida.");      
+    } else if(state.password !== state.passwordRepeat){
+      alert("Comprueba tu contraseña.");
+    } else if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(state.password)){
+      alert("Debe ingresar una contraseña de 8 caracteres alfanumericos y como mínimo una mayúscula.");
+    } else {     
+      axios.post(`http://localhost:3001/users/`, state)
         .then(({ data }) => {
-          console.log(data);
-
           props.navigation.navigate("UpdateUser", { user: data });
         })
         .catch((error) => console.log(error));
@@ -71,14 +75,16 @@ const CreateUserScreen = (props) => {
       </StyledView>
       <StyledView>
         <TextInput
+          secureTextEntry={true}
           placeholder="Contraseña"
           onChangeText={(value) => handleTextChange("password", value)}
         />
       </StyledView>
       <StyledView>
         <TextInput
+          secureTextEntry={true}
           placeholder="Repite tu contraseña"
-          // onChangeText={(value) => reviewPassword()} Esta hay que crearla!!
+          onChangeText={(value) => handleTextChange("passwordRepeat", value)} 
         />
       </StyledView>
       <View>
@@ -87,7 +93,7 @@ const CreateUserScreen = (props) => {
         </Button>
       </View>
       <View>
-        <WhiteText {/*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */} >
+        <WhiteText /*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */ >
           ¿Necesitas ayuda?
         </WhiteText>
       </View>

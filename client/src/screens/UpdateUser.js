@@ -113,7 +113,7 @@ const UpdateUserScreen = (props) => {
           <WhiteText>Siguiente</WhiteText>
         </Button>
       </View>
-      <WhiteText {/*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */} >
+      <WhiteText /*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */ >
           ¿Necesitas ayuda?
         </WhiteText>
     </StyledScrollView>
