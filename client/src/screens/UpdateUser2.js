@@ -32,8 +32,7 @@ const WhiteText = styled.Text`
   text-align: center;
 `;
 
-const UpdateUserScreen = (props) => {
-  console.log(props);
+const UpdateUserScreen = (props) => { 
   const [state, setState] = useState({
     address: "",
     addressNumber: "",
@@ -83,8 +82,7 @@ const UpdateUserScreen = (props) => {
               country: "",
             });
           } else {
-            respuesta.direccionesNormalizadas.forEach((dir) => {
-              console.log(dir.direccion);
+            respuesta.direccionesNormalizadas.forEach((dir) => {    
             });
             createUser();
           }
@@ -92,7 +90,7 @@ const UpdateUserScreen = (props) => {
     }
   };
 
-  const userID = props.route.params.user;
+  const userID = props.route.params;
 
   const createUser = () => {
     if (
@@ -104,8 +102,7 @@ const UpdateUserScreen = (props) => {
       state.country === ""
     ) {
       alert("Debes completar todos los campos antes de continuar.");
-    } else {
-      console.log(state);
+    } else {      
       axios.put(`http://localhost:3001/users/${userID}`, state).then(() => {
         props.navigation.navigate("Login");
       });

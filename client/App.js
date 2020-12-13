@@ -8,6 +8,7 @@ import UpdateUser2 from "./src/screens/UpdateUser2";
 import Register from "./src/screens/Register";
 import UserProfile from "./src/screens/userProfile/UserProfile";
 import Footer from "./src/screens/footer/Footer";
+import AuthEmail from "./src/screens/AuthEmail";
 
 const Stack = createStackNavigator();
 function MyStack() {
@@ -15,6 +16,7 @@ function MyStack() {
     <Stack.Navigator>
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="AuthEmail" component={AuthEmail} />
       <Stack.Screen name="UpdateUser" component={UpdateUser} />
       <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
       <Stack.Screen name="UserProfile" component={UserProfile} />
