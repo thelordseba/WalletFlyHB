@@ -1,5 +1,17 @@
+require("dotenv").config()
 const server = require("express").Router();
 const { User, Account } = require("../db");
+const nodemailer = require("nodemailer");
+
+//Transporter para nodemailer
+let transporter = nodemailer.createTransport({
+	service: "gmail",
+	auth: {
+		user: process.env.EMAIL, //Nuestro mail
+		pass: process.env.PASSWORD  //Nuestra password
+	}
+});
+
 
 //Ruta para crear usuario
 
@@ -10,12 +22,29 @@ server.post("/", (req, res, next) => {
       .status(400)
       .json({ message: "Parametros incompletos o invalidos" });
   }
+  var segNumber = Math.ceil(Math.random()*1000000);
   User.create({
     email: email,
     password: password,
+    segNumber: segNumber,
   })
-    .then((user) => res.status(200).json({ user }))
-    .catch(next);
+  .then((user) => res.status(200).json({ user }))
+  .then((user) => {
+  	let mailOptions = {
+		from: process.env.EMAIL,
+		to: email,
+		subject: "Felicitaciones por tu nueva cuenta",
+  		text: `HOLA HOLA maquina del amor, tu numero para el usuario es ${segNumber}`
+  	};
+  	transporter.sendMail(mailOptions, function(err, data) {
+		if(err){
+			console.log("Error occurs: ", err)
+		} else {
+			console.log("Success")
+		}
+  	})  	
+ 	})
+ 	.catch(next);
 });
 
 //Ruta para modificar usuario
