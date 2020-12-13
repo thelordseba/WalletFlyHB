@@ -60,5 +60,12 @@ module.exports = (sequelize) => {
         return () => this.getDataValue("salt");
       },
     },
+    segNumber: {
+      type: DataTypes.INTEGER,
+      get() {
+        return () => this.getDataValue("segNumber");
+      },
+    },
   });
 };
+
