@@ -47,7 +47,7 @@ const CreateUserScreen = (props) => {
     setState({ ...state, [name]: value });
   };
 
-  const next = () => {
+  const next = () => {  
     if (state.email === "" || state.password === "" || state.passwordRepeat === "") {
       alert("Debes completar todos los campos antes de continuar.");
     } else if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(state.email)){
@@ -59,10 +59,10 @@ const CreateUserScreen = (props) => {
     } else {     
       axios.post(`http://localhost:3001/users/`, state)
         .then(({ data }) => {
-          props.navigation.navigate("UpdateUser", { user: data });
+          props.navigation.navigate("AuthEmail", data.user.id); //Le paso por props solo el userId que acabo de crear
         })
         .catch((error) => {
-          console.log(error), alert("Este mail ya esta en uso");
+        alert("Este mail ya esta en uso");
         });
     }
   };

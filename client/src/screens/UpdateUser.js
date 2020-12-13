@@ -37,7 +37,6 @@ const WhiteText = styled.Text`
 `;
 
 const UpdateUserScreen = (props) => {
-  console.log(props);
   const [state, setState] = useState({
     firstName: "",
     lastName: "",
@@ -46,7 +45,8 @@ const UpdateUserScreen = (props) => {
     documentNumber: "",
     phone: "",
   });
-  const userID = props.route.params.user.user.id;
+  const userID = props.route.params;
+  
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
@@ -74,17 +74,15 @@ const UpdateUserScreen = (props) => {
       state.phone === ""
     ) {
       alert("Debes completar todos los campos antes de continuar.");
-    } else {
-      console.log(birth());
+    } else {  
       if (birth() >= 16) {
         axios
           .put(`http://localhost:3001/users/${userID}`, state)
           .then(() => {
-            props.navigation.navigate("UpdateUser2", { user: userID });
-            console.log(userID);
+            props.navigation.navigate("UpdateUser2", userID );          
           })
           .catch((error) => {
-            console.log(error), alert("Este DNI ya corresponde a un usuario");
+           alert("Este DNI ya corresponde a un usuario");
           });
       } else {
         alert("Debes ser mayor de 16 años para registrarte!");
