@@ -103,8 +103,13 @@ const UpdateUserScreen = (props) => {
     ) {
       alert("Debes completar todos los campos antes de continuar.");
     } else {      
-      axios.put(`http://localhost:3001/users/${userID}`, state).then(() => {
-        props.navigation.navigate("Login");
+      axios.put(`http://localhost:3001/users/${userID}`, state)
+      .then(() => {
+        const accountNumber = Math.round(Math.random() * 100000 * userID);
+        axios.post(`http://localhost:3001/accounts/${userID}`, {number: accountNumber, type: "Ahorro pesos"})
+        .then(()=>{
+          props.navigation.navigate("Login");
+        })                
       });
     }
   };
