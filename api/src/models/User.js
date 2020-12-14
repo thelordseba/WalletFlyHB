@@ -61,10 +61,7 @@ module.exports = (sequelize) => {
       },
     },
     segNumber: {
-      type: DataTypes.INTEGER,
-      get() {
-        return () => this.getDataValue("segNumber");
-      },
+      type: DataTypes.INTEGER 
     },
   });
 };
