@@ -22,13 +22,13 @@ module.exports = (sequelize) => {
       validate: {
         is: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, //Min 8 caracteres, 1 number, 1 uppercase
       },
-    }, 
+    },
     documentType: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM("DNI", "PASAPORTE"),
     },
     documentNumber: {
       type: DataTypes.INTEGER,
-      unique: true
+      unique: true,
     },
     phone: {
       type: DataTypes.STRING,
@@ -39,16 +39,16 @@ module.exports = (sequelize) => {
     addressNumber: {
       type: DataTypes.INTEGER,
     },
-    postalCode:{
+    postalCode: {
       type: DataTypes.INTEGER,
     },
-    city:{
+    city: {
       type: DataTypes.STRING,
     },
-    province:{
+    province: {
       type: DataTypes.STRING,
     },
-    country:{
+    country: {
       type: DataTypes.STRING,
     },
   });

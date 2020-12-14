@@ -64,7 +64,8 @@ const Login = (props) => {
           placeholder="Contraseña"
           onChangeText={(value) => handleTextChange("password", value)}
         />
-         <WhiteText {/*onPress={() => props.navigation.navigate("ForgotPassword")}*/}> 
+        <WhiteText //onPress={() => props.navigation.navigate("ForgotPassword")}
+        >
           ¿Olvidaste tu contraseña?
         </WhiteText>
       </StyledView>
@@ -74,12 +75,13 @@ const Login = (props) => {
         </Button>
       </View>
       <View>
-        <Button primary onPress={() => props.navigation.navigate("CreateUser")}>
+        <Button primary onPress={() => props.navigation.navigate("Register")}>
           <WhiteText primary>Registrarme</WhiteText>
         </Button>
       </View>
       <View>
-      <WhiteText {/*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */} >
+        <WhiteText //onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */
+        >
           ¿Necesitas ayuda?
         </WhiteText>
       </View>

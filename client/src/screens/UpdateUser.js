@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { View, TextInput } from "react-native";
 import styled from "styled-components/native";
+// import CheckBox from "@react-native-community/checkbox";
 
 const StyledScrollView = styled.ScrollView`
   flex: 1;
@@ -91,9 +92,15 @@ const UpdateUserScreen = (props) => {
         />
       </StyledView>
       <StyledView>
-        <StyledTextInput
-          placeholder="Tipo de Documento"
-          onChangeText={(value) => handleTextChange("documentType", value)}
+        <CheckBox
+          disabled={false}
+          value={documentType}
+          onValueChange={(value) => handleTextChange("documentType", value)}
+        />
+        <CheckBox
+          disabled={false}
+          value={documentType}
+          onValueChange={(value) => handleTextChange("documentType", value)}
         />
       </StyledView>
       <StyledView>
@@ -113,9 +120,10 @@ const UpdateUserScreen = (props) => {
           <WhiteText>Siguiente</WhiteText>
         </Button>
       </View>
-      <WhiteText {/*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */} >
-          ¿Necesitas ayuda?
-        </WhiteText>
+      <WhiteText //onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente>
+      >
+        ¿Necesitas ayuda?
+      </WhiteText>
     </StyledScrollView>
   );
 };
