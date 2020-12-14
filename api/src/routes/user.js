@@ -102,4 +102,19 @@ server.get("/:id", async (req, res, next) => {
   }
 });
 
+server.delete("/:userId", async(req, res, next)=>{
+  try{
+    const user = await User.findOne({
+      where:{
+        id: req.params.userId  
+      }      
+    });
+    await user.destroy();
+    res.send("OK");
+  }catch(error)
+  {
+    next(error);
+  }
+});
+
 module.exports = server;
