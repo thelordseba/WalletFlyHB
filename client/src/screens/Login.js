@@ -65,7 +65,8 @@ const Login = (props) => {
           onChangeText={(value) => handleTextChange("password", value)}
         />
 
-         <WhiteText /*onPress={() => props.navigation.navigate("ForgotPassword")}*/> 
+        <WhiteText //onPress={() => props.navigation.navigate("ForgotPassword")}
+        >
 
           ¿Olvidaste tu contraseña?
         </WhiteText>
@@ -76,15 +77,16 @@ const Login = (props) => {
         </Button>
       </View>
 
-      {/* <View>
+
         <Button primary onPress={() => props.navigation.navigate("Register")}>
           <WhiteText primary>Registrarme</WhiteText>
         </Button>
-      </View> */}
+      </View>
 
       <View>
-      <WhiteText /*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */ >
 
+        <WhiteText //onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */
+        >
           ¿Necesitas ayuda?
         </WhiteText>
       </View>
