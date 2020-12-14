@@ -3,9 +3,9 @@ import { SafeAreaView, Text, View, Button, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import MoneyOffIcon from '@material-ui/icons/MoneyOff';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
-import { array } from '../../utils/ArrayMovimientos'
+import { array } from '../../../utils/ArrayMovimientos'
 
-export default function Transacciones(){
+export default function Transacciones(props){
 
   return (
     <SafeAreaView style={{flex: 1}}>
@@ -14,8 +14,8 @@ export default function Transacciones(){
         <Text style={s.textBalance}>Balance de cuenta</Text>
       </View>
       <View style={s.containerButton}>
-        <Button title="Recargar" />
-        <Button title="Transferir" />
+        <Button title="Recargar" onPress={() => props.navigation.navigate("Recargar")}/>
+        <Button title="Transferir" onPress={() => props.navigation.navigate("Transferir")}/>
       </View>
       <ScrollView>
         <View style={s.containerMovimientos}>
