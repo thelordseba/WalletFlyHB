@@ -28,7 +28,7 @@ function MyStack() {
 
 // Si el usuaario no tiene un Token mostrara la pantalla 
 
-const user = true;
+const user = false;
 
 const App = () => (
   <Router>

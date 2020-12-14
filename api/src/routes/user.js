@@ -26,7 +26,7 @@ server.post("/", (req, res, next) => {
   User.create({
     email: email,
     password: password,
-    segNumber: segNumber,
+    segNumber: segNumber
   })
   .then((user) => res.status(200).json({ user }))
   .then((user) => {
@@ -89,6 +89,8 @@ server.get("/getUserByEmail", async (req, res, next) => {
   }
 });
 
+//Ruta para obtener un usuario
+
 server.get("/:id", async (req, res, next) => {
   try {
     const userId = req.params.id;
@@ -101,6 +103,8 @@ server.get("/:id", async (req, res, next) => {
     next(error);
   }
 });
+
+//Ruta para eliminar un usuario
 
 server.delete("/:userId", async(req, res, next)=>{
   try{
