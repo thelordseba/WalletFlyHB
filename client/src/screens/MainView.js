@@ -32,61 +32,23 @@ const WhiteText = styled.Text`
   text-align: center;
 `;
 
-const Login = (props) => {
-  const [state, setState] = useState({
-    email: "",
-    password: "",
-  });
-  const handleTextChange = (name, value) => {
-    setState({ ...state, [name]: value });
-  };
-
-  const validateUser = () => {
-    if (state.email === "" || state.password === "") {
-      alert("Debes completar todos los campos antes de continuar.");
-    } else {
-      console.log(state);
-      props.navigation.navigate("Main");
-    }
-  };
-
+const MainView = (props) => {
   return (
-    <StyledScrollView>
-      <StyledView>
-        <TextInput
-          placeholder="Email"
-          onChangeText={(value) => handleTextChange("email", value)}
-        />
-      </StyledView>
-      <StyledView>
-        <TextInput
-          secureTextEntry={true}
-          placeholder="Contraseña"
-          onChangeText={(value) => handleTextChange("password", value)}
-        />
-
-        <WhiteText //onPress={() => props.navigation.navigate("ForgotPassword")}
-        >
-
-          ¿Olvidaste tu contraseña?
-        </WhiteText>
-      </StyledView>
+    <StyledScrollView>         
       <View>
-        <Button onPress={() => validateUser()}>
+        <Button onPress={() => props.navigation.navigate("Login")}>
           <WhiteText>Ingresar</WhiteText>
         </Button>
       </View>
-
-
+      <View>
         <Button primary onPress={() => props.navigation.navigate("Register")}>
           <WhiteText primary>Registrarme</WhiteText>
         </Button>
       </View>
-
       <View>
 
-        <WhiteText //onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */
-        >
+      <WhiteText /*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */ >
+
           ¿Necesitas ayuda?
         </WhiteText>
       </View>
@@ -94,4 +56,4 @@ const Login = (props) => {
   );
 };
 
-export default Login;
+export default MainView;

@@ -22,7 +22,11 @@ module.exports = (sequelize) => {
       validate: {
         is: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/, //Min 8 caracteres, 1 number, 1 uppercase
       },
-    },
+      get() {
+        return () => this.getDataValue("password");
+      },
+    }, 
+
     documentType: {
       type: DataTypes.ENUM("DNI", "PASAPORTE"),
     },
@@ -51,5 +55,18 @@ module.exports = (sequelize) => {
     country: {
       type: DataTypes.STRING,
     },
+    salt: {
+      type: DataTypes.STRING,
+      get() {
+        return () => this.getDataValue("salt");
+      },
+    },
+    segNumber: {
+      type: DataTypes.INTEGER,
+      get() {
+        return () => this.getDataValue("segNumber");
+      },
+    },
   });
 };
+

@@ -38,7 +38,6 @@ const WhiteText = styled.Text`
 `;
 
 const UpdateUserScreen = (props) => {
-  console.log(props);
   const [state, setState] = useState({
     firstName: "",
     lastName: "",
@@ -47,9 +46,23 @@ const UpdateUserScreen = (props) => {
     documentNumber: "",
     phone: "",
   });
-  const userID = props.route.params.user.user.id;
+  const userID = props.route.params;
+  
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
+  };
+
+  /*  const getAge = (birthDate) => {
+    Math.floor((new Date() - new Date(birthDate).getTime()) / 31557600000);
+  }; */
+
+  //año dia mes pero entra dia mes año
+
+  const birth = () => {
+    var birthArray = state.birthdate.split("/");
+    var Age = birthArray[2] + "-" + birthArray[1] + "-" + birthArray[0];
+    var edad = Math.floor((new Date() - new Date(Age).getTime()) / 31557600000);
+    return edad;
   };
 
   const next = () => {
@@ -62,12 +75,19 @@ const UpdateUserScreen = (props) => {
       state.phone === ""
     ) {
       alert("Debes completar todos los campos antes de continuar.");
-    } else {
-      console.log(state);
-      axios.put(`http://localhost:3001/users/${userID}`, state).then(() => {
-        props.navigation.navigate("UpdateUser2", { user: userID });
-        console.log(userID);
-      });
+    } else {  
+      if (birth() >= 16) {
+        axios
+          .put(`http://localhost:3001/users/${userID}`, state)
+          .then(() => {
+            props.navigation.navigate("UpdateUser2", userID );          
+          })
+          .catch((error) => {
+           alert("Este DNI ya corresponde a un usuario");
+          });
+      } else {
+        alert("Debes ser mayor de 16 años para registrarte!");
+      }
     }
   };
 
@@ -124,6 +144,7 @@ const UpdateUserScreen = (props) => {
       >
         ¿Necesitas ayuda?
       </WhiteText>
+
     </StyledScrollView>
   );
 };

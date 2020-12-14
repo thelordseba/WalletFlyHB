@@ -28,7 +28,7 @@
 //                                     'JJJJJJJJ'		
 
 const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const { conn } = require('./src/db.js'); 
 
 // Sincronizadno todos los modelos a la vez.
 conn.sync({ force: false }).then(() => {
