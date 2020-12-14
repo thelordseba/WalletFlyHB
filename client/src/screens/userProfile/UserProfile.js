@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
-import { Avatar } from '@material-ui/core'
+import { Avatar } from '@material-ui/core';
 
 export default function UserProfile(props) {
 
@@ -22,7 +22,7 @@ export default function UserProfile(props) {
                     <Text style={s.ButtonText}>Mi CVU</Text>
                     <NavigateNextIcon />
                 </View>
-                <View style={s.containerButtonIcon} onClick={() => props.navigation.navigate('DatosPersonales')}>
+                <View style={s.containerButtonIcon} onClick={() => props.navigation.navigate("DatosPersonales")}>
                     <Text style={s.ButtonText}>Datos Personales</Text>
                     <NavigateNextIcon />
                 </View>
