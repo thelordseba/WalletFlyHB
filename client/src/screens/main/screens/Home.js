@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, SafeAreaView, StyleSheet, Text, View, Dimensions } from 'react-native';
+import { Button, StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Avatar } from '@material-ui/core';
 import { LineChart } from "react-native-chart-kit";
 
@@ -49,7 +49,6 @@ export default function Home(props){
                 <Text style={s.balance}>Balance</Text>
                 <LineChart
                     data={{
-                        // Reemplazar esto por algo de la base de datos, segun filtrado
                         labels: Label(value),
                         datasets: [{data: Datos(value)}]
                     }}
@@ -58,7 +57,6 @@ export default function Home(props){
                     yAxisLabel="$"
                     yAxisInterval={1}
                     chartConfig={{
-                        // Esto cambia los colores de fondo del grafico
                         backgroundColor: "#e26a00",
                         backgroundGradientFrom: "#fb8c00",
                         backgroundGradientTo: "#ffa726",
@@ -88,8 +86,8 @@ export default function Home(props){
                 </View>
             </View>
             <View style={s.containerButton}>
-                <Button title="Recargar" />
-                <Button title="Transferir" />
+                <Button title="Recargar" onPress={() => props.navigation.navigate("Recargar")}/>
+                <Button title="Transferir" onPress={() => props.navigation.navigate("Recargar")}/>
             </View>
         </View>
     )

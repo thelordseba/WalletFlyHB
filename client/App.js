@@ -6,8 +6,8 @@ import Login from "./src/screens/Login";
 import UpdateUser from "./src/screens/UpdateUser";
 import UpdateUser2 from "./src/screens/UpdateUser2";
 import Register from "./src/screens/Register";
-import UserProfile from "./src/screens/userProfile/UserProfile";
-import Footer from "./src/screens/footer/Footer";
+import UserProfile from "./src/screens/main/screens/userProfile/UserProfile";
+import Main from "./src/screens/main/Main";
 import AuthEmail from "./src/screens/AuthEmail";
 import MainView from "./src/screens/MainView";
 
@@ -28,11 +28,11 @@ function MyStack() {
 
 // Si el usuaario no tiene un Token mostrara la pantalla 
 
-const user = false;
+const user = true;
 
 const App = () => (
   <Router>
-    <NavigationContainer>{user ? <Footer /> : <MyStack />}</NavigationContainer>
+    <NavigationContainer>{user ? <Main /> : <MyStack />}</NavigationContainer>
   </Router>
 );
 export default App;
