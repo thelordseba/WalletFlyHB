@@ -24,10 +24,4 @@ export const Array = [
         name: "Fernando Leiva",
         tranferencia: false,
     },
-    {
-        id: 6,
-        name: "Nicolas Acevedo",
-        tranferencia: "Ultima Tranferencia 5/7/19",
-    },
-
 ]
