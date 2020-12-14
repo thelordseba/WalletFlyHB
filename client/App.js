@@ -9,11 +9,13 @@ import Register from "./src/screens/Register";
 import UserProfile from "./src/screens/userProfile/UserProfile";
 import Footer from "./src/screens/footer/Footer";
 import AuthEmail from "./src/screens/AuthEmail";
+import MainView from "./src/screens/MainView";
 
 const Stack = createStackNavigator();
 function MyStack() {
   return (
     <Stack.Navigator>
+      <Stack.Screen name="MainView" component={MainView} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="AuthEmail" component={AuthEmail} />

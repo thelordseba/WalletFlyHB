@@ -45,6 +45,8 @@ const UpdateUserScreen = (props) => {
     setState({ ...state, [name]: value });
   };
 
+  const userID = props.route.params;
+
   const validateLoc = () => {
     if (
       state.address === "" ||
@@ -88,9 +90,7 @@ const UpdateUserScreen = (props) => {
           }
         });
     }
-  };
-
-  const userID = props.route.params;
+  }; 
 
   const createUser = () => {
     if (
