@@ -8,7 +8,7 @@ export default function Home(props){
     const [ value, setValue ] = useState(0)
     const email = useSelector(state => state.email)
     const user = useSelector(state => state.user)
-    
+    const userLogin = useSelector(state => state.userLogin)
     const Datos = (args) => {
         switch (args) {
             case 1:
@@ -40,12 +40,12 @@ export default function Home(props){
 
     return (
         <View style={s.container}>
-            <Text style={s.textBienvenida}>Bienvenido {user.firstName}</Text>
+            <Text style={s.textBienvenida}>Bienvenido {user ? user.firstName : userLogin.firstName}</Text>
             <View style={s.containerPerfil}>
                 <Avatar style={{ minWidth: "80px", minHeight: "80px" }} />
                 <View style={s.containerNameEmail}>
-                    <Text style={s.textNombre}>{user.firstName} {user.lastName}</Text>
-                    <Text style={s.textEmail}>{email}</Text>
+                    <Text style={s.textNombre}>{user ? user.firstName: userLogin.firstName} {user ? user.lastName: userLogin.lastName}</Text>
+                    <Text style={s.textEmail}>{email ? email : userLogin.email}</Text>
                 </View>
             </View>
             <View>

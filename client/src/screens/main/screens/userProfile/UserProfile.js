@@ -7,15 +7,15 @@ import { useSelector } from 'react-redux';
 export default function UserProfile(props) {
     const email = useSelector(state => state.email)
     const user = useSelector(state => state.user)
+    const userLogin = useSelector(state => state.userLogin)
 
     return (
-
         <SafeAreaView>
             <View style={s.container}>
                 <View style={s.containerImg}>
                     <Avatar style={{ width: 200, height: 200, borderRadius: "50%" }} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU' />
-                    <Text style={s.textUser}>{user.firstName} {user.lastName}</Text>
-                    <Text style={s.textEmail}>{email}</Text>
+                    <Text style={s.textUser}>{user ? user.firstName : userLogin.firstName} {user ? user.lastName : userLogin.lastName}</Text>
+                    <Text style={s.textEmail}>{email ? email : userLogin.email}</Text>
                 </View>
                 <View style={s.containerButtonIcon} onClick={() => alert("hola")}>
                     <Text style={s.ButtonText}>Mi Código QR</Text>
@@ -31,7 +31,6 @@ export default function UserProfile(props) {
                 </View>
             </View>
         </SafeAreaView>
-
     )
 }
 
