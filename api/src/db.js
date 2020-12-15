@@ -61,7 +61,9 @@ User.hasOne(Card);
 Transaction.belongsTo(Account);
 Account.hasMany(Transaction);
 
-User.belongsToMany(User, { through: Contacts, as: 'contact' });
+Contacts.belongsTo(User, {foreignKey: 'userId'});
+Contacts.belongsTo(User, {foreignKey: 'contactId'});
+
 
 // FUNCIONES PARA ENCRIPTADO DE CONTRASEÑA
 // FUNCION QUE GENERA EL SALT

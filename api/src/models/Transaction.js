@@ -3,7 +3,7 @@ const { DataTypes } = require("sequelize");
 module.exports = (sequelize) => {
   sequelize.define("transaction", {
     type: {
-      type: DataTypes.ENUM("DA", "RECIBE"),
+      type: DataTypes.ENUM("out", "income"),
       allowNull: false
     },
     description: {
