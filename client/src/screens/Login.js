@@ -76,15 +76,12 @@ const Login = (props) => {
           <WhiteText>Ingresar</WhiteText>
         </Button>
       </View>
-
-
+      <View>
         <Button primary onPress={() => props.navigation.navigate("Register")}>
           <WhiteText primary>Registrarme</WhiteText>
         </Button>
       </View>
-
       <View>
-
         <WhiteText //onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */
         >
           ¿Necesitas ayuda?

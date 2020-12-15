@@ -1,10 +1,11 @@
 import actionCreators from './ActionCreator';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux'
-const { USER, EMAIL } = actionCreators;
+const { USER, EMAIL, USERDIRECTION } = actionCreators;
 
 const initialState = {
     user: false,
+    userDirection: false,
     email: ""
 }
 
@@ -20,6 +21,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 email: action.payload
+            }
+        case USERDIRECTION: 
+            return {
+                ...state,
+                userDirection: action.payload
             }
         default:
             return {...state}

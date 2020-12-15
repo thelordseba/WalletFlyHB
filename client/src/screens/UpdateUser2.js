@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { View, TextInput } from "react-native";
 import styled from "styled-components/native";
+import { useDispatch } from "react-redux";
+import api from '../reducer/ActionCreator';
 
 const StyledScrollView = styled.ScrollView`
   flex: 1;
@@ -41,56 +43,58 @@ const UpdateUserScreen = (props) => {
     province: "",
     country: "",
   });
+  const { USERDIRECTION } = api;
+  const dispatch = useDispatch();
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
 
   const userID = props.route.params;
 
-  const validateLoc = () => {
-    if (
-      state.address === "" ||
-      state.addressNumber === "" ||
-      state.postalCode === "" ||
-      state.city === "" ||
-      state.province === "" ||
-      state.country === ""
-    ) {
-      alert("Debes completar todos los campos antes de continuar.");
-    } else {
-      let loc =
-        state.address +
-        "%20" +
-        state.addressNumber +
-        "," +
-        state.city.replace(" ", "%20");
-      let locURL = loc.replace(" ", "%20");
-      fetch(
-        `http://servicios.usig.buenosaires.gob.ar/normalizar/?direccion=${locURL}`
-      )
-        .then((res) => res.json())
-        .then((respuesta) => {
-          if (respuesta.errorMessage) {
-            alert(
-              respuesta.errorMessage,
-              "Volver a ingresar los datos correctamente"
-            );
-            setState({
-              address: "",
-              addressNumber: "",
-              postalCode: "",
-              city: "",
-              province: "",
-              country: "",
-            });
-          } else {
-            respuesta.direccionesNormalizadas.forEach((dir) => {    
-            });
-            createUser();
-          }
-        });
-    }
-  }; 
+  // const validateLoc = () => {
+  //   if (
+  //     state.address === "" ||
+  //     state.addressNumber === "" ||
+  //     state.postalCode === "" ||
+  //     state.city === "" ||
+  //     state.province === "" ||
+  //     state.country === ""
+  //   ) {
+  //     alert("Debes completar todos los campos antes de continuar.");
+  //   } else {
+  //     let loc =
+  //       state.address +
+  //       "%20" +
+  //       state.addressNumber +
+  //       "," +
+  //       state.city.replace(" ", "%20");
+  //     let locURL = loc.replace(" ", "%20");
+  //     fetch(
+  //       `http://servicios.usig.buenosaires.gob.ar/normalizar/?direccion=${locURL}`
+  //     )
+  //       .then((res) => res.json())
+  //       .then((respuesta) => {
+  //         if (respuesta.errorMessage) {
+  //           alert(
+  //             respuesta.errorMessage,
+  //             "Volver a ingresar los datos correctamente"
+  //           );
+  //           setState({
+  //             address: "",
+  //             addressNumber: "",
+  //             postalCode: "",
+  //             city: "",
+  //             province: "",
+  //             country: "",
+  //           });
+  //         } else {
+  //           respuesta.direccionesNormalizadas.forEach((dir) => {    
+  //           });
+  //           createUser();
+  //         }
+  //       });
+  //   }
+  // }; 
 
   const createUser = () => {
     if (
@@ -108,9 +112,14 @@ const UpdateUserScreen = (props) => {
         const accountNumber = Math.round(Math.random() * 100000 * userID);
         axios.post(`http://localhost:3001/accounts/${userID}`, {number: accountNumber, type: "Ahorro pesos"})
         .then(()=>{
-          props.navigation.navigate("Login");
+          // props.navigation.navigate("Login");
+          dispatch({
+            type: USERDIRECTION,
+            payload: state
+          })
         })                
-      });
+      })
+      .catch(err => alert(`Error!! ${err}`));
     }
   };
 
