@@ -1,15 +1,14 @@
 const server = require("express").Router();
-const { User, Account } = require("../db");
+const { User, Account, Transaction } = require("../db");
 
 //Ruta para crear cuenta de usuario
 
 server.post('/:userId', async(req, res, next)=>{
     const userId = req.params.userId;
-    const {number, type} = req.body;
+    const {type} = req.body;
     try{
         const user = await User.findByPk(userId);
-        const account = await Account.create({
-            number: number,
+        const account = await Account.create({            
             type: type,
             balance: 0
         });
@@ -27,6 +26,22 @@ server.get('/', async(req, res, next)=>{
       const accounts = await Account.findAll({      
       });
       res.json(accounts);
+    }catch(error){
+      next(error);
+    }
+  });
+
+  //Ruta para obtener un cuenta en particular con todas sus transacciones
+  server.get('/:userId/transactions', async (req, res, next)=>{
+    const userId = req.params.userId;
+    try{
+      const account = await Account.findOne({
+        where:{
+          userId: userId
+        },
+        include: [{ model: Transaction }]
+      });
+      res.json(account);
     }catch(error){
       next(error);
     }
