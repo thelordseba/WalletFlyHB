@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const router = Router();
+
 // importar todas los enrutadores;
 const userRouter = require("./user.js");
 const accountRouter = require("./account.js");
@@ -15,5 +16,8 @@ router.use("/users", userRouter);
 router.use('/accounts', accountRouter);
 router.use("/transactions", transactionRouter);
 
+
+router.use('/users', require("./user.js"))
+router.use('/accounts', require("./account.js"))
 
 module.exports = router;
