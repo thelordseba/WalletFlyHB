@@ -2,8 +2,11 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import { Avatar } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 export default function UserProfile(props) {
+    const email = useSelector(state => state.email)
+    const user = useSelector(state => state.user)
 
     return (
 
@@ -11,8 +14,8 @@ export default function UserProfile(props) {
             <View style={s.container}>
                 <View style={s.containerImg}>
                     <Avatar style={{ width: 200, height: 200, borderRadius: "50%" }} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU' />
-                    <Text style={s.textUser}>Maico Loncomilla</Text>
-                    <Text style={s.textEmail}>maicoloncomilla@gmail.com</Text>
+                    <Text style={s.textUser}>{user.firstName} {user.lastName}</Text>
+                    <Text style={s.textEmail}>{email}</Text>
                 </View>
                 <View style={s.containerButtonIcon} onClick={() => alert("hola")}>
                     <Text style={s.ButtonText}>Mi Código QR</Text>

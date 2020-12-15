@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { View, TextInput } from "react-native";
 import styled from "styled-components/native";
+import { useDispatch } from "react-redux";
+import api from '../reducer/ActionCreator';
 
 const StyledScrollView = styled.ScrollView`
   flex: 1;
@@ -36,13 +38,15 @@ const WhiteText = styled.Text`
   text-align: center;
 `;
 
+
 const CreateUserScreen = (props) => {
   const [state, setState] = useState({
     email: "",
     password: "",
     passwordRepeat: ""
   });
-
+  const { EMAIL } = api;
+  const dispatch = useDispatch();
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
@@ -60,9 +64,14 @@ const CreateUserScreen = (props) => {
       axios.post(`http://localhost:3001/users/`, state)
         .then(({ data }) => {
           props.navigation.navigate("AuthEmail", data.user.id); //Le paso por props solo el userId que acabo de crear
+          dispatch({
+            type: EMAIL,
+            payload: state.email
+          })
         })
         .catch((error) => {
-        alert("Este mail ya esta en uso");
+          alert(`Error! ${error}`)
+        // alert("Este mail ya esta en uso" + error);
         });
     }
   };
@@ -96,8 +105,8 @@ const CreateUserScreen = (props) => {
       </View>
       <View>
 
-        <WhiteText /*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */ >
-
+        <WhiteText //onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente>
+        >
           ¿Necesitas ayuda?
         </WhiteText>
       </View>

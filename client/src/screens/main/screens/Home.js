@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View, Dimensions } from 'react-native';
 import { Avatar } from '@material-ui/core';
 import { LineChart } from "react-native-chart-kit";
+import { useSelector } from 'react-redux';
 
 export default function Home(props){
     const [ value, setValue ] = useState(0)
+    const email = useSelector(state => state.email)
+    const user = useSelector(state => state.user)
     
     const Datos = (args) => {
         switch (args) {
@@ -37,12 +40,12 @@ export default function Home(props){
 
     return (
         <View style={s.container}>
-            <Text style={s.textBienvenida}>Bienvenido USUARIO!!</Text>
+            <Text style={s.textBienvenida}>Bienvenido {user.firstName}</Text>
             <View style={s.containerPerfil}>
                 <Avatar style={{ minWidth: "80px", minHeight: "80px" }} />
                 <View style={s.containerNameEmail}>
-                    <Text style={s.textNombre}>Maico Loncomilla</Text>
-                    <Text style={s.textEmail}>maicoloncomilla@gmail.com</Text>
+                    <Text style={s.textNombre}>{user.firstName} {user.lastName}</Text>
+                    <Text style={s.textEmail}>{email}</Text>
                 </View>
             </View>
             <View>

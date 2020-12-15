@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import axios from "axios";
 import { View, TextInput } from "react-native";
 import styled from "styled-components/native";
+import { useDispatch } from "react-redux";
+import api from '../reducer/ActionCreator';
+// import CheckBox from "@react-native-community/checkbox";
 
 const StyledScrollView = styled.ScrollView`
   flex: 1;
@@ -41,10 +44,12 @@ const UpdateUserScreen = (props) => {
     firstName: "",
     lastName: "",
     birthdate: "",
-    documentType: "",
+    // documentType: "",
     documentNumber: "",
     phone: "",
   });
+  const { USER } = api
+  const dispatch = useDispatch();
   const userID = props.route.params;
   
   const handleTextChange = (name, value) => {
@@ -69,7 +74,7 @@ const UpdateUserScreen = (props) => {
       state.firstName === "" ||
       state.lastName === "" ||
       state.birthdate === "" ||
-      state.documentType === "" ||
+      // state.documentType === "" ||
       state.documentNumber === "" ||
       state.phone === ""
     ) {
@@ -79,7 +84,11 @@ const UpdateUserScreen = (props) => {
         axios
           .put(`http://localhost:3001/users/${userID}`, state)
           .then(() => {
-            props.navigation.navigate("UpdateUser2", userID );          
+            props.navigation.navigate("UpdateUser2", userID );  
+            dispatch({
+              type: USER,
+              payload: state
+            })        
           })
           .catch((error) => {
            alert("Este DNI ya corresponde a un usuario");
@@ -111,10 +120,16 @@ const UpdateUserScreen = (props) => {
         />
       </StyledView>
       <StyledView>
-        <StyledTextInput
-          placeholder="Tipo de Documento"
-          onChangeText={(value) => handleTextChange("documentType", value)}
+        {/* <CheckBox
+          disabled={false}
+          value={documentType}
+          onValueChange={(value) => handleTextChange("documentType", value)}
         />
+        <CheckBox
+          disabled={false}
+          value={documentType}
+          onValueChange={(value) => handleTextChange("documentType", value)}
+        /> */}
       </StyledView>
       <StyledView>
         <StyledTextInput
@@ -133,10 +148,10 @@ const UpdateUserScreen = (props) => {
           <WhiteText>Siguiente</WhiteText>
         </Button>
       </View>
-
-      <WhiteText /*onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente> */ >
-          ¿Necesitas ayuda?
-        </WhiteText>
+      <WhiteText //onPress={() => props.navigation.navigate("FAQ")} Hay que armar el componente>
+      >
+        ¿Necesitas ayuda?
+      </WhiteText>
 
     </StyledScrollView>
   );

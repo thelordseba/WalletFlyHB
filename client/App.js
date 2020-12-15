@@ -10,6 +10,8 @@ import UserProfile from "./src/screens/main/screens/userProfile/UserProfile";
 import Main from "./src/screens/main/Main";
 import AuthEmail from "./src/screens/AuthEmail";
 import MainView from "./src/screens/MainView";
+import { store } from './src/reducer/Reducer';
+import { Provider, useSelector } from 'react-redux';
 
 const Stack = createStackNavigator();
 function MyStack() {
@@ -25,14 +27,19 @@ function MyStack() {
     </Stack.Navigator>
   );
 }
-
-// Si el usuaario no tiene un Token mostrara la pantalla 
-
-const user = true;
-
-const App = () => (
-  <Router>
-    <NavigationContainer>{user ? <Main /> : <MyStack />}</NavigationContainer>
-  </Router>
-);
-export default App;
+const AppWrapper = () => {
+  return (
+    <Provider store={store}>
+      <App/>
+    </Provider>
+  )
+}
+const App = () => {
+  const user = useSelector(state => state.userDirection)
+  return (
+      <Router>
+        <NavigationContainer>{user ? <Main /> : <MyStack />}</NavigationContainer>
+      </Router>
+  )
+}
+export default AppWrapper

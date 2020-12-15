@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { View, TextInput } from "react-native";
 import styled from "styled-components/native";
@@ -33,19 +34,27 @@ const WhiteText = styled.Text`
 `;
 
 const AuthEmail = (props) => {
-  const [authCode, setAuthCode] = useState("");
+  const [authCode, setAuthCode] = useState(0);
 
   const handleTextChange = (value) => {
     setAuthCode(value);
   };
 
   const authenticateEmail = () => {
-      const userCode = "123456"; //Acá va el código que se generó al registrar el user. ESTA HARCODEADO      
-      if(userCode === authCode){                
-        props.navigation.navigate("UpdateUser", props.route.params); //Le paso a UpdateUser solo el userId como props
-      }else {
-          alert("El código de autenticación es incorrecto.");
-      }
+      var userCode = "";
+      const userId = props.route.params;      
+      axios.get(`http://localhost:3001/users/${userId}`)
+        .then((user) => {              
+          userCode = user.data.segNumber;
+          if(userCode == authCode){                
+            props.navigation.navigate("UpdateUser", userId);
+          }else {       
+              alert("El código de autenticación es incorrecto.");
+          }
+        })
+        .catch((error) => {
+        alert(error);
+        });
   };
 
   return (
