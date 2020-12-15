@@ -36,9 +36,11 @@ const AppWrapper = () => {
 }
 const App = () => {
   const user = useSelector(state => state.userDirection)
+  const userLogin = useSelector(state => state.userLogin)
+  
   return (
       <Router>
-        <NavigationContainer>{user ? <Main /> : <MyStack />}</NavigationContainer>
+        <NavigationContainer>{user || userLogin ? <Main /> : <MyStack />}</NavigationContainer>
       </Router>
   )
 }

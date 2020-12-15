@@ -18,6 +18,7 @@ server.post('/login', async (req, res, next) => {
   passport.authenticate('login', async (err, user, info) => {
     try {
       console.log(user.dataValues)
+      return res.json(user.dataValues)
 /*      if (err) return next(err);
       if (!user) return res.json(info);
       req.logIn(user, async (err) => {
