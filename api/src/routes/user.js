@@ -2,6 +2,38 @@ require("dotenv").config()
 const server = require("express").Router();
 const { User, Account } = require("../db");
 const nodemailer = require("nodemailer");
+const passport = require('passport');
+const jwt = require ("jsonwebtoken");
+const authenticateToken = require('../auth/authenticateToken')
+
+require('../auth/passportAuth.js')
+
+server.use(passport.initialize()); //Arranca passport mediante middleware
+server.use(passport.session());
+
+
+// RUTA PARA LOGIN
+
+server.post('/login', async (req, res, next) => {
+  passport.authenticate('login', async (err, user, info) => {
+    try {
+      console.log(user.dataValues)
+/*      if (err) return next(err);
+      if (!user) return res.json(info);
+      req.logIn(user, async (err) => {
+        if (err) { return next(err); }
+        const body = { name: user.name, email: user.email }
+        const accessToken = jwt.sign({user: body}, process.env.ACCESS_TOKEN_SECRET)
+        res.cookie('authcookie', accessToken, {maxAge:720000, httpOnly:true})        
+        return res.json(body)
+      }); */
+    } catch (error) {
+      return next(error)
+    }
+  })(req, res, next)
+})
+
+
 
 //Transporter para nodemailer
 let transporter = nodemailer.createTransport({

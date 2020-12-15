@@ -61,8 +61,6 @@ User.hasOne(Card);
 Transaction.belongsTo(Account);
 Account.hasMany(Transaction);
 
-User.hasMany(User, { through: Contacts });
-
 // FUNCIONES PARA ENCRIPTADO DE CONTRASEÑA
 // FUNCION QUE GENERA EL SALT
 User.generateSalt = function () {
