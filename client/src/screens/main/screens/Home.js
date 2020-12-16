@@ -90,7 +90,7 @@ export default function Home(props){
             </View>
             <View style={s.containerButton}>
                 <Button title="Recargar" onPress={() => props.navigation.navigate("Recargar")}/>
-                <Button title="Transferir" onPress={() => props.navigation.navigate("Recargar")}/>
+                <Button title="Transferir" onPress={() => props.navigation.navigate("Enviar")}/>
             </View>
         </View>
     )
