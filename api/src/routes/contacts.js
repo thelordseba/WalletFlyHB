@@ -53,7 +53,7 @@ server.get("/", async (req, res, next) => {
 
 //Ruta que me trae todos los contactos de un usuario
 
-server.get("/userId", async (req, res, next) => {
+server.get("/:userId", async (req, res, next) => {
   const userID = req.params.userId;
   try {
     const contact = await Contacts.findAll({
@@ -69,7 +69,7 @@ server.get("/userId", async (req, res, next) => {
 
 //ruta para cambiar el alias
 
-server.put("userId", async (req, res, next) => {
+server.put("/:userId", async (req, res, next) => {
   const userID = req.params.userId;
   const contactID = req.query.contactId;
   const alias = req.body;
