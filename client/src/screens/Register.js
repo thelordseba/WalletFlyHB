@@ -61,7 +61,7 @@ const CreateUserScreen = (props) => {
     } else if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(state.password)){
       alert("Debe ingresar una contraseña de 8 caracteres alfanumericos y como mínimo una mayúscula.");
     } else {     
-      axios.post(`http://localhost:3001/users/`, state)
+      axios.post(`http://localhost:3001/userEmail`, state)
         .then(({ data }) => {
           props.navigation.navigate("AuthEmail", data.user.id); //Le paso por props solo el userId que acabo de crear
           dispatch({

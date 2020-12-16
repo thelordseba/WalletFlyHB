@@ -5,6 +5,7 @@ const router = Router();
 const userRouter = require("./user.js");
 const accountRouter = require("./account.js");
 const transactionRouter = require("./transaction");
+const userEmail = require("./userEmail.js")
 
 //const productRouter = require("./product"); //ESTO ES UN EJEMPLO - BORRAR
 
@@ -15,6 +16,7 @@ const transactionRouter = require("./transaction");
 router.use("/users", userRouter);    
 router.use('/accounts', accountRouter);
 router.use("/transactions", transactionRouter);
+router.use("/userEmail", userEmail);
 
 
 router.use('/users', require("./user.js"))
