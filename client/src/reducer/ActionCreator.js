@@ -10,6 +10,7 @@ const actionCreators = {
     },
     EMAIL: "EMAIL",
     USERDIRECTION: "USERDIRECTION",
+    USERLOGIN: "USERLOGIN",
     // dispatch
     _dispatchPromise: function(promise, type, dispatch){
         return promise

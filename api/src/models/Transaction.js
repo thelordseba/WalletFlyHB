@@ -2,15 +2,15 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define("transaction", {
+    title: {
+      type: DataTypes.STRING
+    },
     type: {
-      type: DataTypes.ENUM("out", "income"),
+      type: DataTypes.ENUM("ingreso", "egreso"),
       allowNull: false
     },
     description: {
       type: DataTypes.STRING,
-    },
-    status: {
-      type: DataTypes.ENUM("Accepted", "Rejected", "Processing")
     },
     total: {
       type: DataTypes.FLOAT,

@@ -42,19 +42,14 @@ export default function Footer() {
       </Tab.Screen>
       <Tab.Screen
         name="Transacciones"
+        component={Transacciones}
         options={{
           tabBarLabel: 'Transacciones',
           tabBarIcon: ({ color }) => (
             <AssessmentIcon style={{color: color}}/>
           ),
-        }}>
-        {() => (
-          <SettingsStack.Navigator>
-            <SettingsStack.Screen name="Transacciones" component={Transacciones} />
-            <SettingsStack.Screen name="Recargar" component={Recargar} />
-          </SettingsStack.Navigator>
-        )}
-      </Tab.Screen>
+        }}
+      />
       <Tab.Screen 
         name="Profile"
         options={{

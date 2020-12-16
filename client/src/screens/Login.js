@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { View, TextInput } from "react-native";
 import styled from "styled-components/native";
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import api from '../reducer/ActionCreator';
 
 const StyledScrollView = styled.ScrollView`
   flex: 1;
@@ -40,13 +43,21 @@ const Login = (props) => {
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
+  const dispatch = useDispatch();
+  const { USERLOGIN } = api;
 
   const validateUser = () => {
     if (state.email === "" || state.password === "") {
       alert("Debes completar todos los campos antes de continuar.");
     } else {
-      console.log(state);
-      props.navigation.navigate("Main");
+      axios.post(`http://localhost:3001/users/login`, state)
+        .then(({data}) => {
+          dispatch({
+            type: USERLOGIN,
+            payload: data
+          })
+        })
+        .catch(err => alert(`Error! ${err}`))
     }
   };
 
