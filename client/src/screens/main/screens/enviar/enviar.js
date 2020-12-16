@@ -10,72 +10,67 @@ export default function Enviar() {
     title: "",
     description: "",
   });
-  const [contact, setContact] = useState();
-  const [me, setMe] = useState();
 
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.userLogin);
 
   const handleTextChange = (name, value) => {
     setText({ ...text, [name]: value });
   };
 
   const sendMoney = () => {
-    var next = false;
     Axios.get(`http://localhost:3001/users/getUserByEmail?email=${text.email}`) //trae el destinatario
       .then(({ data }) => {
-        setContact(data);
-        next = true;
+        var contact = data;
+
+        Axios.get(
+          `http://localhost:3001/users/getUserByEmail?email=${user.email}`
+        )
+          .then(({ data }) => {
+            if (data.accounts[0].balance < text.amount) {
+              alert("no posees el saldo suficiente");
+            } else {
+              Axios.post(
+                `http://localhost:3001/transaction/${data.accounts[0].id}`,
+                {
+                  title: text.title,
+                  description: text.description,
+                  type: "egreso",
+                  total: parseInt(text.amount, 10),
+                }
+              )
+                .then(({ data }) => {
+                  Axios.post(
+                    `http://localhost:3001/transaction/${contact.accounts[0].id}`,
+                    {
+                      title: text.title,
+                      description: text.description,
+                      type: "ingreso",
+                      total: parseInt(text.amount, 10),
+                    }
+                  )
+                    .then(({ data }) => {
+                      alert("Envio de dinero realizado con exito");
+                    })
+                    .catch((error) => {
+                      console.log("error en el destinatario");
+                      console.log(error);
+                    });
+                })
+                .catch((error) => {
+                  console.log("error en el envio");
+                  console.log(error);
+                });
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       })
       .catch((error) => {
+        next = false;
+        console.log(error);
         alert("el email no corresponde a un usuario");
       });
-    if (next === true) {
-      next = false;
-      Axios.get(
-        `http://localhost:3001/users/getUserByEmail?email=${user.email}`
-      )
-        .then(({ data }) => {
-          setMe(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      if (me.accounts[0].balance <= text.amount) {
-        alert("no posees el saldo suficiente");
-      } else {
-        next = true;
-      }
-    }
-    if (next === true) {
-      Axios.post(`http://localhost:3001/transaction/${me.accounts[0].id}`, {
-        title: text.title,
-        description: text.description,
-        type: "egreso",
-        total: text.amount,
-      })
-        .then(({ data }) => {
-          Axios.post(
-            `http://localhost:3001/transaction/${contact.accounts[0].id}`,
-            {
-              title: text.title,
-              description: text.description,
-              type: "ingreso",
-              total: text.amount,
-            }
-          )
-            .then(({ data }) => {
-              alert("Envio de dinero realizado con exito");
-            })
-            .catch((error) => {
-              console.log("error en el destinatario");
-              console.log(error);
-            });
-        })
-        .catch((error) => {
-          console.log("error en el envio");
-          console.log(error);
-        });
-    }
   };
 
   return (
