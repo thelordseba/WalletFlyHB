@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View, Dimensions } from 'react-native';
-import { Avatar } from '@material-ui/core';
 import { LineChart } from "react-native-chart-kit";
 import { useSelector } from 'react-redux';
+import { Avatar } from 'react-native-paper';
 
 export default function Home(props){
     const [ value, setValue ] = useState(0)
     const email = useSelector(state => state.email)
     const user = useSelector(state => state.user)
     const userLogin = useSelector(state => state.userLogin)
+    console.log(props)
     const Datos = (args) => {
         switch (args) {
             case 1:
@@ -37,12 +38,12 @@ export default function Home(props){
                 return [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ]
         }
     }
-
     return (
         <View style={s.container}>
+            <Text onPress={() => props.navigation.toggleDrawer()}>Click here</Text>
             <Text style={s.textBienvenida}>Bienvenido {user ? user.firstName : userLogin.firstName}</Text>
             <View style={s.containerPerfil}>
-                <Avatar style={{ minWidth: "80px", minHeight: "80px" }} />
+                <Avatar.Image size={70} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" /> 
                 <View style={s.containerNameEmail}>
                     <Text style={s.textNombre}>{user ? user.firstName: userLogin.firstName} {user ? user.lastName: userLogin.lastName}</Text>
                     <Text style={s.textEmail}>{email ? email : userLogin.email}</Text>
@@ -98,7 +99,7 @@ export default function Home(props){
 const s = StyleSheet.create({
     container:{
         width: "100%",
-        height: "100vh",
+        height: '100%',
         // backgroundColor: "#22074d"
     },
     textBienvenida: {
