@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,20 +12,20 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 export default function Contactos() {
-  const [text, setText] = useState({ email: "" });
+  const [text, setText] = useState({ email: "", alias: "" });
   const [contacts, setContacts] = useState([]);
   const user = useSelector((state) => state.userLogin);
 
   const addContact = () => {
     axios
-      .get(`http://localhost:3001/users/getUserByEmail/email=${text.email}`)
+      .get(`http://localhost:3001/users/getUserByEmail/?email=${text.email}`)
       .then(({ data }) => {
         axios
           .post(
             `http://localhost:3001/contacts/${user.id}?contactId=${data.id}`
           )
           .then((data) => {
-            setContacts([...contacts, data]);
+            console.log("contacto agregado");
           })
           .catch((error) => {
             console.log(error);
@@ -47,14 +47,26 @@ export default function Contactos() {
       });
   };
 
-  // axios.get(`http://localhost:3001/contacts/${user.id}`).then ((data) => {setContacts(data)}).catch((error) => {console.log(error)});
+  const handleEdit = (contacto) => {
+    axios
+      .put(`http://localhost:3001/contacts/${user.id}?contactId=${contacto}`, {
+        alias: text.alias,
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   useEffect(() => {
     axios
       .get(`http://localhost:3001/contacts/${user.id}`)
       .then((data) => {
-        setContacts(data);
+        setContacts(data.data);
         console.log(data);
+        console.log(contacts);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -67,28 +79,42 @@ export default function Contactos() {
     <View style={s.container}>
       <Text style={s.textContato}>Contactos WalletFly</Text>
       <ScrollView>
-        {contacts &&
+        {contacts.length &&
           contacts.map((el) => (
             <View style={s.containerView} key={el.id}>
               <Avatar />
               <View style={s.containerViewNameTransferencia}>
-                <Text style={s.name}>{el.name}</Text>
-                <Text style={s.tranferencia}>{el.tranferencia}</Text>
+                {!el.alias ? (
+                  <Text style={s.name}>
+                    {el.user.firstName + " " + el.user.lastName}
+                  </Text>
+                ) : (
+                  <Text style={s.name}>{el.alias}</Text>
+                )}
+                <Text style={s.name}>{el.user.email}</Text>
+                <TextInput
+                  placeholder="alias"
+                  onChangeText={(value) => handleTextChange("alias", value)}
+                ></TextInput>
               </View>
               <Button
-                onPress={() => handleDelete(el.id)}
-                title="Eliminar Contacto"
+                onPress={() => handleEdit(el.contactId)}
+                title="Editar"
+              ></Button>
+              <Button
+                onPress={() => handleDelete(el.contactId)}
+                title="Eliminar"
               />
-              <View>
-                <Text>Agregar contacto por Email</Text>
-                <TextInput
-                  placeholder="Ingrese el email"
-                  onChangeText={(value) => handleTextChange("email", value)}
-                ></TextInput>
-                <Button onPress={() => addContact()} title="+" />
-              </View>
             </View>
           ))}
+        <View>
+          <Text>Agregar contacto por Email</Text>
+          <TextInput
+            placeholder="Ingrese el email"
+            onChangeText={(value) => handleTextChange("email", value)}
+          ></TextInput>
+          <Button onPress={() => addContact()} title="+" />
+        </View>
       </ScrollView>
     </View>
   );
