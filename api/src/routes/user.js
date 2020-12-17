@@ -69,7 +69,7 @@ server.get("/getUserByEmail", async (req, res, next) => {
     const userEmail = req.query.email;
     const user = await User.findOne({
       where: { email: userEmail },
-      include: [{ model: Account }],
+      include: [{ model: Account }]
     });
     res.json(user);
   } catch (error) {
