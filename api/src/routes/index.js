@@ -1,10 +1,6 @@
 const { Router } = require("express");
 const router = Router();
 
-// importar todas los enrutadores;
-const userRouter = require("./user.js");
-const accountRouter = require("./account.js");
-const transactionRouter = require("./transaction");
 
 //const productRouter = require("./product"); //ESTO ES UN EJEMPLO - BORRAR
 
@@ -12,12 +8,11 @@ const transactionRouter = require("./transaction");
 // i.e: router.use('/auth', authRouter);
 
 
-router.use("/users", userRouter);    
-router.use('/accounts', accountRouter);
-router.use("/transactions", transactionRouter);
-
-
 router.use('/users', require("./user.js"))
 router.use('/accounts', require("./account.js"))
+router.use('/transaction', require('./transaction.js'))
+router.use('/contacts', require('./contacts.js'))
+router.use("/userEmail",require("./userEmail.js"))
 
 module.exports = router;
+
