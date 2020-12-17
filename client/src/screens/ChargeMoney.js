@@ -3,8 +3,8 @@ import { View, TextInput, Image } from "react-native";
 import styled from "styled-components/native";
 import axios from 'axios';
 import image from "../../assets/pagofacil.jpg";
-// import { useDispatch } from 'react-redux';
-// import api from '../reducer/ActionCreator';
+import { useDispatch } from 'react-redux';
+import api from '../reducer/ActionCreator';
 
 const ChargeMoney = (props) => { 
   const [state, setState] = useState({
@@ -15,9 +15,10 @@ const ChargeMoney = (props) => {
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   }; 
-
+  const { SALDO } = api
+  const dispatch = useDispatch()
   const {code, email} = props.route.params;
-
+  console.log(code)
   const chargeMoney =  () => {
       if(code === parseInt(state.codigo)){
           const data = {
@@ -26,8 +27,12 @@ const ChargeMoney = (props) => {
               description: 'Recarga de dinero a tavés de Pago Facil.',
               total: parseInt(state.monto , 10)
           };
-          axios.post(`http://localhost:3001/transactions/byUserEmail/${email}`, data)
-          .then(()=>{
+          axios.post(`http://localhost:3001/transaction/byUserEmail/${email}`, data)
+          .then(({data})=>{
+              dispatch({
+                type: SALDO,
+                payload: data.balance
+              })
               props.navigation.navigate('Home');               
           })
           .catch(error=>{

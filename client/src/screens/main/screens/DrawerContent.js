@@ -8,7 +8,7 @@ import api from '../../../reducer/ActionCreator';
 
 export default function DrawerContent(props){
     const user = useSelector(state => state.user)
-    const userDirection = useSelector(state => state.userDirection)
+    // const userDirection = useSelector(state => state.userDirection)
     const userLogin = useSelector(state => state.userLogin)
     const email = useSelector(state => state.email)
     const [ isDarkTheme, setIsDarkTheme ] = useState(false)
@@ -16,7 +16,7 @@ export default function DrawerContent(props){
         setIsDarkTheme(!isDarkTheme)
     }
     const dispatch = useDispatch()
-    const { USERDIRECTION, USERLOGIN } = api
+    const { USERDIRECTION, USERLOGIN, USER, EMAIL } = api
     return (
         <View style={{flex: 1}}>
             <DrawerContentScrollView {...props}>
@@ -81,10 +81,23 @@ export default function DrawerContent(props){
                         <MaterialCommunityIcons name="exit-to-app" size={size} color={color}/>
                     )}
                     label="Cerrar sesión"
-                    onPress={() => dispatch({
-                        type: userDirection ? USERDIRECTION : USERLOGIN,
-                        payload: false
-                    })}
+                    onPress={() => {
+                        dispatch({
+                            type: USERDIRECTION,
+                            payload: false
+                        }); dispatch({
+                            type: USERLOGIN,
+                            payload: false
+                        });
+                        dispatch({
+                            type: USER,
+                            payload: false
+                        });
+                        dispatch({
+                            type: EMAIL,
+                            payload: false
+                        });
+                    }}
                 />
             </Drawer.Section>
         </View>

@@ -12,22 +12,25 @@ export default function Enviar(props) {
     description: "",
   });
 
-  const user = useSelector((state) => state.userLogin);
+  const user = useSelector(state => state.userLogin);
+  const emailRegister = useSelector(state => state.email)
   const dispatch = useDispatch()
   const { SALDO } = api
   const handleTextChange = (name, value) => {
     setText({ ...text, [name]: value });
   };
-
+  console.log(emailRegister)
+  console.log(user.email)
   const sendMoney = () => {
     Axios.get(`http://localhost:3001/users/getUserByEmail?email=${text.email}`) //trae el destinatario
       .then(({ data }) => {
         var contact = data;
 
         Axios.get(
-          `http://localhost:3001/users/getUserByEmail?email=${user.email}`
+          `http://localhost:3001/users/getUserByEmail/?email=${user ? user.email: emailRegister}`
         )
           .then(({ data }) => {
+            console.log(data)
             if (data.accounts[0].balance < text.amount) {
               alert("no posees el saldo suficiente");
             } else {
