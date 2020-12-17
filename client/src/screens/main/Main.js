@@ -11,6 +11,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 // icons
 import Recargar from './screens/recargar/Recargar';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ChargeMoney from '../ChargeMoney';
+import Enviar from "./screens/enviar/enviar"; //Ojo componente en minúsculas
 
 const Tab = createMaterialBottomTabNavigator();
 const SettingsStack = createStackNavigator();
@@ -34,6 +36,11 @@ export default function Footer() {
           <SettingsStack.Navigator>
             <SettingsStack.Screen name="Home" component={Home} />
             <SettingsStack.Screen name="Recargar" component={Recargar} />
+
+            <SettingsStack.Screen name="ChargeMoney" component={ChargeMoney}/>
+
+            <SettingsStack.Screen name="Enviar" component={Enviar} />            
+
           </SettingsStack.Navigator>
         )}
       </Tab.Screen>

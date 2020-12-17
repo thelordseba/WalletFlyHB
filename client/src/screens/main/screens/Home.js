@@ -91,63 +91,63 @@ export default function Home(props){
             </View>
             <View style={s.containerButton}>
                 <Button title="Recargar" onPress={() => props.navigation.navigate("Recargar")}/>
-                <Button title="Transferir" onPress={() => props.navigation.navigate("Recargar")}/>
+                <Button title="Enviar" onPress={() => props.navigation.navigate("Enviar")}/>
             </View>
         </View>
     )
 }
 const s = StyleSheet.create({
-    container:{
-        width: "100%",
-        height: '100%',
-        // backgroundColor: "#22074d"
-    },
-    textBienvenida: {
-        textAlign: "center",
-        fontSize: 20,
-        // color: "#49e1f4",
-        marginTop: 10,
-        marginBottom: 10
-    },
-    containerPerfil:{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        marginTop: 15,
-        marginBottom: 15,
-    },
-    containerNameEmail:{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        marginLeft: 10,
-        marginRight: 10
-    },
-    textNombre:{
-        // color: "#49e1f4",
-        fontSize: 18
-    },
-    textEmail:{
-        // color: "#49e1f4",
-        fontSize: 14
-    },
-    containerButton:{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        width: "100%",
-        marginTop: 20,
-    },
-    balance:{
-        // color: "#49e1f4",
-        fontSize: 20,
-        marginTop: 15
-    },
-    textButton:{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingRight: 5,
-        paddingLeft: 5
-    },
-})
+  container: {
+    width: "100%",
+    height: "100vh",
+    // backgroundColor: "#22074d"
+  },
+  textBienvenida: {
+    textAlign: "center",
+    fontSize: 20,
+    // color: "#49e1f4",
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  containerPerfil: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 15,
+    marginBottom: 15,
+  },
+  containerNameEmail: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  textNombre: {
+    // color: "#49e1f4",
+    fontSize: 18,
+  },
+  textEmail: {
+    // color: "#49e1f4",
+    fontSize: 14,
+  },
+  containerButton: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    marginTop: 20,
+  },
+  balance: {
+    // color: "#49e1f4",
+    fontSize: 20,
+    marginTop: 15,
+  },
+  textButton: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingRight: 5,
+    paddingLeft: 5,
+  },
+});
