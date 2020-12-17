@@ -31,21 +31,4 @@ server.get('/', async(req, res, next)=>{
     }
   });
 
-  //Ruta para obtener un cuenta en particular con todas sus transacciones
-  server.get('/:userId/transactions', async (req, res, next)=>{
-    const userId = req.params.userId;
-    try{
-      const account = await Account.findOne({
-        where:{
-          userId: userId
-        },
-        include: [{ model: Transaction }]
-      });
-      res.json(account);
-    }catch(error){
-      next(error);
-    }
-  });
-
-
 module.exports = server;

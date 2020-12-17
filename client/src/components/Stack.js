@@ -19,12 +19,12 @@ const Drawer2 = createDrawerNavigator();
 
 export default function MyStack() {
 
-    // const user = useSelector(state => state.userDirection)
-    // const userLogin = useSelector(state => state.userLogin)
-    const user = true
+    const user = useSelector(state => state.userDirection)
+    const userLogin = useSelector(state => state.userLogin)
+    // const user = true
     return (
         <>
-        { user ? 
+        { user || userLogin ? 
             <Drawer2.Navigator drawerContent={props => <Drawer {...props} />}>
                 <Drawer2.Screen name="HomeDrawer" component={Main} />
             </Drawer2.Navigator>

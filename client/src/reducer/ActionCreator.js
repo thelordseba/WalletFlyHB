@@ -11,6 +11,7 @@ const actionCreators = {
     EMAIL: "EMAIL",
     USERDIRECTION: "USERDIRECTION",
     USERLOGIN: "USERLOGIN",
+    SALDO: "SALDO",
     // dispatch
     _dispatchPromise: function(promise, type, dispatch){
         return promise
