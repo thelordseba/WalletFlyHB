@@ -2,17 +2,21 @@ import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import api from '../../../reducer/ActionCreator';
 
 export default function DrawerContent(props){
     const user = useSelector(state => state.user)
+    const userDirection = useSelector(state => state.userDirection)
     const userLogin = useSelector(state => state.userLogin)
     const email = useSelector(state => state.email)
     const [ isDarkTheme, setIsDarkTheme ] = useState(false)
     const toggleTheme = () => {
         setIsDarkTheme(!isDarkTheme)
     }
+    const dispatch = useDispatch()
+    const { USERDIRECTION, USERLOGIN } = api
     return (
         <View style={{flex: 1}}>
             <DrawerContentScrollView {...props}>
@@ -77,7 +81,10 @@ export default function DrawerContent(props){
                         <MaterialCommunityIcons name="exit-to-app" size={size} color={color}/>
                     )}
                     label="Cerrar sesión"
-                    onPress={() => {}}
+                    onPress={() => dispatch({
+                        type: userDirection ? USERDIRECTION : USERLOGIN,
+                        payload: false
+                    })}
                 />
             </Drawer.Section>
         </View>

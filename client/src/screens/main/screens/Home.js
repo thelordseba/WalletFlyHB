@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View, Dimensions } from 'react-native';
 import { LineChart } from "react-native-chart-kit";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from 'react-native-paper';
+import Axios from 'axios';
+import api from '../../../reducer/ActionCreator'
 
 export default function Home(props){
     const [ value, setValue ] = useState(0)
     const email = useSelector(state => state.email)
     const user = useSelector(state => state.user)
     const userLogin = useSelector(state => state.userLogin)
-    console.log(props)
+    const saldo = useSelector(state => state.saldo)
+    const dispatch = useDispatch()
+    console.log(saldo)
+    const { SALDO } = api
     const Datos = (args) => {
         switch (args) {
             case 1:
@@ -38,8 +43,17 @@ export default function Home(props){
                 return [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ]
         }
     }
+    useEffect(() => {
+        Axios.get(`http://localhost:3001/users/getUserByEmail/?email=${email ? email : userLogin.email}`)
+        .then(({data}) => dispatch({
+            type: SALDO,
+            payload: data.accounts[0].balance
+        }))
+        .catch(err => console.log(`Error!! ${err}` ))
+    }, [])
     return (
         <View style={s.container}>
+            {/* cambiar a icono */}
             <Text onPress={() => props.navigation.toggleDrawer()}>Click here</Text>
             <Text style={s.textBienvenida}>Bienvenido {user ? user.firstName : userLogin.firstName}</Text>
             <View style={s.containerPerfil}>
@@ -50,7 +64,7 @@ export default function Home(props){
                 </View>
             </View>
             <View>
-                <Text style={s.balance}>Balance</Text>
+                <Text style={s.balance}>Saldo {saldo}</Text>
                 <LineChart
                     data={{
                         labels: Label(value),

@@ -1,9 +1,10 @@
-import Axios from "axios";
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import api from '../../../../reducer/ActionCreator';
+import Axios from "axios";
 
-export default function Enviar() {
+export default function Enviar(props) {
   const [text, setText] = useState({
     email: "",
     amount: 0,
@@ -12,7 +13,8 @@ export default function Enviar() {
   });
 
   const user = useSelector((state) => state.userLogin);
-
+  const dispatch = useDispatch()
+  const { SALDO } = api
   const handleTextChange = (name, value) => {
     setText({ ...text, [name]: value });
   };
@@ -38,7 +40,11 @@ export default function Enviar() {
                   total: parseInt(text.amount, 10),
                 }
               )
-                .then(({ data }) => {
+                .then(({data}) => {
+                  dispatch({
+                    type: SALDO,
+                    payload: data.balance
+                  })
                   Axios.post(
                     `http://localhost:3001/transaction/${contact.accounts[0].id}`,
                     {
@@ -50,6 +56,7 @@ export default function Enviar() {
                   )
                     .then(({ data }) => {
                       alert("Envio de dinero realizado con exito");
+                      props.navigation.navigate('Home')
                     })
                     .catch((error) => {
                       console.log("error en el destinatario");
@@ -67,7 +74,6 @@ export default function Enviar() {
           });
       })
       .catch((error) => {
-        next = false;
         console.log(error);
         alert("el email no corresponde a un usuario");
       });
@@ -95,7 +101,7 @@ export default function Enviar() {
         placeholder="ingrese el monto"
         onChangeText={(value) => handleTextChange("amount", value)}
       ></TextInput>
-      <Button onPress={() => sendMoney()}>Enviar</Button>
+      <Button title="Enviar" onPress={() => sendMoney()}/>
     </View>
   );
 }

@@ -12,7 +12,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Recargar from './screens/recargar/Recargar';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ChargeMoney from '../ChargeMoney';
-import Enviar from "./screens/enviar/enviar"; //Ojo componente en minúsculas
+import Enviar from "./screens/enviar/Enviar";
 
 const Tab = createMaterialBottomTabNavigator();
 const SettingsStack = createStackNavigator();
