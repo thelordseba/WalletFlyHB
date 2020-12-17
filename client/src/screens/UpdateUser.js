@@ -91,7 +91,7 @@ const UpdateUserScreen = (props) => {
             })        
           })
           .catch((error) => {
-           alert("Este DNI ya corresponde a un usuario");
+           alert(`Error ${error}`);
           });
       } else {
         alert("Debes ser mayor de 16 años para registrarte!");

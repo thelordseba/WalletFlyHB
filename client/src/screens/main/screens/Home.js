@@ -8,7 +8,7 @@ import api from '../../../reducer/ActionCreator'
 
 export default function Home(props){
     const [ value, setValue ] = useState(0)
-    const email = useSelector(state => state.email)
+    const email = useSelector(state => state.email) 
     const user = useSelector(state => state.user)
     const userLogin = useSelector(state => state.userLogin)
     const saldo = useSelector(state => state.saldo)
@@ -64,7 +64,7 @@ export default function Home(props){
                 </View>
             </View>
             <View>
-                <Text style={s.balance}>Saldo {saldo}</Text>
+                <Text style={s.balance}>Saldo ${saldo} ARS</Text>
                 <LineChart
                     data={{
                         labels: Label(value),
