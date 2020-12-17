@@ -53,18 +53,23 @@ server.get("/", async (req, res, next) => {
 
 //Ruta que me trae todos los contactos de un usuario
 
-server.get("/:userId", async (req, res, next) => {
+server.get("/:userId", (req, res, next) => {
   const userID = req.params.userId;
-  try {
-    const contact = await Contacts.findAll({
-      where: {
-        userId: userID,
-      },
-    });
-    res.send(contact);
-  } catch (error) {
-    next(error);
-  }
+  Contacts.findAll({
+    attributes: ["id", "userId", "contactId", "alias"],
+    include: {
+      attributes: ["firstName", "lastName", "email"],
+      model: User,
+    },
+    where: { userId: userID },
+  })
+    .then((contacts) => {
+      if (!contacts[0]) {
+        return res.status(400).json({ message: "La agenda esta vacia" });
+      }
+      res.status(200).json(contacts);
+    })
+    .catch((error) => next(error.message));
 });
 
 //ruta para cambiar el alias
@@ -72,7 +77,7 @@ server.get("/:userId", async (req, res, next) => {
 server.put("/:userId", async (req, res, next) => {
   const userID = req.params.userId;
   const contactID = req.query.contactId;
-  const alias = req.body;
+  const alias = req.body.alias;
   try {
     const contact = await Contacts.findOne({
       where: {
