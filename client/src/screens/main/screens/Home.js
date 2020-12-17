@@ -99,7 +99,7 @@ export default function Home(props){
 const s = StyleSheet.create({
   container: {
     width: "100%",
-    height: "100vh",
+    height: "100%",
     // backgroundColor: "#22074d"
   },
   textBienvenida: {
