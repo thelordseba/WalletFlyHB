@@ -12,52 +12,39 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 export default function Contactos() {
+  const [text, setText] = useState({ email: "" });
   const [contacts, setContacts] = useState([]);
   const user = useSelector((state) => state.userLogin);
 
   const addContact = () => {
-    axios.post(
-      "http://localhost:3001/contacts/:userId",
-      async (req, res, next) => {
-        const userId = req.params.userId;
-        const contactId = req.query.contactId;
-        try {
-          const contact = await Contacts.findOrCreate({
-            where: {
-              userId: userId,
-              contactId: contactId,
-            },
-            userId: userId,
-            contactId: contactId,
+    axios
+      .get(`http://localhost:3001/users/getUserByEmail/email=${text.email}`)
+      .then(({ data }) => {
+        axios
+          .post(
+            `http://localhost:3001/contacts/${user.id}?contactId=${data.id}`
+          )
+          .then((data) => {
+            setContacts([...contacts, data]);
+          })
+          .catch((error) => {
+            console.log(error);
           });
-          res.json(contact);
-        } catch (error) {
-          next(error);
-        }
-      }
-    );
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
-  const handleDelete = () => {
-    axios.delete(
-      "http://localhost:3001/contacts/:userId",
-      async (req, res, next) => {
-        const userId = req.params.userId;
-        const contactId = req.query.contactId;
-        try {
-          const contact = await Contacts.findOne({
-            where: {
-              userId: userID,
-              contactId: contactId,
-            },
-          });
-          await contact.destroy();
-          res.send("Deleted");
-        } catch (error) {
-          next(error);
-        }
-      }
-    );
+  const handleDelete = (contacto) => {
+    axios
+      .delete(`http://localhost:3001/contacts/${user.id}?contactId=${contacto}`)
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   // axios.get(`http://localhost:3001/contacts/${user.id}`).then ((data) => {setContacts(data)}).catch((error) => {console.log(error)});
@@ -72,6 +59,10 @@ export default function Contactos() {
       .catch((err) => console.error(err));
   }, []);
 
+  const handleTextChange = (name, value) => {
+    setText({ ...text, [name]: value });
+  };
+
   return (
     <View style={s.container}>
       <Text style={s.textContato}>Contactos WalletFly</Text>
@@ -84,9 +75,17 @@ export default function Contactos() {
                 <Text style={s.name}>{el.name}</Text>
                 <Text style={s.tranferencia}>{el.tranferencia}</Text>
               </View>
-              <Button onPress={handleDelete} title="Eliminar Contacto" />
+              <Button
+                onPress={() => handleDelete(el.id)}
+                title="Eliminar Contacto"
+              />
               <View>
-                <Button onPress={addContact} title="+" />
+                <Text>Agregar contacto por Email</Text>
+                <TextInput
+                  placeholder="Ingrese el email"
+                  onChangeText={(value) => handleTextChange("email", value)}
+                ></TextInput>
+                <Button onPress={() => addContact()} title="+" />
               </View>
             </View>
           ))}
