@@ -1,9 +1,8 @@
 import React from "react";
 import { SafeAreaView, Text, View, Button, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import MoneyOffIcon from '@material-ui/icons/MoneyOff';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 import { array } from '../../../utils/ArrayMovimientos'
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function Transacciones(props){
 
@@ -25,7 +24,7 @@ export default function Transacciones(props){
               <View style={s.container} key={pagos.id}>
                 <View style={s.containerIconDireccion}>
                   <View style={pagos.tipo === "ingresa" ? s.containerIconIngresaDinero : s.containerIconSaleDinero}>
-                    {pagos.tipo === "ingresa" ? <AttachMoneyIcon fontSize="small" /> : <MoneyOffIcon fontSize="small" />}
+                    {pagos.tipo === "ingresa" ? <MaterialCommunityIcons name="currency-usd" size={20}/> : <MaterialCommunityIcons name="currency-usd-off" size={20}/>}
                   </View>
                   <Text style={s.textDireccion}>{pagos.direccion}</Text>
                 </View>
@@ -45,7 +44,7 @@ const s = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    height: "200px",
+    height: 200,
     backgroundColor: "#7b1fa2"
   },
   textUsd: {
@@ -63,7 +62,7 @@ const s = StyleSheet.create({
     alignItems: "flex-end",
     position: "absolute",
     zIndex: 1,
-    height: "215px",
+    height: 215,
     width: "100%"
   },
   textMovimientos:{

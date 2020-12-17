@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 export default function DatosPersonales(props) {
@@ -8,7 +8,7 @@ export default function DatosPersonales(props) {
    const userDirection = useSelector(state => state.userDirection)
    const userLogin = useSelector(state => state.userLogin)
    return (
-      <SafeAreaView>
+      <View>
          <View style={s.container}>
             <Text>Email</Text>
             <Text>{email ? email : userLogin.email}</Text>
@@ -45,7 +45,7 @@ export default function DatosPersonales(props) {
             <Text>País</Text>
             <Text>{userDirection ? userDirection.country : userLogin.country}</Text>
          </View>
-      </SafeAreaView>
+      </View>
    )
 }
 const s = StyleSheet.create({
@@ -56,6 +56,6 @@ const s = StyleSheet.create({
         width: '95%',
         marginLeft: 'auto',
         marginRight: 'auto',
-        marginTop: 20
+        marginTop: 20,
     }
 })

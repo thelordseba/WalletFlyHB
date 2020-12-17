@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
@@ -114,6 +115,7 @@ export default function Contactos() {
             onChangeText={(value) => handleTextChange("email", value)}
           ></TextInput>
           <Button onPress={() => addContact()} title="+" />
+
         </View>
       </ScrollView>
     </View>

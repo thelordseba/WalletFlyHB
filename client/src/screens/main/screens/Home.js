@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, StyleSheet, Text, View, Dimensions } from 'react-native';
-import { Avatar } from '@material-ui/core';
 import { LineChart } from "react-native-chart-kit";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Avatar } from 'react-native-paper';
+import Axios from 'axios';
+import api from '../../../reducer/ActionCreator'
 
 export default function Home(props){
     const [ value, setValue ] = useState(0)
-    const email = useSelector(state => state.email)
+    const email = useSelector(state => state.email) 
     const user = useSelector(state => state.user)
     const userLogin = useSelector(state => state.userLogin)
+    const saldo = useSelector(state => state.saldo)
+    const dispatch = useDispatch()
+    console.log(saldo)
+    const { SALDO } = api
     const Datos = (args) => {
         switch (args) {
             case 1:
@@ -37,19 +43,28 @@ export default function Home(props){
                 return [ "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat" ]
         }
     }
-
+    useEffect(() => {
+        Axios.get(`http://localhost:3001/users/getUserByEmail/?email=${email ? email : userLogin.email}`)
+        .then(({data}) => dispatch({
+            type: SALDO,
+            payload: data.accounts[0].balance
+        }))
+        .catch(err => console.log(`Error!! ${err}` ))
+    }, [])
     return (
         <View style={s.container}>
+            {/* cambiar a icono */}
+            <Text onPress={() => props.navigation.toggleDrawer()}>Click here</Text>
             <Text style={s.textBienvenida}>Bienvenido {user ? user.firstName : userLogin.firstName}</Text>
             <View style={s.containerPerfil}>
-                <Avatar style={{ minWidth: "80px", minHeight: "80px" }} />
+                <Avatar.Image size={70} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" /> 
                 <View style={s.containerNameEmail}>
                     <Text style={s.textNombre}>{user ? user.firstName: userLogin.firstName} {user ? user.lastName: userLogin.lastName}</Text>
                     <Text style={s.textEmail}>{email ? email : userLogin.email}</Text>
                 </View>
             </View>
             <View>
-                <Text style={s.balance}>Balance</Text>
+                <Text style={s.balance}>Saldo ${saldo} ARS</Text>
                 <LineChart
                     data={{
                         labels: Label(value),
@@ -90,63 +105,63 @@ export default function Home(props){
             </View>
             <View style={s.containerButton}>
                 <Button title="Recargar" onPress={() => props.navigation.navigate("Recargar")}/>
-                <Button title="Transferir" onPress={() => props.navigation.navigate("Recargar")}/>
+                <Button title="Enviar" onPress={() => props.navigation.navigate("Enviar")}/>
             </View>
         </View>
     )
 }
 const s = StyleSheet.create({
-    container:{
-        width: "100%",
-        height: "100vh",
-        // backgroundColor: "#22074d"
-    },
-    textBienvenida: {
-        textAlign: "center",
-        fontSize: 20,
-        // color: "#49e1f4",
-        marginTop: 10,
-        marginBottom: 10
-    },
-    containerPerfil:{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        marginTop: 15,
-        marginBottom: 15,
-    },
-    containerNameEmail:{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        marginLeft: 10,
-        marginRight: 10
-    },
-    textNombre:{
-        // color: "#49e1f4",
-        fontSize: 18
-    },
-    textEmail:{
-        // color: "#49e1f4",
-        fontSize: 14
-    },
-    containerButton:{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-around",
-        width: "100%",
-        marginTop: 20,
-    },
-    balance:{
-        // color: "#49e1f4",
-        fontSize: 20,
-        marginTop: 15
-    },
-    textButton:{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingRight: 5,
-        paddingLeft: 5
-    },
-})
+  container: {
+    width: "100%",
+    height: "100%",
+    // backgroundColor: "#22074d"
+  },
+  textBienvenida: {
+    textAlign: "center",
+    fontSize: 20,
+    // color: "#49e1f4",
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  containerPerfil: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 15,
+    marginBottom: 15,
+  },
+  containerNameEmail: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  textNombre: {
+    // color: "#49e1f4",
+    fontSize: 18,
+  },
+  textEmail: {
+    // color: "#49e1f4",
+    fontSize: 14,
+  },
+  containerButton: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+    marginTop: 20,
+  },
+  balance: {
+    // color: "#49e1f4",
+    fontSize: 20,
+    marginTop: 15,
+  },
+  textButton: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingRight: 5,
+    paddingLeft: 5,
+  },
+});

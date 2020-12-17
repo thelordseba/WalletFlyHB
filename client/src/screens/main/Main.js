@@ -9,11 +9,10 @@ import Contactos from './screens/Contactos';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 // icons
-import GroupIcon from '@material-ui/icons/Group';
-import HomeIcon from "@material-ui/icons/Home";
-import PersonIcon from "@material-ui/icons/Person";
-import AssessmentIcon from "@material-ui/icons/Assessment";
 import Recargar from './screens/recargar/Recargar';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ChargeMoney from '../ChargeMoney';
+import Enviar from "./screens/enviar/Enviar";
 
 const Tab = createMaterialBottomTabNavigator();
 const SettingsStack = createStackNavigator();
@@ -30,13 +29,18 @@ export default function Footer() {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color }) => (
-            <HomeIcon style={{color: color}}/>
+            <MaterialCommunityIcons name="home" size={26} color={color}/>
           ),
         }}>
         {() => (
           <SettingsStack.Navigator>
             <SettingsStack.Screen name="Home" component={Home} />
             <SettingsStack.Screen name="Recargar" component={Recargar} />
+
+            <SettingsStack.Screen name="ChargeMoney" component={ChargeMoney}/>
+
+            <SettingsStack.Screen name="Enviar" component={Enviar} />            
+
           </SettingsStack.Navigator>
         )}
       </Tab.Screen>
@@ -46,7 +50,7 @@ export default function Footer() {
         options={{
           tabBarLabel: 'Transacciones',
           tabBarIcon: ({ color }) => (
-            <AssessmentIcon style={{color: color}}/>
+            <MaterialCommunityIcons name="chart-bar" size={26} color={color}/>
           ),
         }}
       />
@@ -55,7 +59,7 @@ export default function Footer() {
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color }) => (
-            <PersonIcon style={{color: color}}/>
+            <MaterialCommunityIcons name="account" size={26} color={color}/>
           ),
         }}>
         {() => (
@@ -71,7 +75,7 @@ export default function Footer() {
         options={{
           tabBarLabel: 'Contactos',
           tabBarIcon: ({ color }) => (
-            <GroupIcon style={{color: color}}/>
+            <MaterialCommunityIcons name="account-plus" size={26} color={color}/>
           ),
         }}
       />

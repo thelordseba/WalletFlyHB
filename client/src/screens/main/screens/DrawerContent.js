@@ -1,29 +1,26 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import Home from './Home'
-import Transacciones from './Transacciones';
-import Contactos from './Contactos';
-import UserProfile from './userProfile/UserProfile';
 import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import HomeIcon from '@material-ui/icons/Home';
-import PersonIcon from '@material-ui/icons/Person';
-import PermContactCalendarIcon from '@material-ui/icons/PermContactCalendar';
-import AssessmentIcon from "@material-ui/icons/Assessment";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import api from '../../../reducer/ActionCreator';
 
 export default function DrawerContent(props){
     const user = useSelector(state => state.user)
+    // const userDirection = useSelector(state => state.userDirection)
     const userLogin = useSelector(state => state.userLogin)
     const email = useSelector(state => state.email)
     const [ isDarkTheme, setIsDarkTheme ] = useState(false)
     const toggleTheme = () => {
         setIsDarkTheme(!isDarkTheme)
     }
+    const dispatch = useDispatch()
+    const { USERDIRECTION, USERLOGIN, USER, EMAIL } = api
     return (
         <View style={{flex: 1}}>
             <DrawerContentScrollView {...props}>
+                <MaterialCommunityIcons style={{textAlign: "right", marginRight: 5}} name="close-circle" size={30} onPress={() => props.navigation.toggleDrawer()}/>
                 <View style={s.drawerContent}>
                     <View style={s.userInfoSection}>
                         <View style={{flexDirection: "row", marginTop: 15}}>
@@ -39,7 +36,7 @@ export default function DrawerContent(props){
                     <DrawerItem
                         name="Main"
                         icon={({ color, size }) => (
-                            <HomeIcon color={color} size={size} />
+                            <MaterialCommunityIcons name="home" size={size} color={color}/>
                         )}
                         label="Home"
                         onPress={() => props.navigation.navigate('Main')}
@@ -47,21 +44,21 @@ export default function DrawerContent(props){
                     <DrawerItem
                         name="Profile"
                         icon={({ color, size }) => (
-                            <PersonIcon color={color} size={size} />
+                            <MaterialCommunityIcons name="account" size={size} color={color}/>
                         )}
                         label="Perfil"
                         onPress={() => props.navigation.navigate('UserProfile')}
                     />
                     <DrawerItem
                         icon={({ color, size }) => (
-                            <PermContactCalendarIcon color={color} size={size} />
+                            <MaterialCommunityIcons name="contacts" size={size} color={color}/>
                         )}
                         label="Contactos"
                         onPress={() => { }}
                     />
                     <DrawerItem
                         icon={({ color, size }) => (
-                            <AssessmentIcon color={color} size={size} />
+                            <MaterialCommunityIcons name="chart-bar" size={size} color={color}/>
                         )}
                         label="Transacciones"
                         onPress={() => { }}
@@ -81,10 +78,26 @@ export default function DrawerContent(props){
             <Drawer.Section style={s.bottomDrawerSection}>
                 <DrawerItem
                     icon={({color, size}) =>(
-                        <ExitToAppIcon color={color} size={size}/>
+                        <MaterialCommunityIcons name="exit-to-app" size={size} color={color}/>
                     )}
                     label="Cerrar sesión"
-                    onPress={() => {}}
+                    onPress={() => {
+                        dispatch({
+                            type: USERDIRECTION,
+                            payload: false
+                        }); dispatch({
+                            type: USERLOGIN,
+                            payload: false
+                        });
+                        dispatch({
+                            type: USER,
+                            payload: false
+                        });
+                        dispatch({
+                            type: EMAIL,
+                            payload: false
+                        });
+                    }}
                 />
             </Drawer.Section>
         </View>
