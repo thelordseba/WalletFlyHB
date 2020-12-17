@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View, ScrollView } from 'react-native';
-import { Avatar } from '@material-ui/core';
 import { Array } from '../../../utils/ArrayContactos';
+import { Avatar } from 'react-native-paper';
 
 export default function Contactos() {
     return (
@@ -10,7 +10,7 @@ export default function Contactos() {
             <ScrollView>
                 {Array && Array.map(el => (
                     <View style={s.containerView} key={el.id}>
-                        <Avatar />
+                        <Avatar.Image size={40} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" />
                         <View style={s.containerViewNameTransferencia}>
                             <Text style={s.name}>{el.name}</Text>
                             <Text style={s.tranferencia}>{el.tranferencia}</Text>
