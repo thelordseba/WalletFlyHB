@@ -10,6 +10,7 @@ import Register from "./src/screens/Register";
 import Main from "./src/screens/main/Main";
 import AuthEmail from "./src/screens/AuthEmail";
 import MainView from "./src/screens/MainView";
+import ChargeMoney from "./src/screens/ChargeMoney"
 import { store } from './src/reducer/Reducer';
 import { Provider, useSelector } from 'react-redux';
 // import DrawerContent from "./src/screens/main/screens/DrawerContent";
@@ -25,6 +26,7 @@ function MyStack() {
       <Stack.Screen name="AuthEmail" component={AuthEmail} />
       <Stack.Screen name="UpdateUser" component={UpdateUser} />
       <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
+      <Stack.Screen name="ChargeMoney" component={ChargeMoney} />
     </Stack.Navigator>
   );
 }

@@ -14,6 +14,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import PersonIcon from "@material-ui/icons/Person";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import Recargar from './screens/recargar/Recargar';
+import ChargeMoney from '../ChargeMoney';
 
 const Tab = createMaterialBottomTabNavigator();
 const SettingsStack = createStackNavigator();
@@ -37,6 +38,7 @@ export default function Footer() {
           <SettingsStack.Navigator>
             <SettingsStack.Screen name="Home" component={Home} />
             <SettingsStack.Screen name="Recargar" component={Recargar} />
+            <SettingsStack.Screen name="ChargeMoney" component={ChargeMoney}/>
           </SettingsStack.Navigator>
         )}
       </Tab.Screen>
