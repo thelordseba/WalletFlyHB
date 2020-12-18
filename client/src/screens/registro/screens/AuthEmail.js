@@ -4,7 +4,7 @@ import { View, TextInput, Text } from "react-native";
 import { Button, Dialog, Paragraph } from 'react-native-paper'
 import stylesInputs from './styles/inputs/s';
 
-export default function AuthEmail(props) {
+export default function AuthEmail({ route, navigation }) {
   const [authCode, setAuthCode] = useState(0);
   const handleTextChange = (value) => {
     setAuthCode(value);
@@ -14,22 +14,22 @@ export default function AuthEmail(props) {
   const hideDialog = () => {
     setVisible(!visible)
   }
+  console.log(route)
   const authenticateEmail = () => {
-      var userCode = "";
-      const userId = props.route.params;      
-      axios.get(`http://localhost:3001/users/${userId}`)
-        .then((user) => {              
-          userCode = user.data.segNumber;
-          if(userCode == authCode){                
-            props.navigation.navigate("UpdateUser", userId);
-          }else {   
-              setAlertMessage("El código de autenticación es incorrecto.")    
-              setVisible(!visible)
-          }
-        })
-        .catch((error) => {
+    const userId = route.params.id;
+    axios.get(`http://localhost:3001/users/${userId}`)
+      .then((user) => {
+        let userCode = user.data.segNumber;
+        if (userCode == authCode) {
+          navigation.navigate("UpdateUser", route.params);
+        } else {
+          setAlertMessage("El código de autenticación es incorrecto.")
+          setVisible(!visible)
+        }
+      })
+      .catch((error) => {
         alert(error);
-        });
+      });
   };
 
   return (

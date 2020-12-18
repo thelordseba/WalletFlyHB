@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { View, TextInput, Image, StyleSheet } from "react-native";
 import axios from 'axios';
 import image from "../../assets/pagofacil.jpg";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import api from '../reducer/ActionCreator';
-import { Button, Dialog, Paragraph, DefaultTheme } from 'react-native-paper';
-import stylesInputs from './registro/screens/styles/inputs/s'
+import { Button, Dialog, Paragraph } from 'react-native-paper';
+import stylesInputs from './registro/screens/styles/inputs/s';
 
 export default function ChargeMoney(props) {
   const [state, setState] = useState({
@@ -20,23 +20,31 @@ export default function ChargeMoney(props) {
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
-  const { SALDO } = api
+  const recarga = useSelector(state => state.recarga)
+  const { SALDO, EFECTIVO } = api
   const dispatch = useDispatch()
-  const { code, email } = props.route.params;
-  console.log(code)
+  console.log(props)
   const chargeMoney = () => {
-    if (code === parseInt(state.codigo)) {
+    if (recarga.code === parseInt(state.codigo)) {
       const data = {
         title: 'PagoFacil',
         type: 'ingreso',
         description: 'Recarga de dinero a tavés de Pago Facil.',
         total: parseInt(state.monto, 10)
       };
-      axios.post(`http://localhost:3001/transaction/byUserEmail/${email}`, data)
+      axios.post(`http://localhost:3001/transaction/byUserEmail/${recarga.email}`, data)
         .then(({ data }) => {
           dispatch({
             type: SALDO,
             payload: data.balance
+          })
+          dispatch({
+            type: EFECTIVO,
+            payload: false,
+          })
+          dispatch({
+            type: RECARGA,
+            payload: {}
           })
           props.navigation.navigate('Home');
         })

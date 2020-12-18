@@ -19,7 +19,7 @@ export default function Login({ route, navigation }) {
     setState({ ...state, [name]: value });
   };
   const dispatch = useDispatch();
-  const { USERLOGIN } = api;
+  const { USER } = api;
 
   const validateUser = () => {
     if (state.email === "" || state.password === "") {
@@ -28,7 +28,7 @@ export default function Login({ route, navigation }) {
       axios.post(`http://localhost:3001/users/login`, state)
         .then(({ data }) => {
           dispatch({
-            type: USERLOGIN,
+            type: USER,
             payload: data
           })
         })

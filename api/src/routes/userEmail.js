@@ -78,7 +78,8 @@ server.post("/", (req, res, next) => {
   User.create({
     email: email,
     password: password,
-    segNumber: segNumber
+    segNumber: segNumber,
+    active: false
   })
   .then((user) => res.status(200).json({ user }))
   .then((user) => {

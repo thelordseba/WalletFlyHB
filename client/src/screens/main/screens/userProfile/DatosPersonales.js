@@ -3,47 +3,45 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 
 export default function DatosPersonales(props) {
-   const email = useSelector(state => state.email)
    const user = useSelector(state => state.user)
-   const userDirection = useSelector(state => state.userDirection)
-   const userLogin = useSelector(state => state.userLogin)
+
    return (
       <View>
          <View style={s.container}>
             <Text>Email</Text>
-            <Text>{email ? email : userLogin.email}</Text>
+            <Text>{user.email}</Text>
          </View>
          <View style={s.container}>
             <Text>Fecha de nacimiento</Text>
-            <Text>{user ? user.birthdate : userLogin.birthdate}</Text>
+            <Text>{user.birthdate}</Text>
          </View>
          <View style={s.container}>
             <Text>Telefono</Text>
-            <Text>{user ? user.phone : userLogin.phone}</Text>
+            <Text>{user.phone}</Text>
          </View>
          <View style={s.container}>
             <Text>Nº de documento</Text>
-            <Text>{user ? user.documentNumber : userLogin.documentNumber}</Text>
+            <Text>{user.documentNumber}</Text>
          </View>
          <View style={s.container}>
             <Text>Domicilio</Text>
-            <Text>{userDirection ? userDirection.address : userLogin.address} Nº {user ? userDirection.addressNumber : userLogin.addressNumber}</Text>
+            <Text>{user.address} Nº {user.addressNumber}</Text>
          </View>
          <View style={s.container}>
             <Text>Código Postal</Text>
-            <Text>{userDirection ? userDirection.postalCode : userLogin.postalCode}</Text>
+            <Text>{user.postalCode}</Text>
          </View>
          <View style={s.container}>
             <Text>Localidad</Text>
-            <Text>{userDirection ? userDirection.city : userLogin.city}</Text>
+            <Text>{user.city}</Text>
          </View>
          <View style={s.container}>
             <Text>Provincia</Text>
-            <Text>{userDirection ? userDirection.province : userLogin.province}</Text>
+            <Text>{user.province}</Text>
          </View>
          <View style={s.container}>
             <Text>País</Text>
-            <Text>{userDirection ? userDirection.country : userLogin.country}</Text>
+            <Text>{user.country}</Text>
          </View>
       </View>
    )

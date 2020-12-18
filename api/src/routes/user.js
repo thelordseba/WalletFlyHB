@@ -48,6 +48,29 @@ server.put("/:id", (req, res, next) => {
     })
     .catch(next);
 });
+//Ruta para modificar user y crear su account
+
+server.put('/:userId/userAccount', async (req, res, next)=>{
+  const userId = req.params.userId;
+  const data = req.body; 
+  try{          
+    await Account.create({  
+      userId: userId,          
+      type: "Ahorro pesos",
+      balance: 0
+    });
+    const user = await User.findOne({
+      where:{
+        id: userId
+      },
+      include:[{ model: Account }]
+    });
+    await user.update(data);   
+    res.json(user);
+  }catch(error){
+    next(error)
+  }
+});
 
 //Ruta para obtener todos los usuraios
 

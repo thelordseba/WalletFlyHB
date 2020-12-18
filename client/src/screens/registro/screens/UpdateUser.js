@@ -1,14 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { View, TextInput } from "react-native";
-import { useDispatch } from "react-redux";
-import api from '../../../reducer/ActionCreator';
 import { Button, Dialog, Paragraph } from 'react-native-paper'
 import stylesInputs from './styles/inputs/s'
-// import CheckBox from "@react-native-community/checkbox";
 
-export default function UpdateUserScreen(props) {
+export default function UpdateUserScreen({ route, navigation }) {
   const [state, setState] = useState({
+    id: route.params.id,
+    email: route.params.state.email,
     firstName: "",
     lastName: "",
     birthdate: "",
@@ -21,10 +19,6 @@ export default function UpdateUserScreen(props) {
   const hideDialog = () => {
     setVisible(!visible)
   }
-  const { USER } = api
-  const dispatch = useDispatch();
-  const userID = props.route.params;
-  
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
@@ -48,19 +42,7 @@ export default function UpdateUserScreen(props) {
       setVisible(!visible)
     } else {  
       if (birth() >= 16) {
-        axios
-          .put(`http://localhost:3001/users/${userID}`, state)
-          .then(() => {
-            props.navigation.navigate("UpdateUser2", userID );  
-            dispatch({
-              type: USER,
-              payload: state
-            })        
-          })
-          .catch((error) => {
-            setAlertMessage(`Error ${error}`)
-            setVisible(!visible)
-          });
+        navigation.navigate('UpdateUser2', state)
       } else {
         setAlertMessage("Debes ser mayor de 16 años para registrarte!")
         setVisible(!visible)
@@ -110,17 +92,3 @@ export default function UpdateUserScreen(props) {
 
   );
 }
-
-{/* 
-  <CheckBox
-    disabled={false}
-    value={documentType}
-    onValueChange={(value) => handleTextChange("documentType", value)}
-  />
-  <CheckBox
-    disabled={false}
-    value={documentType}
-    onValueChange={(value) => handleTextChange("documentType", value)}
-  />
- */}
-

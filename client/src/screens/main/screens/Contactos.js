@@ -15,7 +15,7 @@ import { Avatar } from 'react-native-paper';
 export default function Contactos() {
   const [text, setText] = useState({ email: "", alias: "" });
   const [contacts, setContacts] = useState([]);
-  const user = useSelector((state) => state.userLogin);
+  const user = useSelector((state) => state.user);
 
   const addContact = () => {
     axios
