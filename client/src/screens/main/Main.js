@@ -36,11 +36,8 @@ export default function Footer() {
           <SettingsStack.Navigator>
             <SettingsStack.Screen name="Home" component={Home} />
             <SettingsStack.Screen name="Recargar" component={Recargar} />
-
             <SettingsStack.Screen name="ChargeMoney" component={ChargeMoney}/>
-
             <SettingsStack.Screen name="Enviar" component={Enviar} />            
-
           </SettingsStack.Navigator>
         )}
       </Tab.Screen>

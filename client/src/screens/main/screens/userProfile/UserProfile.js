@@ -1,8 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
-import { Avatar } from 'react-native-paper';
 import { useSelector } from 'react-redux';
-import { Button } from 'react-native-paper';
+import { Button, Avatar } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function UserProfile(props) {

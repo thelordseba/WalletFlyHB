@@ -8,9 +8,9 @@ import {
   ScrollView,
   Button,
 } from "react-native";
-import { Avatar } from "@material-ui/core";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { Avatar } from 'react-native-paper';
 
 export default function Contactos() {
   const [text, setText] = useState({ email: "", alias: "" });
@@ -83,7 +83,7 @@ export default function Contactos() {
         {contacts.length &&
           contacts.map((el) => (
             <View style={s.containerView} key={el.id}>
-              <Avatar />
+              <Avatar.Image size={70} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" /> 
               <View style={s.containerViewNameTransferencia}>
                 {!el.alias ? (
                   <Text style={s.name}>

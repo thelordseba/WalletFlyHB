@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
 export default function EnEfectivo(props){
   const code = Math.round(Math.random()*1000000000000);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import { View, Text, TextInput, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import api from '../../../../reducer/ActionCreator';
 import Axios from "axios";
