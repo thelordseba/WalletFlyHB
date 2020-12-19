@@ -8,15 +8,12 @@ import api from '../../../reducer/ActionCreator';
 
 export default function DrawerContent(props){
     const user = useSelector(state => state.user)
-    // const userDirection = useSelector(state => state.userDirection)
-    const userLogin = useSelector(state => state.userLogin)
-    const email = useSelector(state => state.email)
     const [ isDarkTheme, setIsDarkTheme ] = useState(false)
     const toggleTheme = () => {
         setIsDarkTheme(!isDarkTheme)
     }
     const dispatch = useDispatch()
-    const { USERDIRECTION, USERLOGIN, USER, EMAIL } = api
+    const { USER } = api
     return (
         <View style={{flex: 1}}>
             <DrawerContentScrollView {...props}>
@@ -26,8 +23,8 @@ export default function DrawerContent(props){
                         <View style={{flexDirection: "row", marginTop: 15}}>
                             <Avatar.Image source={{uri: ""}} size={50}/>
                             <View style={{marginLeft: 15, flexDirection:"column"}}>
-                                <Title style={s.title}>{user ? user.firstName: userLogin.firstName} {user ? user.lastName: userLogin.lastName}</Title>
-                                <Caption style={s.caption}>{email ? email : userLogin.email}</Caption>
+                                <Title style={s.title}>{user.firstName} {user.lastName}</Title>
+                                <Caption style={s.caption}>{user.email}</Caption>
                             </View>
                         </View>
                     </View>
@@ -83,18 +80,7 @@ export default function DrawerContent(props){
                     label="Cerrar sesión"
                     onPress={() => {
                         dispatch({
-                            type: USERDIRECTION,
-                            payload: false
-                        }); dispatch({
-                            type: USERLOGIN,
-                            payload: false
-                        });
-                        dispatch({
                             type: USER,
-                            payload: false
-                        });
-                        dispatch({
-                            type: EMAIL,
                             payload: false
                         });
                     }}

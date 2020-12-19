@@ -5,9 +5,7 @@ import { Button, Avatar } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function UserProfile(props) {
-    const email = useSelector(state => state.email)
     const user = useSelector(state => state.user)
-    const userLogin = useSelector(state => state.userLogin)
 
     return (
         <SafeAreaView>
@@ -15,8 +13,8 @@ export default function UserProfile(props) {
                 <View style={s.containerImg}>
                     {/* en celular no muestra el icono, segun doc hay que importar img */}
                     <Avatar.Image size={70} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" /> 
-                    <Text style={s.textUser}>{user ? user.firstName : userLogin.firstName} {user ? user.lastName : userLogin.lastName}</Text>
-                    <Text style={s.textEmail}>{email ? email : userLogin.email}</Text>
+                    <Text style={s.textUser}>{user.firstName} {user.lastName}</Text>
+                    <Text style={s.textEmail}>{user.email}</Text>
                 </View>
                 <Button mode="outlined" onPress={() => props.navigation.push("DatosPersonales")}>
                     Mi Código QR

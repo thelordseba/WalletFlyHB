@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { View, TextInput, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
-import api from '../../../reducer/ActionCreator';
 import { Button, Dialog, Paragraph } from 'react-native-paper'
 import stylesInputs  from './styles/inputs/s'; 
 
@@ -17,12 +15,9 @@ export default function CreateUserScreen(props) {
   const hideDialog = () => {
     setVisible(!visible)
   }
-  const { EMAIL } = api;
-  const dispatch = useDispatch();
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
-
   const next = () => {  
     if (state.email === "" || state.password === "" || state.passwordRepeat === "") {
       setAlertMessage("Debes completar todos los campos antes de continuar.")
@@ -36,14 +31,10 @@ export default function CreateUserScreen(props) {
     } else if(!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(state.password)){
       setAlertMessage("Debe ingresar una contraseña de 8 caracteres alfanumericos y como mínimo una mayúscula.")
       setVisible(!visible)
-    } else {     
+    } else {    
       axios.post(`http://localhost:3001/userEmail`, state)
         .then(({ data }) => {
-          props.navigation.push("AuthEmail", data.user.id); //Le paso por props solo el userId que acabo de crear
-          dispatch({
-            type: EMAIL,
-            payload: state.email
-          })
+          props.navigation.navigate("AuthEmail", {id: data.user.id, state});
         })
         .catch((error) => {
           setAlertMessage(`Error! ${error}`)

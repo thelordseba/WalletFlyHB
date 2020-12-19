@@ -2,16 +2,15 @@ import axios from 'axios';
 
 const actionCreators = {
     USER: "USER",
+    SALDO: "SALDO",
+    EFECTIVO: "EFECTIVO",
+    RECARGA: "RECARGA",
     getME: function(id){
         return dispatch => {
             const promise = axios.get(`${process.env.REACT_APP_API_URL}/users/${id}`)
             this._dispatchPromise(promise, this.USER, dispatch)
         }
     },
-    EMAIL: "EMAIL",
-    USERDIRECTION: "USERDIRECTION",
-    USERLOGIN: "USERLOGIN",
-    SALDO: "SALDO",
     // dispatch
     _dispatchPromise: function(promise, type, dispatch){
         return promise

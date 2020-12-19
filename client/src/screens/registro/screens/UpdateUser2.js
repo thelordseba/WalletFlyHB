@@ -6,27 +6,33 @@ import api from '../../../reducer/ActionCreator';
 import { Button, Dialog, Paragraph } from 'react-native-paper'
 import stylesInputs from './styles/inputs/s';
 
-export default function UpdateUserScreen(props) {
+export default function UpdateUserScreen({ route, navigation }) {
   const [state, setState] = useState({
+    id: route.params.id,
+    birthdate: route.params.birthdate,
+    documentNumber: route.params.documentNumber,
+    email: route.params.email,
+    firstName: route.params.firstName,
+    lastName: route.params.lastName,
+    phone: route.params.phone,
     address: "",
     addressNumber: "",
     postalCode: "",
     city: "",
     province: "",
     country: "",
+    active: true
   });
   const [visible, setVisible] = useState(false)
   const [alertMessage, setAlertMessage] = useState("")
   const hideDialog = () => {
     setVisible(!visible)
   }
-  const { USERDIRECTION } = api;
+  const { USER } = api;
   const dispatch = useDispatch();
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
-  const userID = props.route.params;
-
   const createUser = () => {
     if (
       state.address === "" ||
@@ -39,15 +45,12 @@ export default function UpdateUserScreen(props) {
       setAlertMessage("Debes completar todos los campos antes de continuar.")
       setVisible(!visible)
     } else {
-      axios.put(`http://localhost:3001/users/${userID}`, state)
-        .then(() => {
-          axios.post(`http://localhost:3001/accounts/${userID}`, { type: "Ahorro pesos" })
-            .then(() => {
-              dispatch({
-                type: USERDIRECTION,
-                payload: state
-              })
-            })
+      axios.put(`http://localhost:3001/users/${state.id}/userAccount`, state)
+        .then(({ data }) => {
+          dispatch({
+            type: USER,
+            payload: data
+          })
         })
         .catch(err => {
           setAlertMessage(`Error! ${err}`)

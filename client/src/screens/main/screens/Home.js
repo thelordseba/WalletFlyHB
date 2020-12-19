@@ -8,12 +8,10 @@ import api from '../../../reducer/ActionCreator'
 
 export default function Home(props){
     const [ value, setValue ] = useState(0)
-    const email = useSelector(state => state.email) 
     const user = useSelector(state => state.user)
-    const userLogin = useSelector(state => state.userLogin)
     const saldo = useSelector(state => state.saldo)
     const dispatch = useDispatch()
-    console.log(saldo)
+    console.log(user)
     const { SALDO } = api
     const Datos = (args) => {
         switch (args) {
@@ -44,7 +42,7 @@ export default function Home(props){
         }
     }
     useEffect(() => {
-        Axios.get(`http://localhost:3001/users/getUserByEmail/?email=${email ? email : userLogin.email}`)
+        Axios.get(`http://localhost:3001/users/getUserByEmail/?email=${user.email}`)
         .then(({data}) => dispatch({
             type: SALDO,
             payload: data.accounts[0].balance
@@ -55,12 +53,12 @@ export default function Home(props){
         <View style={s.container}>
             {/* cambiar a icono */}
             <Text onPress={() => props.navigation.toggleDrawer()}>Click here</Text>
-            <Text style={s.textBienvenida}>Bienvenido {user ? user.firstName : userLogin.firstName}</Text>
+            <Text style={s.textBienvenida}>Bienvenido {user.firstName}</Text>
             <View style={s.containerPerfil}>
                 <Avatar.Image size={70} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" /> 
                 <View style={s.containerNameEmail}>
-                    <Text style={s.textNombre}>{user ? user.firstName: userLogin.firstName} {user ? user.lastName: userLogin.lastName}</Text>
-                    <Text style={s.textEmail}>{email ? email : userLogin.email}</Text>
+                    <Text style={s.textNombre}>{user.firstName} {user.lastName}</Text>
+                    <Text style={s.textEmail}>{user.email}</Text>
                 </View>
             </View>
             <View>

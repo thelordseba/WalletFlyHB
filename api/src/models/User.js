@@ -2,6 +2,9 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define("user", {
+    active: {
+      type: DataTypes.BOOLEAN,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
