@@ -3,17 +3,23 @@ import { SafeAreaView, Text, View, Button, StyleSheet } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { array } from '../../../utils/ArrayMovimientos'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Appbar } from 'react-native-paper'
 
 export default function Transacciones(props){
 
   return (
+    <>
+      <Appbar.Header>
+        <Appbar.Action icon="menu" onPress={() => props.navigation.toggleDrawer()} />
+        <Appbar.Content title="Transacciones" />
+      </Appbar.Header>
     <SafeAreaView style={{flex: 1}}>
       <View style={s.containerUsd}>
         <Text style={s.textUsd}>$ 5.000.00 USD</Text>
         <Text style={s.textBalance}>Balance de cuenta</Text>
       </View>
       <View style={s.containerButton}>
-        <Button title="Recargar" onPress={() => props.navigation.navigate("Recargar")}/>
+        <Button title="Recargar" onPress={() => props.navigation.navigate("EnEfectivo")}/>
         <Button title="Transferir" onPress={() => props.navigation.navigate("Transferir")}/>
       </View>
       <ScrollView>
@@ -36,6 +42,7 @@ export default function Transacciones(props){
         </View>
       </ScrollView>
     </SafeAreaView>
+    </>
   )
 }
 

@@ -11,5 +11,11 @@ export default StyleSheet.create({
         marginLeft: 'auto',
         marginRight: 'auto',
         width: '95%'
+    },
+    inputsLogin: {
+        height: 40,
+        paddingLeft: 10,
+        width: "100%",
+        borderColor: 'none'
     }
 })

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from 'react-native-paper';
 import Axios from 'axios';
 import api from '../../../reducer/ActionCreator'
+import { Appbar } from 'react-native-paper';
 
 export default function Home(props){
     const [ value, setValue ] = useState(0)
@@ -50,62 +51,67 @@ export default function Home(props){
         .catch(err => console.log(`Error!! ${err}` ))
     }, [])
     return (
-        <View style={s.container}>
-            {/* cambiar a icono */}
-            <Text onPress={() => props.navigation.toggleDrawer()}>Click here</Text>
-            <Text style={s.textBienvenida}>Bienvenido {user.firstName}</Text>
-            <View style={s.containerPerfil}>
-                <Avatar.Image size={70} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" /> 
-                <View style={s.containerNameEmail}>
-                    <Text style={s.textNombre}>{user.firstName} {user.lastName}</Text>
-                    <Text style={s.textEmail}>{user.email}</Text>
+        <>
+            <Appbar.Header>
+                <Appbar.Action icon="menu" onPress={() => props.navigation.toggleDrawer()} />
+                <Appbar.Content title="Menu" />
+            </Appbar.Header>
+            <View style={s.container}>
+                {/* cambiar a icono */}
+                <Text style={s.textBienvenida}>Bienvenido {user.firstName}</Text>
+                <View style={s.containerPerfil}>
+                    <Avatar.Image size={70} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" />
+                    <View style={s.containerNameEmail}>
+                        <Text style={s.textNombre}>{user.firstName} {user.lastName}</Text>
+                        <Text style={s.textEmail}>{user.email}</Text>
+                    </View>
+                </View>
+                <View>
+                    <Text style={s.balance}>Saldo ${saldo} ARS</Text>
+                    <LineChart
+                        data={{
+                            labels: Label(value),
+                            datasets: [{ data: Datos(value) }]
+                        }}
+                        width={Dimensions.get('screen').width}
+                        height={300}
+                        yAxisLabel="$"
+                        yAxisInterval={1}
+                        chartConfig={{
+                            backgroundColor: "#e26a00",
+                            backgroundGradientFrom: "#fb8c00",
+                            backgroundGradientTo: "#ffa726",
+                            decimalPlaces: 2,
+                            color: (opacity = 5) => `rgba(255, 255, 255, ${opacity})`,
+                            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+                            style: {
+                                borderRadius: 16
+                            },
+                            propsForDots: {
+                                r: "6",
+                                strokeWidth: "2",
+                                stroke: "#ffa726"
+                            }
+                        }}
+                        bezier
+                        style={{
+                            marginVertical: 8,
+                            borderRadius: 5
+                        }}
+                    />
+                    <View style={s.textButton}>
+                        <Text onPress={() => setValue(1)}>7 dias</Text>
+                        <Text onPress={() => setValue(2)}>1 mes</Text>
+                        <Text onPress={() => setValue(3)}>6 meses</Text>
+                        <Text onPress={() => setValue(4)}>1 año</Text>
+                    </View>
+                </View>
+                <View style={s.containerButton}>
+                    <Button title="Recargar" onPress={() => props.navigation.navigate("EnEfectivo")} />
+                    <Button title="Enviar" onPress={() => props.navigation.navigate("Enviar")} />
                 </View>
             </View>
-            <View>
-                <Text style={s.balance}>Saldo ${saldo} ARS</Text>
-                <LineChart
-                    data={{
-                        labels: Label(value),
-                        datasets: [{data: Datos(value)}]
-                    }}
-                    width={Dimensions.get('screen').width}
-                    height={300}
-                    yAxisLabel="$"
-                    yAxisInterval={1}
-                    chartConfig={{
-                        backgroundColor: "#e26a00",
-                        backgroundGradientFrom: "#fb8c00",
-                        backgroundGradientTo: "#ffa726",
-                        decimalPlaces: 2,
-                        color: (opacity = 5) => `rgba(255, 255, 255, ${opacity})`,
-                        labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-                        style: {
-                            borderRadius: 16
-                        },
-                        propsForDots: {
-                            r: "6",
-                            strokeWidth: "2",
-                            stroke: "#ffa726"
-                        }
-                    }}
-                    bezier
-                    style={{
-                        marginVertical: 8,
-                        borderRadius: 5
-                    }}
-                />
-                <View style={s.textButton}>
-                    <Text onPress={() => setValue(1)}>7 dias</Text>
-                    <Text onPress={() => setValue(2)}>1 mes</Text>
-                    <Text onPress={() => setValue(3)}>6 meses</Text>
-                    <Text onPress={() => setValue(4)}>1 año</Text>
-                </View>
-            </View>
-            <View style={s.containerButton}>
-                <Button title="Recargar" onPress={() => props.navigation.navigate("Recargar")}/>
-                <Button title="Enviar" onPress={() => props.navigation.navigate("Enviar")}/>
-            </View>
-        </View>
+        </>
     )
 }
 const s = StyleSheet.create({

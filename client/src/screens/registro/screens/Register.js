@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, Text } from "react-native";
 import { Button, Dialog, Paragraph } from 'react-native-paper'
 import stylesInputs  from './styles/inputs/s'; 
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function CreateUserScreen(props) {
   const [state, setState] = useState({
@@ -46,24 +47,36 @@ export default function CreateUserScreen(props) {
   return (
     <>
       <View>
-        <TextInput
-          style={stylesInputs.inputs}
-          placeholder="Email"
-          onChangeText={(value) => handleTextChange("email", value)}
-        />
-        <TextInput
-          style={stylesInputs.inputs}
-          secureTextEntry={true}
-          placeholder="Contraseña"
-          onChangeText={(value) => handleTextChange("password", value)}
-        />
-        <TextInput
-          style={stylesInputs.inputs}
-          secureTextEntry={true}
-          placeholder="Repite tu contraseña"
-          onChangeText={(value) => handleTextChange("passwordRepeat", value)}
-        />
-        <Button mode="contained" onPress={() => next()}>Registarme</Button>
+        <Text style={s.text}>Email</Text>
+        <View style={s.containerInput}>
+          <MaterialCommunityIcons name="account-outline" size={20} />
+          <TextInput
+            style={stylesInputs.inputsLogin}
+            placeholder="Ingrese su Email"
+            onChangeText={(value) => handleTextChange("email", value)}
+          />
+        </View>
+        <Text style={s.text}>Contraseña</Text>
+        <View style={s.containerInput}>
+          <MaterialCommunityIcons name="lock-outline" size={20} />
+          <TextInput
+            style={stylesInputs.inputsLogin}
+            secureTextEntry={true}
+            placeholder="Ingrese su contraseña"
+            onChangeText={(value) => handleTextChange("password", value)}
+          />
+        </View>
+        <Text style={s.text}>Repita su contraseña</Text>
+        <View style={s.containerInput}>
+          <MaterialCommunityIcons name="lock-outline" size={20} />
+          <TextInput
+            style={stylesInputs.inputsLogin}
+            secureTextEntry={true}
+            placeholder="Repita su contraseña"
+            onChangeText={(value) => handleTextChange("passwordRepeat", value)}
+          />
+        </View>
+        <Button style={{marginTop: 20}} mode="contained" onPress={() => next()}>Registarme</Button>
       </View>
       <Dialog visible={visible} onDismiss={hideDialog}>
         <Dialog.Content>
@@ -80,4 +93,23 @@ const s = StyleSheet.create({
   container: {
     flex: 1,
   },
+  containerInput: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    width: '95%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 5,
+    marginBottom: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#cccccc'
+  },
+  text: {
+    fontSize: 13,
+    color: '#999',
+    marginLeft: 10,
+    marginTop: 10
+  },
+
 })

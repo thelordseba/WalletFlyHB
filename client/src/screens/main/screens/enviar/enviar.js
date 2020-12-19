@@ -3,6 +3,8 @@ import { View, Text, TextInput, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import api from '../../../../reducer/ActionCreator';
 import Axios from "axios";
+import { Appbar } from 'react-native-paper';
+import styleInputs from '../../../registro/screens/styles/inputs/s';
 
 export default function Enviar(props) {
   const [text, setText] = useState({
@@ -78,28 +80,38 @@ export default function Enviar(props) {
   };
 
   return (
-    <View>
-      <Text>Email del destinatario</Text>
-      <TextInput
-        placeholder="Ingrese el email"
-        onChangeText={(value) => handleTextChange("email", value)}
-      ></TextInput>
-      <Text>Titulo</Text>
-      <TextInput
-        placeholder="Ingrese un titulo"
-        onChangeText={(value) => handleTextChange("title", value)}
-      ></TextInput>
-      <Text>Descripcion</Text>
-      <TextInput
-        placeholder="Ingrese una descripcion"
-        onChangeText={(value) => handleTextChange("description", value)}
-      ></TextInput>
-      <Text>Monto del envio</Text>
-      <TextInput
-        placeholder="ingrese el monto"
-        onChangeText={(value) => handleTextChange("amount", value)}
-      ></TextInput>
-      <Button title="Enviar" onPress={() => sendMoney()}/>
-    </View>
+    <>
+      <Appbar.Header>
+        <Appbar.Action icon="arrow-left" onPress={() => props.navigation.goBack()} />
+        <Appbar.Content title="Enviar Dinero" />
+      </Appbar.Header>
+      <View>
+        <Text>Email del destinatario</Text>
+        <TextInput
+          style={styleInputs.inputs}
+          placeholder="Ingrese el email"
+          onChangeText={(value) => handleTextChange("email", value)}
+        />
+        <Text>Titulo</Text>
+        <TextInput
+          style={styleInputs.inputs}
+          placeholder="Ingrese un titulo"
+          onChangeText={(value) => handleTextChange("title", value)}
+        />
+        <Text>Descripcion</Text>
+        <TextInput
+          style={styleInputs.inputs}
+          placeholder="Ingrese una descripcion"
+          onChangeText={(value) => handleTextChange("description", value)}
+        />
+        <Text>Monto del envio</Text>
+        <TextInput
+          style={styleInputs.inputs}
+          placeholder="ingrese el monto"
+          onChangeText={(value) => handleTextChange("amount", value)}
+        />
+        <Button title="Enviar" onPress={() => sendMoney()} />
+      </View>
+    </>
   );
 }

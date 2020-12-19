@@ -10,9 +10,9 @@ import {
 } from "react-native";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Avatar } from 'react-native-paper';
+import { Avatar, Appbar } from 'react-native-paper';
 
-export default function Contactos() {
+export default function Contactos(props) {
   const [text, setText] = useState({ email: "", alias: "" });
   const [contacts, setContacts] = useState([]);
   const user = useSelector((state) => state.user);
@@ -77,6 +77,11 @@ export default function Contactos() {
   };
 
   return (
+    <>
+      <Appbar.Header>
+        <Appbar.Action icon="menu" onPress={() => props.navigation.toggleDrawer()} />
+        <Appbar.Content title="Contactos" />
+      </Appbar.Header>
     <View style={s.container}>
       <Text style={s.textContato}>Contactos WalletFly</Text>
       <ScrollView>
@@ -119,6 +124,7 @@ export default function Contactos() {
         </View>
       </ScrollView>
     </View>
+    </>
   );
 }
 const s = StyleSheet.create({
