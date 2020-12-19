@@ -3,8 +3,9 @@ import { View, TextInput, StyleSheet, Text } from "react-native";
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import api from '../../../reducer/ActionCreator';
-import { Button, Dialog, Paragraph } from 'react-native-paper'
+import { Button, Dialog, Paragraph, Appbar } from 'react-native-paper';
 import stylesInputs from './styles/inputs/s';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function Login({ route, navigation }) {
   const [state, setState] = useState({
@@ -39,18 +40,26 @@ export default function Login({ route, navigation }) {
   return (
     <>
       <View style={s.container}>
-        <TextInput
-          style={stylesInputs.inputs}
-          placeholder="Email"
-          onChangeText={(value) => handleTextChange("email", value)}
-        />
-        <TextInput
-          style={stylesInputs.inputs}
-          placeholder="password"
-          secureTextEntry={true}
-          onChangeText={(value) => handleTextChange("password", value)}
-        />
-        <Button mode="contained" onPress={() => validateUser()}>
+        <Text style={s.text}>Email</Text>
+        <View style={s.containerInput}>
+          <MaterialCommunityIcons name="account-outline" size={20} />
+          <TextInput
+            style={stylesInputs.inputsLogin}
+            placeholder="Ingrese su Email"
+            onChangeText={(value) => handleTextChange("email", value)}
+          />
+        </View>
+        <Text style={s.text}>Contraseña</Text>
+        <View style={s.containerInput}>
+          <MaterialCommunityIcons name="lock-outline" size={20} />
+          <TextInput
+            style={stylesInputs.inputsLogin}
+            placeholder="Ingrese su Contraseña"
+            secureTextEntry={true}
+            onChangeText={(value) => handleTextChange("password", value)}
+          />
+        </View>
+        <Button style={{marginTop: 20}} mode="contained" onPress={() => validateUser()}>
           Ingresar
         </Button>
         <Text style={{textAlign: 'center', marginTop: 10}}>¿Olvidaste tu contraseña? </Text>
@@ -71,5 +80,23 @@ export default function Login({ route, navigation }) {
 const s = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  text: {
+    fontSize: 13,
+    color: '#999',
+    marginLeft: 10,
+    marginTop: 10
+  },
+  containerInput: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    width: '95%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    marginTop: 5,
+    marginBottom: 5,
+    borderBottomWidth: 1,
+    borderBottomColor: '#cccccc'
   }
 })

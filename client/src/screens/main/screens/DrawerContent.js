@@ -6,23 +6,23 @@ import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import api from '../../../reducer/ActionCreator';
 
-export default function DrawerContent(props){
+export default function DrawerContent(props) {
     const user = useSelector(state => state.user)
-    const [ isDarkTheme, setIsDarkTheme ] = useState(false)
+    const [isDarkTheme, setIsDarkTheme] = useState(false)
     const toggleTheme = () => {
         setIsDarkTheme(!isDarkTheme)
     }
     const dispatch = useDispatch()
     const { USER } = api
     return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
             <DrawerContentScrollView {...props}>
-                <MaterialCommunityIcons style={{textAlign: "right", marginRight: 5}} name="close-circle" size={30} onPress={() => props.navigation.toggleDrawer()}/>
+                <MaterialCommunityIcons style={{ textAlign: "right", marginRight: 5 }} name="close-circle" size={30} onPress={() => props.navigation.toggleDrawer()} />
                 <View style={s.drawerContent}>
                     <View style={s.userInfoSection}>
-                        <View style={{flexDirection: "row", marginTop: 15}}>
-                            <Avatar.Image source={{uri: ""}} size={50}/>
-                            <View style={{marginLeft: 15, flexDirection:"column"}}>
+                        <View style={{ flexDirection: "row", marginTop: 15 }}>
+                            <Avatar.Image source={{ uri: "" }} size={50} />
+                            <View style={{ marginLeft: 15, flexDirection: "column" }}>
                                 <Title style={s.title}>{user.firstName} {user.lastName}</Title>
                                 <Caption style={s.caption}>{user.email}</Caption>
                             </View>
@@ -31,34 +31,41 @@ export default function DrawerContent(props){
                 </View>
                 <Drawer.Section style={s.drawerSection}>
                     <DrawerItem
-                        name="Main"
+                        name="Home"
                         icon={({ color, size }) => (
-                            <MaterialCommunityIcons name="home" size={size} color={color}/>
+                            <MaterialCommunityIcons name="home" size={size} color={color} />
                         )}
                         label="Home"
-                        onPress={() => props.navigation.navigate('Main')}
+                        onPress={() => props.navigation.navigate('Home')}
                     />
                     <DrawerItem
                         name="Profile"
                         icon={({ color, size }) => (
-                            <MaterialCommunityIcons name="account" size={size} color={color}/>
+                            <MaterialCommunityIcons name="account" size={size} color={color} />
                         )}
                         label="Perfil"
-                        onPress={() => props.navigation.navigate('UserProfile')}
+                        onPress={() => props.navigation.navigate('Profile')}
                     />
                     <DrawerItem
                         icon={({ color, size }) => (
-                            <MaterialCommunityIcons name="contacts" size={size} color={color}/>
+                            <MaterialCommunityIcons name="contacts" size={size} color={color} />
                         )}
                         label="Contactos"
-                        onPress={() => { }}
+                        onPress={() => props.navigation.navigate('Contactos')}
                     />
                     <DrawerItem
                         icon={({ color, size }) => (
-                            <MaterialCommunityIcons name="chart-bar" size={size} color={color}/>
+                            <MaterialCommunityIcons name="chart-bar" size={size} color={color} />
                         )}
                         label="Transacciones"
-                        onPress={() => { }}
+                        onPress={() => props.navigation.navigate('Transacciones')}
+                    />
+                    <DrawerItem
+                        icon={({ color, size }) => (
+                            <MaterialCommunityIcons name="help-circle" size={size} color={color} />
+                        )}
+                        label="Ayuda"
+                        onPress={() => props.navigation.navigate('QuestionAndAnswers')}
                     />
                 </Drawer.Section>
                 <Drawer.Section title="Preferences">
@@ -66,7 +73,7 @@ export default function DrawerContent(props){
                         <View style={s.preference}>
                             <Text>Tema Oscuro</Text>
                             <View pointerEvents="none">
-                                <Switch value={isDarkTheme}/>
+                                <Switch value={isDarkTheme} />
                             </View>
                         </View>
                     </TouchableRipple>
@@ -74,8 +81,8 @@ export default function DrawerContent(props){
             </DrawerContentScrollView>
             <Drawer.Section style={s.bottomDrawerSection}>
                 <DrawerItem
-                    icon={({color, size}) =>(
-                        <MaterialCommunityIcons name="exit-to-app" size={size} color={color}/>
+                    icon={({ color, size }) => (
+                        <MaterialCommunityIcons name="exit-to-app" size={size} color={color} />
                     )}
                     label="Cerrar sesión"
                     onPress={() => {
@@ -91,7 +98,7 @@ export default function DrawerContent(props){
 }
 
 const s = StyleSheet.create({
-    drawerContent:{
+    drawerContent: {
         flex: 1
     },
     userInfoSection: {
@@ -116,7 +123,7 @@ const s = StyleSheet.create({
         alignItems: "center",
         marginRight: 15,
     },
-    drawerSection:{
+    drawerSection: {
         marginTop: 15
     },
     bottomDrawerSection: {
