@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
@@ -6,11 +5,11 @@ import {
   TextInput,
   View,
   ScrollView,
-  Button,
+  SafeAreaView
 } from "react-native";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Avatar, Appbar } from 'react-native-paper';
+import { Avatar, Appbar, Button } from 'react-native-paper';
 
 export default function Contactos(props) {
   const [text, setText] = useState({ email: "", alias: "" });
@@ -19,11 +18,11 @@ export default function Contactos(props) {
 
   const addContact = () => {
     axios
-      .get(`http://localhost:3001/users/getUserByEmail/?email=${text.email}`)
+      .get(`http://192.168.0.2:3001/users/getUserByEmail/?email=${text.email}`)
       .then(({ data }) => {
         axios
           .post(
-            `http://localhost:3001/contacts/${user.id}?contactId=${data.id}`
+            `http://192.168.0.2:3001/contacts/${user.id}?contactId=${data.id}`
           )
           .then((data) => {
             console.log("contacto agregado");
@@ -39,7 +38,7 @@ export default function Contactos(props) {
 
   const handleDelete = (contacto) => {
     axios
-      .delete(`http://localhost:3001/contacts/${user.id}?contactId=${contacto}`)
+      .delete(`http://192.168.0.2:3001/contacts/${user.id}?contactId=${contacto}`)
       .then((data) => {
         console.log(data);
       })
@@ -50,7 +49,7 @@ export default function Contactos(props) {
 
   const handleEdit = (contacto) => {
     axios
-      .put(`http://localhost:3001/contacts/${user.id}?contactId=${contacto}`, {
+      .put(`http://192.168.0.2:3001/contacts/${user.id}?contactId=${contacto}`, {
         alias: text.alias,
       })
       .then((data) => {
@@ -63,7 +62,7 @@ export default function Contactos(props) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/contacts/${user.id}`)
+      .get(`http://192.168.0.2:3001/contacts/${user.id}`)
       .then((data) => {
         setContacts(data.data);
         console.log(data);
@@ -82,48 +81,45 @@ export default function Contactos(props) {
         <Appbar.Action icon="menu" onPress={() => props.navigation.toggleDrawer()} />
         <Appbar.Content title="Contactos" />
       </Appbar.Header>
-    <View style={s.container}>
-      <Text style={s.textContato}>Contactos WalletFly</Text>
-      <ScrollView>
-        {contacts.length &&
-          contacts.map((el) => (
-            <View style={s.containerView} key={el.id}>
-              <Avatar.Image size={70} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" /> 
-              <View style={s.containerViewNameTransferencia}>
-                {!el.alias ? (
-                  <Text style={s.name}>
-                    {el.user.firstName + " " + el.user.lastName}
-                  </Text>
-                ) : (
-                  <Text style={s.name}>{el.alias}</Text>
-                )}
-                <Text style={s.name}>{el.user.email}</Text>
-                <TextInput
-                  placeholder="alias"
-                  onChangeText={(value) => handleTextChange("alias", value)}
-                ></TextInput>
+      <View>
+        <Text>Contactos WalletFly</Text>
+        <Text>
+          {
+            contacts.length && contacts.map(el =>
+              <View key={el.id}>
+                <Avatar.Image size={70} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" />
+                <View>
+                  {
+                    !el.alias ?
+                      <Text>{el.user.firstName} {el.user.lastName}</Text>
+                      :
+                      <Text>{el.alias}</Text>
+                  }
+                  <Text>{el.user.email}</Text>
+                  <TextInput
+                    placeholder="Alias"
+                    onChangeText={(value) => handleTextChange("alias", value)}
+                  />
+                </View>
+                <Button mode="contained" onPress={() => handleEdit(el.contactId)}>
+                  Editar
+                </Button>
+                <Button mode="contained" onPress={() => handleDelete(el.contactId)}>
+                  Eliminar
+                </Button>
               </View>
-              <Button
-                onPress={() => handleEdit(el.contactId)}
-                title="Editar"
-              ></Button>
-              <Button
-                onPress={() => handleDelete(el.contactId)}
-                title="Eliminar"
-              />
-            </View>
-          ))}
+            )
+          }
+        </Text>
         <View>
           <Text>Agregar contacto por Email</Text>
           <TextInput
             placeholder="Ingrese el email"
             onChangeText={(value) => handleTextChange("email", value)}
-          ></TextInput>
+          />
           <Button onPress={() => addContact()} title="+" />
-
         </View>
-      </ScrollView>
-    </View>
+      </View>
     </>
   );
 }

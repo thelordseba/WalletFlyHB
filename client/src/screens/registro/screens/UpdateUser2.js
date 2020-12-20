@@ -45,7 +45,7 @@ export default function UpdateUserScreen({ route, navigation }) {
       setAlertMessage("Debes completar todos los campos antes de continuar.")
       setVisible(!visible)
     } else {
-      axios.put(`http://localhost:3001/users/${state.id}/userAccount`, state)
+      axios.put(`http://192.168.0.2:3001/users/${state.id}/userAccount`, state)
         .then(({ data }) => {
           dispatch({
             type: USER,

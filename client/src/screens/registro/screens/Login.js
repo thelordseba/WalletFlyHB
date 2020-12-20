@@ -26,7 +26,7 @@ export default function Login({ route, navigation }) {
     if (state.email === "" || state.password === "") {
       setVisible(!visible)
     } else {
-      axios.post(`http://localhost:3001/users/login`, state)
+      axios.post(`http://192.168.0.2:3001/users/login`, state)
         .then(({ data }) => {
           dispatch({
             type: USER,
