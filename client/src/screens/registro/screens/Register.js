@@ -33,7 +33,7 @@ export default function CreateUserScreen(props) {
       setAlertMessage("Debe ingresar una contraseña de 8 caracteres alfanumericos y como mínimo una mayúscula.")
       setVisible(!visible)
     } else {    
-      axios.post(`http://localhost:3001/userEmail`, state)
+      axios.post(`http://192.168.0.2:3001/userEmail`, state)
         .then(({ data }) => {
           props.navigation.navigate("AuthEmail", {id: data.user.id, state});
         })

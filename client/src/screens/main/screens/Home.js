@@ -12,7 +12,6 @@ export default function Home(props){
     const user = useSelector(state => state.user)
     const saldo = useSelector(state => state.saldo)
     const dispatch = useDispatch()
-    console.log(user)
     const { SALDO } = api
     const Datos = (args) => {
         switch (args) {
@@ -43,7 +42,7 @@ export default function Home(props){
         }
     }
     useEffect(() => {
-        Axios.get(`http://localhost:3001/users/getUserByEmail/?email=${user.email}`)
+        Axios.get(`http://192.168.0.2:3001/users/getUserByEmail/?email=${user.email}`)
         .then(({data}) => dispatch({
             type: SALDO,
             payload: data.accounts[0].balance

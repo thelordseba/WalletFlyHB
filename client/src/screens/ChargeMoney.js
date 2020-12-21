@@ -32,7 +32,7 @@ export default function ChargeMoney(props) {
         description: 'Recarga de dinero a tavés de Pago Facil.',
         total: parseInt(state.monto, 10)
       };
-      axios.post(`http://localhost:3001/transaction/byUserEmail/${recarga.email}`, data)
+      axios.post(`http://192.168.0.2:3001/transaction/byUserEmail/${recarga.email}`, data)
         .then(({ data }) => {
           dispatch({
             type: SALDO,

@@ -17,7 +17,7 @@ export default function AuthEmail({ route, navigation }) {
   console.log(route)
   const authenticateEmail = () => {
     const userId = route.params.id;
-    axios.get(`http://localhost:3001/users/${userId}`)
+    axios.get(`http://192.168.0.2:3001/users/${userId}`)
       .then((user) => {
         let userCode = user.data.segNumber;
         if (userCode == authCode) {
