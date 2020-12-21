@@ -1,92 +1,60 @@
 const server = require("express").Router();
-const { User, Contacts } = require("../db");
+const { Contacts } = require("../db");
+const contact = require('../controllers/contact')
+
+//Ruta que me trae todos los contactos de un usuario
+server.get("/:userId", (req, res, next) =>{
+   const userID = req.params.userId;
+   if(!userID){
+     return res.status(400).send("Debes ingresar un Id para retornar los contactos")
+   }
+   contact.read(userID)
+   .then(r => res.send(r))
+   .catch(next)
+})
 
 //Ruta para crear Contacto
-
-server.post("/:userId", async (req, res, next) => {
+server.post("/:userId", (req, res, next) => {
   const userId = req.params.userId;
   const contactId = req.query.contactId;
-  try {
-    const contact = await Contacts.findOrCreate({
-      where: {
-        userId: userId,
-        contactId: contactId,
-      },
-      userId: userId,
-      contactId: contactId,
-    });
-    res.json(contact);
-  } catch (error) {
-    next(error);
+  if(!userId || !contactId){
+    return res.status(400).send("Debes ingresar un ID del usuario o el ID del contacto")
   }
-});
+  contact.create(userId, contactId)
+  .then(r => res.send(r))
+  .catch(next)
+})
 
 //Ruta para eliminar un contacto
-
-server.delete("/:userId", async (req, res, next) => {
-  const userID = req.params.userId;
+server.delete('/:userId', (req, res, next) => {
+  const userId = req.params.userId;
   const contactId = req.query.contactId;
-  try {
-    const contact = await Contacts.findOne({
-      where: {
-        userId: userID,
-        contactId: contactId,
-      },
-    });
-    await contact.destroy();
-    res.send("Deleted");
-  } catch (error) {
-    next(error);
+  if(!userId || !contactId){
+    return res.status(400).send("Debes ingresar un ID del usuario o el ID del contacto")
   }
-});
+  contact.delete(userId, contactId)
+  .then(r => res.send(r))
+  .catch(next)
+})
 
-//Ruta que me trae todos los contactod de la bd
+//ruta para cambiar el alias
+server.put('/:userId', (req, res, next) => {
+  const userId = req.params.userId;
+  const contactId = req.query.contactId;
+  const alias = req.body.alias;
+  if(!userId || !contactId || !alias){
+    return res.status(400).send("Debes ingresar un ID del usuario o el ID del contacto o un Alias")
+  }
+  contact.update(userId, contactId, alias)
+  .then(r => res.send(r))
+  .catch(next)
+})
+// NO BORRAR
 
 server.get("/", async (req, res, next) => {
   try {
     const contact = await Contacts.findAll();
     res.send(contact);
-  } catch (error) {
-    next(error);
-  }
-});
-
-//Ruta que me trae todos los contactos de un usuario
-
-server.get("/:userId", (req, res, next) => {
-  const userID = req.params.userId;
-  Contacts.findAll({
-    attributes: ["id", "userId", "contactId", "alias"],
-    include: {
-      attributes: ["firstName", "lastName", "email"],
-      model: User,
-    },
-    where: { userId: userID },
-  })
-    .then((contacts) => {
-      if (!contacts[0]) {
-        return res.status(400).json({ message: "La agenda esta vacia" });
-      }
-      res.status(200).json(contacts);
-    })
-    .catch((error) => next(error.message));
-});
-
-//ruta para cambiar el alias
-
-server.put("/:userId", async (req, res, next) => {
-  const userID = req.params.userId;
-  const contactID = req.query.contactId;
-  const alias = req.body.alias;
-  try {
-    const contact = await Contacts.findOne({
-      where: {
-        userId: userID,
-        contactId: contactID,
-      },
-    });
-    await contact.update({ alias: alias });
-    res.json(contact);
   } catch (error) {
     next(error);
   }

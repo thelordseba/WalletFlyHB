@@ -5,6 +5,7 @@ const actionCreators = {
     SALDO: "SALDO",
     EFECTIVO: "EFECTIVO",
     RECARGA: "RECARGA",
+    CONTACTOS: "CONTACTOS",
     getME: function(id){
         return dispatch => {
             const promise = axios.get(`${process.env.REACT_APP_API_URL}/users/${id}`)

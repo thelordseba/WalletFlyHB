@@ -1,13 +1,14 @@
 import actionCreators from './ActionCreator';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux'
-const { USER, SALDO, EFECTIVO, RECARGA } = actionCreators;
+const { USER, SALDO, EFECTIVO, RECARGA, CONTACTOS } = actionCreators;
 
 const initialState = {
     user: false,
     saldo: 0,
     activate: false,
-    recarga: {}
+    recarga: {},
+    contactos: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -32,6 +33,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 recarga: action.payload
+            }
+        case CONTACTOS: 
+            return {
+                ...state,
+                contactos: action.payload
             }
         default:
             return {...state}

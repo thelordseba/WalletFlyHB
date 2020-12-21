@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text } from 'react-native';
+import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '../../../../reducer/ActionCreator';
 import { Appbar } from 'react-native-paper';
@@ -35,9 +36,9 @@ export default function EnEfectivo(props) {
         <Text>Recarga de dinero</Text>
         <View>
           <Text>Para recargar dinero en tu cuenta tenes que entregar el siguente código a la cajera del Pago fácil</Text>
-          <View>Código de recarga:</View>
-          <View>{code}</View>
-          <Button title="Recargar" onPress={() => recargar()} />
+          <View><Text>Código de recarga:</Text></View>
+          <View><Text>{code}</Text></View>
+          <Button onPress={() => recargar()}>Recargar</Button>
         </View>
       </View>
     </>
