@@ -64,6 +64,8 @@ var returnHTML = function(segNumber){
   )
 }
 
+
+
 //Ruta para crear usuario
 
 server.post("/", (req, res, next) => {
