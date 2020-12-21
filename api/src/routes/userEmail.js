@@ -64,10 +64,11 @@ var returnHTML = function(segNumber){
   )
 }
 
+
+
 //Ruta para crear usuario
 
 server.post("/", (req, res, next) => {
-  console.log("ENTRAMOS")
   const { email, password } = req.body;
   if (!email || !password) {
     return res
@@ -81,7 +82,25 @@ server.post("/", (req, res, next) => {
     segNumber: segNumber,
     active: false
   })
-  .then((user) => res.status(200).json({ user }))
+  .then((user) => {
+    console.log("ESTE ES EL USUARIO ", user.dataValues)
+    const trueUser = user.dataValues;
+    setTimeout( async function(){
+      console.log("ENTRAMOS AL SET")
+      const user = await User.findOne({
+        where:{
+          id: trueUser.id  
+        }      
+      });
+      if(!user.active){
+        await user.destroy();
+        console.log("DESTRUIMOS AL TRAIDOR!!!")
+        res.send("OK");
+      }
+      console.log("ALGO MALIO SAL, CREO QUE ERA DE VERDAD")
+    },300000)
+    res.status(200).json({ user })
+  })
   .then((user) => {
   	let mailOptions = {
 		from: process.env.EMAIL,
