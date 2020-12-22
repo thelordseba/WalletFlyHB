@@ -13,6 +13,7 @@ router.use('/accounts', require("./account.js"))
 router.use('/transaction', require('./transaction.js'))
 router.use('/contacts', require('./contacts.js'))
 router.use("/userEmail",require("./userEmail.js"))
+router.use("/inviteEmail", require("./inviteEmail.js"))
 
 module.exports = router;
 
