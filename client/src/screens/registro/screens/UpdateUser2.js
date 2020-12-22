@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { View, TextInput, Text } from "react-native";
+import { View, TextInput, Text, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
-import api from '../../../reducer/ActionCreator';
-import { Button, Dialog, Paragraph } from 'react-native-paper'
-import stylesInputs from './styles/inputs/s';
+import api from "../../../reducer/ActionCreator";
+import { Button, Dialog, Paragraph } from "react-native-paper";
+import stylesInputs from "./styles/inputs/s";
 
 export default function UpdateUserScreen({ route, navigation }) {
   
@@ -22,13 +22,13 @@ export default function UpdateUserScreen({ route, navigation }) {
     city: "",
     province: "",
     country: "",
-    active: true
+    active: true,
   });
-  const [visible, setVisible] = useState(false)
-  const [alertMessage, setAlertMessage] = useState("")
+  const [visible, setVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
   const hideDialog = () => {
-    setVisible(!visible)
-  }
+    setVisible(!visible);
+  };
   const { USER } = api;
   const dispatch = useDispatch();
   const handleTextChange = (name, value) => {
@@ -43,22 +43,38 @@ export default function UpdateUserScreen({ route, navigation }) {
       state.province === "" ||
       state.country === ""
     ) {
-      setAlertMessage("Debes completar todos los campos antes de continuar.")
-      setVisible(!visible)
+      setAlertMessage("Debes completar todos los campos antes de continuar.");
+      setVisible(!visible);
     } else {
-      axios.put(`http://192.168.0.2:3001/users/${state.id}/userAccount`, state)
+      axios
+        .put(`http://192.168.0.2:3001/users/${state.id}/userAccount`, state)
         .then(({ data }) => {
           dispatch({
             type: USER,
-            payload: data
-          })
+            payload: data,
+          });
         })
-        .catch(err => {
-          setAlertMessage(`Error! ${err}`)
-          setVisible(!visible)
+        .catch((err) => {
+          setAlertMessage(`Error! ${err}`);
+          setVisible(!visible);
         });
     }
   };
+  const [error, setError] = useState("");
+  useEffect(() => {
+    if (
+      !state.address ||
+      !state.addressNumber ||
+      !state.postalCode ||
+      !state.city ||
+      !state.province ||
+      !state.country
+    ) {
+      setError("Este campo es obligatorio");
+    } else {
+      setError(null);
+    }
+  }, [state, setError]);
 
   return (
     <>
@@ -68,30 +84,40 @@ export default function UpdateUserScreen({ route, navigation }) {
           placeholder="Dirección"
           onChangeText={(value) => handleTextChange("address", value)}
         />
+        {!state.address && <Text style={s.error}>{error}</Text>}
         <TextInput
           style={stylesInputs.inputs}
           placeholder="Número"
           onChangeText={(value) => handleTextChange("addressNumber", value)}
         />
+        {!state.addressNumber && <Text style={s.error}>{error}</Text>}
         <TextInput
           style={stylesInputs.inputs}
           placeholder="Código Postal"
-          onChangeText={(value) => handleTextChange("postalCode", value)} />
+          onChangeText={(value) => handleTextChange("postalCode", value)}
+        />
+        {!state.postalCode && <Text style={s.error}>{error}</Text>}
         <TextInput
           style={stylesInputs.inputs}
           placeholder="Ciudad"
-          onChangeText={(value) => handleTextChange("city", value)} />
+          onChangeText={(value) => handleTextChange("city", value)}
+        />
+        {!state.city && <Text style={s.error}>{error}</Text>}
         <TextInput
           style={stylesInputs.inputs}
           placeholder="Provincia"
-          onChangeText={(value) => handleTextChange("province", value)} />
+          onChangeText={(value) => handleTextChange("province", value)}
+        />
+        {!state.province && <Text style={s.error}>{error}</Text>}
         <TextInput
           style={stylesInputs.inputs}
           placeholder="País"
-          onChangeText={(value) => handleTextChange("country", value)} />
-        <Button mode="contained" onPress={() => createUser()}>
+          onChangeText={(value) => handleTextChange("country", value)}
+        />
+        {!state.firstName && <Text style={s.error}>{error}</Text>}
+        <Button mode="country" onPress={() => createUser()}>
           Crear Usuario
-      </Button>
+        </Button>
       </View>
       <Dialog visible={visible} onDismiss={hideDialog}>
         <Dialog.Content>
@@ -103,5 +129,13 @@ export default function UpdateUserScreen({ route, navigation }) {
       </Dialog>
     </>
   );
-};
+}
 
+const s = StyleSheet.create({
+  error: {
+    color: "#cB3065",
+    fontSize: 13,
+    marginLeft: 10,
+    marginBottom: 10,
+  },
+});
