@@ -14,11 +14,12 @@ import QuestionAndAnswers from '../screens/faq/QuestionAndAnswers';
 import UserProfile from '../screens/main/screens/userProfile/UserProfile';
 import DatosPersonales from '../screens/main/screens/userProfile/DatosPersonales';
 import Enviar from '../screens/main/screens/enviar/Enviar';
-
+import ModificarContacto from '../screens/main/screens/modificarContactos/ModificarContacto';
 
 // import SideBar from '../screens/main/sidebar/SideBar';
 import SideBar from '../screens/main/screens/DrawerContent';
 import EnEfectivo from '../screens/main/screens/recargar/EnEfectivo';
+
 
 const Stack = createStackNavigator()
 const HomeScreenStack = createStackNavigator()
@@ -41,6 +42,7 @@ export default function MyStack(props) {
                             <Stack.Screen name="EnEfectivo" component={EnEfectivo} />
                             <Stack.Screen name="Enviar" component={Enviar} />
                             <Stack.Screen name="QuestionAndAnswers" component={QuestionAndAnswers} />
+                            <Stack.Screen name="ModificarContacto" component={ModificarContacto} />
                         </Drawer.Navigator>
                         // NO BORRAR ESTO, ESTOY HACIENDO PRUEBAS PARA NO REPETIR CODIGO..... (Maico)
 
