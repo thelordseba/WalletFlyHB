@@ -7,6 +7,7 @@ import { Button, Dialog, Paragraph } from 'react-native-paper'
 import stylesInputs from './styles/inputs/s';
 
 export default function UpdateUserScreen({ route, navigation }) {
+  
   const [state, setState] = useState({
     id: route.params.id,
     birthdate: route.params.birthdate,

@@ -3,18 +3,21 @@ import {
   StyleSheet,
   Text,
   TextInput,
-  View,
-  ScrollView,
-  SafeAreaView
+  View
 } from "react-native";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Appbar, Button } from 'react-native-paper';
+import api from '../../../reducer/ActionCreator';
+import styleInputs from '../../registro/screens/styles/inputs/s'
 
 export default function Contactos(props) {
+
   const [text, setText] = useState({ email: "", alias: "" });
-  const [contacts, setContacts] = useState([]);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const contactos = useSelector(state => state.contactos)
+  const { CONTACTOS } = api;
 
   const addContact = () => {
     axios
@@ -24,8 +27,12 @@ export default function Contactos(props) {
           .post(
             `http://192.168.0.2:3001/contacts/${user.id}?contactId=${data.id}`
           )
-          .then((data) => {
-            console.log("contacto agregado");
+          .then(({ data }) => {
+            dispatch({
+              type: CONTACTOS,
+              payload: data
+            })
+            setText({email: "", alias: ""})
           })
           .catch((error) => {
             console.log(error);
@@ -39,8 +46,11 @@ export default function Contactos(props) {
   const handleDelete = (contacto) => {
     axios
       .delete(`http://192.168.0.2:3001/contacts/${user.id}?contactId=${contacto}`)
-      .then((data) => {
-        console.log(data);
+      .then(({ data }) => {
+        dispatch({
+          type: CONTACTOS,
+          payload: data
+        })
       })
       .catch((error) => {
         console.log(error);
@@ -52,24 +62,30 @@ export default function Contactos(props) {
       .put(`http://192.168.0.2:3001/contacts/${user.id}?contactId=${contacto}`, {
         alias: text.alias,
       })
-      .then((data) => {
-        console.log(data);
+      .then(({ data }) => {
+        dispatch({
+          type: CONTACTOS,
+          payload: data
+        })
+        setText({email: "", alias: ""})
       })
       .catch((error) => {
         console.log(error);
       });
+      
   };
 
   useEffect(() => {
     axios
       .get(`http://192.168.0.2:3001/contacts/${user.id}`)
-      .then((data) => {
-        setContacts(data.data);
-        console.log(data);
-        console.log(contacts);
+      .then(({data}) => {
+        dispatch({
+          type: CONTACTOS,
+          payload: data
+        })
       })
       .catch((err) => console.error(err));
-  }, []);
+  },[]);
 
   const handleTextChange = (name, value) => {
     setText({ ...text, [name]: value });
@@ -83,9 +99,9 @@ export default function Contactos(props) {
       </Appbar.Header>
       <View>
         <Text>Contactos WalletFly</Text>
-        <Text>
+        <View>
           {
-            contacts.length && contacts.map(el =>
+            contactos.length && contactos.map(el =>
               <View key={el.id}>
                 <Avatar.Image size={70} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" />
                 <View>
@@ -97,7 +113,9 @@ export default function Contactos(props) {
                   }
                   <Text>{el.user.email}</Text>
                   <TextInput
+                    style={styleInputs.inputsLogin}
                     placeholder="Alias"
+                    value={text.alias}
                     onChangeText={(value) => handleTextChange("alias", value)}
                   />
                 </View>
@@ -110,14 +128,16 @@ export default function Contactos(props) {
               </View>
             )
           }
-        </Text>
+        </View>
         <View>
           <Text>Agregar contacto por Email</Text>
           <TextInput
+            value={text.email}
+            style={styleInputs.inputsLogin}
             placeholder="Ingrese el email"
             onChangeText={(value) => handleTextChange("email", value)}
           />
-          <Button onPress={() => addContact()} title="+" />
+          <Button mode="contained" onPress={() => addContact()}>Agregar</Button>
         </View>
       </View>
     </>
@@ -164,3 +184,4 @@ const s = StyleSheet.create({
     color: "#aaa",
   },
 });
+
