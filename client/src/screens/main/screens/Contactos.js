@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "react-native";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Appbar } from 'react-native-paper';
@@ -65,10 +59,13 @@ export default function Contactos({ navigation }) {
     axios
       .get(`http://192.168.0.2:3001/contacts/${user.id}`)
       .then(({data}) => {
-        dispatch({
-          type: CONTACTOS,
-          payload: data
-        })
+        if(data.length){
+          dispatch({
+            type: CONTACTOS,
+            payload: data
+          })
+        }
+        console.log(data)
       })
       .catch((err) => console.error(err));
   },[]);
@@ -81,34 +78,47 @@ export default function Contactos({ navigation }) {
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
         <Appbar.Content title="Contactos" />
+        <Appbar.Action icon="chart-pie" onPress={() => navigation.navigate('StackEstadisticas')} />
       </Appbar.Header>
       <View style={s.container}>
         <ScrollView>
           {
-            contactos.length && contactos.map(el =>
+            contactos && contactos.map(el =>
               <View key={el.id} style={s.containerView}>
                 <View style={s.containerNameAvatar}>
-                <Avatar.Image size={50} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" />
-                <View style={s.containerNameEmail}>
+                  <Avatar.Image size={50} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" />
+                  <View style={s.containerNameEmail}>
                     {
                       !el.alias ?
                         <Text style={s.name}>{el.user.firstName} {el.user.lastName}</Text>
-                        :
+                        : 
                         <Text style={s.name}>{el.alias}</Text>
                     }
                     <Text>{el.user.email}</Text>
+                  </View>
                 </View>
-                </View>
-                <View style={{display: "flex", flexDirection: "row", justifyContent: "flex-end"}}>
-                  <TouchableOpacity onPress={() => navigation.navigate('ModificarContacto', {id: el.contactId, idUser: user.id, firstName: el.user.firstName, lastName: el.user.lastName, alias: el.alias})} style={s.buttonEdit} >
+                <View style={{ display: "flex", flexDirection: "row", justifyContent: "flex-end" }}>
+                  <TouchableOpacity onPress={() => navigation.navigate('ModificarContacto', { id: el.contactId, idUser: user.id, firstName: el.user.firstName, lastName: el.user.lastName, alias: el.alias })} style={s.buttonEdit} >
                     <Text><MaterialCommunityIcons name="pencil" size={15} /></Text>
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => handleDelete(el.contactId)} style={s.buttonDelete} >
-                    <Text><MaterialCommunityIcons name="delete" size={15} color="#a44"/></Text>
+                    <Text><MaterialCommunityIcons name="delete" size={15} color="#a44" /></Text>
                   </TouchableOpacity>
                 </View>
               </View>
             )
+          }
+          {
+            contactos.length === 0 ? 
+            <>
+            <Text style={{fontSize: 30, textAlign: "center"}}>NO TIENES AMIGOS</Text>
+            <Image
+            style={{width: '100%', height: 400, marginLeft: 'auto', marginRight:"auto"}}
+            source={{
+              uri: 'https://staticsnews.medsbla.com/news-es/wp-content/uploads/2018/12/09085821/2fcfe96cb9172198211b9cade4bb77b2e92cd123.jpg',
+            }}
+          />
+          </>: null
           }
         </ScrollView>
           <TouchableOpacity onPress={() => setVisible(!visible)} style={s.button} >
@@ -221,7 +231,7 @@ const s = StyleSheet.create({
     position: "absolute", 
     bottom: 0,
     top: 0,
-    backgroundColor: "rgba(0,0,0,0.2)",
+    backgroundColor: "rgba(0,0,0,0.6)",
     width: '100%',
   },
   containerAgregar2:{

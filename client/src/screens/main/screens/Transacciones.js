@@ -12,6 +12,7 @@ export default function Transacciones(props){
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={() => props.navigation.toggleDrawer()} />
         <Appbar.Content title="Transacciones" />
+        <Appbar.Action icon="chart-pie" onPress={() => props.navigation.navigate('StackEstadisticas')} />
       </Appbar.Header>
     <SafeAreaView style={{flex: 1}}>
       <View style={s.containerUsd}>

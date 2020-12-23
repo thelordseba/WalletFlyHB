@@ -19,6 +19,7 @@ import ModificarContacto from '../screens/main/screens/modificarContactos/Modifi
 // import SideBar from '../screens/main/sidebar/SideBar';
 import SideBar from '../screens/main/screens/DrawerContent';
 import EnEfectivo from '../screens/main/screens/recargar/EnEfectivo';
+import StackEstadisticas from '../screens/main/screens/estadisticas/StackEstadisticas';
 
 
 const Stack = createStackNavigator()
@@ -43,6 +44,7 @@ export default function MyStack(props) {
                             <Stack.Screen name="Enviar" component={Enviar} />
                             <Stack.Screen name="QuestionAndAnswers" component={QuestionAndAnswers} />
                             <Stack.Screen name="ModificarContacto" component={ModificarContacto} />
+                            <Stack.Screen name="StackEstadisticas" component={StackEstadisticas} />
                         </Drawer.Navigator>
                         // NO BORRAR ESTO, ESTOY HACIENDO PRUEBAS PARA NO REPETIR CODIGO..... (Maico)
 
