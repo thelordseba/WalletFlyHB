@@ -64,9 +64,9 @@ var returnHTML = function(){
 
 
 
-//Ruta para invitar a amigo
+//Ruta para invitar a amigo por EMAIL
 
-server.post("/", (req, res, next) => {
+server.post("/email", (req, res, next) => {
   	const { email } = req.body;
   	if (!email) {
     	return res
@@ -88,5 +88,37 @@ server.post("/", (req, res, next) => {
 		}
   	})  		
 });
+
+
+//Ruta para invitar a un amigo por SMS
+
+const accountSid = process.env.ACCOUNT_SID_TWILIO;
+const authToken = process.env.AUTH_TOKEN_TWILIO;
+const ourNumber = process.env.OUR_NUMBER;
+
+const client = require("twilio")(accountSid, authToken)
+
+server.post("/SMS", (req, res, next) => {
+  const { number } = req.body;
+  if (!number) {
+    return res
+      .status(400)
+      .json({ message: "No pasaron el NUMERO del amigo" });
+  }
+    
+  client.messages.create({
+    to: number,
+    from: ourNumber,
+    body: "Te invitaron para unirte a este banco medio turbio que lava plata a lo loco. Te va mover billete a lo Pablo Escobar?", 
+  })
+  .then(message => { 
+    console.log(message.sid)
+    return res.status(200).json({ message: "SE ENVIO PERFECTIRIJILLO"})
+  }) 
+  .catch(err => {
+    return res.status(400).json({ message: err })
+  })  
+});
+
 
 module.exports = server;
