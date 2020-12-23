@@ -6,7 +6,6 @@ const { USER, SALDO, EFECTIVO, RECARGA, CONTACTOS, TRANSACCIONES } = actionCreat
 const initialState = {
     user: false,
     saldo: 0,
-    activate: false,
     recarga: {},
     contactos: false,
     transacciones: false
@@ -24,11 +23,6 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 saldo: action.payload
-            }
-        case EFECTIVO:
-            return {
-                ...state,
-                activate: action.payload
             }
         case RECARGA: 
             return {

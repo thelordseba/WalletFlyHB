@@ -22,18 +22,15 @@ export default function ChargeMoney(props) {
     setState({ ...state, [name]: value });
   };
   const recarga = useSelector(state => state.recarga)
-  const { SALDO, EFECTIVO, RECARGA } = api
+  const { SALDO, RECARGA } = api
   const dispatch = useDispatch()
 
   const cerrarPaypal = () => {
     dispatch({
-      type: EFECTIVO,
-      payload: false,
-    })
-    dispatch({
       type: RECARGA,
       payload: {}
     })
+    props.navigation.navigate('Home');
   }
   const chargeMoney = () => {
     if (recarga.code) {
@@ -48,10 +45,6 @@ export default function ChargeMoney(props) {
           dispatch({
             type: SALDO,
             payload: data.balance
-          })
-          dispatch({
-            type: EFECTIVO,
-            payload: false,
           })
           dispatch({
             type: RECARGA,
