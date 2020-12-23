@@ -3,14 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { Appbar } from 'react-native-paper';
 
-export default function DatosPersonales(props) {
+export default function DatosPersonales({ navigation }) {
 
    const user = useSelector(state => state.user)
 
    return (
       <>
          <Appbar.Header>
-            <Appbar.Action icon="arrow-left" onPress={() => props.navigation.goBack()} />
+            <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
             <Appbar.Content title="DatosPersonales" />
          </Appbar.Header>
          <View>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, TextInput, StyleSheet, Text } from "react-native";
 import { Button, Dialog, Paragraph } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 

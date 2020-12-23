@@ -7,7 +7,7 @@ import Axios from 'axios';
 import api from '../../../reducer/ActionCreator'
 import { Appbar } from 'react-native-paper';
 
-export default function Home(props){
+export default function Home({ navigation }){
     const [ value, setValue ] = useState(0)
     const user = useSelector(state => state.user)
     const saldo = useSelector(state => state.saldo)
@@ -52,8 +52,9 @@ export default function Home(props){
     return (
         <>
             <Appbar.Header>
-                <Appbar.Action icon="menu" onPress={() => props.navigation.toggleDrawer()} />
+                <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
                 <Appbar.Content title="Menu" />
+                <Appbar.Action icon="chart-pie" onPress={() => navigation.navigate('StackEstadisticas')} />
             </Appbar.Header>
             <View style={s.container}>
                 {/* cambiar a icono */}
@@ -106,8 +107,8 @@ export default function Home(props){
                     </View>
                 </View>
                 <View style={s.containerButton}>
-                    <Button title="Recargar" onPress={() => props.navigation.navigate("EnEfectivo")} />
-                    <Button title="Enviar" onPress={() => props.navigation.navigate("Enviar")} />
+                    <Button title="Recargar" onPress={() => navigation.navigate("EnEfectivo")} />
+                    <Button title="Enviar" onPress={() => navigation.navigate("Enviar")} />
                 </View>
             </View>
         </>
