@@ -6,10 +6,7 @@ export function Modelo({ title, icon }){
     return (
         <View style={s.container}>
             <Text style={{fontSize: 14}}>{title}</Text>
-            { icon ? 
-            <MaterialCommunityIcons name="arrow-up-drop-circle-outline" size={30} />
-            :<MaterialCommunityIcons name="arrow-down-drop-circle-outline" size={30} />
-            }
+            <MaterialCommunityIcons name={`arrow-${icon ? "up" : "down"}-drop-circle-outline`} size={30} />
         </View>
     )
 }
