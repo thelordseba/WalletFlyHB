@@ -86,6 +86,7 @@ export default function DrawerContent(props) {
                     )}
                     label="Cerrar sesión"
                     onPress={() => {
+                        props.navigation.toggleDrawer()
                         dispatch({
                             type: USER,
                             payload: false
