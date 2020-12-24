@@ -29,13 +29,12 @@ const Drawer = createDrawerNavigator();
 export default function MyStack(props) {
 
     const user = useSelector(state => state.user)
-    const activate = useSelector(state => state.activate)
     // const user = true
     return (
         <>
             {
-                activate ?
-                    <ChargeMoney /> : user ?
+               
+                     user ?
                         <Drawer.Navigator drawerStyle={{ width: 320 }} drawerContent={props => <SideBar {...props} />} >
                             <Stack.Screen name="HomeDrawer" component={Main} />
                             <Stack.Screen name="UserProfile" component={UserProfile} />
@@ -45,6 +44,7 @@ export default function MyStack(props) {
                             <Stack.Screen name="QuestionAndAnswers" component={QuestionAndAnswers} />
                             <Stack.Screen name="ModificarContacto" component={ModificarContacto} />
                             <Stack.Screen name="StackEstadisticas" component={StackEstadisticas} />
+                            <Stack.Screen name="ChargeMoney" component={ChargeMoney} />
                         </Drawer.Navigator>
                         // NO BORRAR ESTO, ESTOY HACIENDO PRUEBAS PARA NO REPETIR CODIGO..... (Maico)
 

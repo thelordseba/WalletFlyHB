@@ -3,7 +3,6 @@ import axios from 'axios';
 const actionCreators = {
     USER: "USER",
     SALDO: "SALDO",
-    EFECTIVO: "EFECTIVO",
     RECARGA: "RECARGA",
     CONTACTOS: "CONTACTOS",
     TRANSACCIONES: "TRANSACCIONES",
