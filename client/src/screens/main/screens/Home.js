@@ -18,6 +18,7 @@ export default function Home({ navigation }) {
     const { TRANSACCIONES } = api
     const date = new Date();
     const day = date.getDay()
+
     const CreatedAt = () => {
         todo && todo.transactions.map(el => {
             if (el.createdAt.indexOf('T') !== -1) {
@@ -28,6 +29,7 @@ export default function Home({ navigation }) {
         })
     }
     CreatedAt()
+    console.log(todo)
     const Datos = (args) => {
         switch (args) {
             case 2:

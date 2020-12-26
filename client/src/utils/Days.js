@@ -5,3 +5,6 @@ export const diasDeSemana = (day) => {
 
     return [].concat(ArrayResultante, NewArray)
 }
+export const diasMes = () => {
+    
+}
