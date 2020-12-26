@@ -1,11 +1,10 @@
 const date = new Date();
-// let dayMonth = date.getDate()
-let dayMonth = 1;
+let dayMonth = date.getDate()
+// let dayMonth = 23;
 let day = date.getDay()
 let currentYear = date.getFullYear();
 let month = date.getMonth()
 
-//  0 enero 11 diciembre
 const arrayMeses = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 let MesesEscritos = {
     enero: [],
@@ -40,39 +39,24 @@ const imprimeDias = () => {
 }
 
 const totalDays = (month) => {
-    if(dayMonth === -1) month = 11;
+    if (dayMonth === -1) month = 11;
 
-    if(month == 0 || month == 2 || month == 4 || month == 6 || month == 7 || month == 9 || month == 11) return 31;
-    else if(month == 3 || month == 5 || month == 8 || month == 10) return 30
+    if (month == 0 || month == 2 || month == 4 || month == 6 || month == 7 || month == 9 || month == 11) return 31;
+    else if (month == 3 || month == 5 || month == 8 || month == 10) return 30
     else return esBiciesto() ? 29 : 28;
 }
 const esBiciesto = () => {
     return ((currentYear % 100 !== 0) && (currentYear % 4 === 0) || (currentYear % 400 === 0))
 }
 
-// const ComienzoDelDia = () => {
-//     let start = new Date(currentYear, dayMonth, 1);
-//     return ((start.getDay() - 1) === -1) ? 6 : start.getDay() - 1;
-// }
 const ultimoMes = () => {
-    if(month !== 0){
+    if (month !== 0) {
         month--;
-    }else {
+    } else {
         month = 11;
-        month--;
+        // month--;
     }
-    imprimeDias()
 }
-
-// const proximoMes = () => {
-//     if(month !== 11){
-//         month++;
-//     }else{
-//         month = 0;
-//         currentYear++;
-//     }
-//     imprimeDias()
-// }
 
 export const SieteDias = (todo) => {
     let Sun = 0;
@@ -91,49 +75,55 @@ export const SieteDias = (todo) => {
     let Acc7 = 0;
     let newArray = todo && todo.transactions
 
-    // Debe tomar los 7 dias anteriores para hacer el filtro, 26 - 6
-    // Si estamos a 1 de enero, debe tomar 7 dias anteriores
-    // Osea tomar desde el 27 de diciembre hasta el 1 de enero.
-    // Debo comparar el createdAt[1] contra el mes anterior.
-    // llamar a la funcion de imprimeDias. y acceder ahora a sus propiedades.
-    // if(newArray.createdAt[1] >= (dayMonth - 6) >= 0){
-    //     let array7Dias = newArray && newArray.filter(pasa =>
-    //         pasa.createdAt[2] >= (dayMonth - 6))  
-    // }else if(){
-
-    // }
     let array7Dias
-    console.log("EL DAYMONTH ES ", dayMonth)
-    if((dayMonth - 6) >= 0){
+    let final;
+    // console.log("EL DAYMONTH ES ", dayMonth)
+    if ((dayMonth - 6) >= 0) {
         array7Dias = newArray && newArray.filter(pasa =>
-            pasa.createdAt[2] >= (dayMonth - 6))  
-    }else {
-        if(month < 0){
+            pasa.createdAt[2] >= (dayMonth - 6))
+
+    } else {
+        let arrayDiasRestantes = newArray.filter(pasa => pasa.createdAt[2] <= dayMonth)
+        --month;
+        if (month < 0) {
             ultimoMes()
         }
-        
-        --month;
         imprimeDias()
         let anterior = MesesEscritos[arrayMeses[month]]
-        console.log(anterior)
+        final = anterior.slice(array.length + (daymonth - 7), array.length)
+
+        let arrayDiasFaltantes = newArray.filter(pasa =>
+            pasa.createdAt[2] >= final[0] && pasa.createdAt[1] == month)
+
+        array7Dias = arrayDiasFaltantes.concat(arrayDiasRestantes)
 
     }
-      
+    let arraySun, arrayMon, arrayTue, arrayWed, arrayThu, arrayFri, arraySat = []
+    if ((dayMonth - 6) >= 0) {
 
-    let arraySun = array7Dias && array7Dias.filter(pasa =>
-        pasa.createdAt[2] == (dayMonth - 6))
-    let arrayMon = array7Dias && array7Dias.filter(pasa =>
-        pasa.createdAt[2] == (dayMonth - 5))
-    let arrayTue = array7Dias && array7Dias.filter(pasa =>
-        pasa.createdAt[2] == (dayMonth - 4))
-    let arrayWed = array7Dias && array7Dias.filter(pasa =>
-        pasa.createdAt[2] == (dayMonth - 3))
-    let arrayThu = array7Dias && array7Dias.filter(pasa =>
-        pasa.createdAt[2] == (dayMonth - 2))
-    let arrayFri = array7Dias && array7Dias.filter(pasa =>
-        pasa.createdAt[2] == (dayMonth - 1))
-    let arraySat = array7Dias && array7Dias.filter(pasa =>
-        pasa.createdAt[2] == dayMonth)
+        arraySun = array7Dias && array7Dias.filter(pasa =>
+            pasa.createdAt[2] == (dayMonth - 6))
+        arrayMon = array7Dias && array7Dias.filter(pasa =>
+            pasa.createdAt[2] == (dayMonth - 5))
+        arrayTue = array7Dias && array7Dias.filter(pasa =>
+            pasa.createdAt[2] == (dayMonth - 4))
+        arrayWed = array7Dias && array7Dias.filter(pasa =>
+            pasa.createdAt[2] == (dayMonth - 3))
+        arrayThu = array7Dias && array7Dias.filter(pasa =>
+            pasa.createdAt[2] == (dayMonth - 2))
+        arrayFri = array7Dias && array7Dias.filter(pasa =>
+            pasa.createdAt[2] == (dayMonth - 1))
+        arraySat = array7Dias && array7Dias.filter(pasa =>
+            pasa.createdAt[2] == dayMonth)
+    } else {
+        arraySun = array7Dias && array7Dias[0]
+        arrayMon = array7Dias && array7Dias[1]
+        arrayTue = array7Dias && array7Dias[2]
+        arrayWed = array7Dias && array7Dias[3]
+        arrayThu = array7Dias && array7Dias[4]
+        arrayFri = array7Dias && array7Dias[5]
+        arraySat = array7Dias && array7Dias[6]
+    }
 
     if (arraySun !== undefined) {
         arraySun.map(el => {

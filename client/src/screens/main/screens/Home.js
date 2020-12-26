@@ -7,7 +7,7 @@ import axios from 'axios';
 import api from '../../../reducer/ActionCreator'
 import { Appbar } from 'react-native-paper';
 import { diasDeSemana } from '../../../utils/Days';
-import { SieteDias } from '../../../utils/Valores'
+import { SieteDias, filtroMes } from '../../../utils/Valores'
 
 export default function Home({ navigation }) {
     const [value, setValue] = useState(0)
@@ -18,7 +18,6 @@ export default function Home({ navigation }) {
     const { TRANSACCIONES } = api
     const date = new Date();
     const day = date.getDay()
-
     const CreatedAt = () => {
         todo && todo.transactions.map(el => {
             if (el.createdAt.indexOf('T') !== -1) {
@@ -33,9 +32,9 @@ export default function Home({ navigation }) {
     const Datos = (args) => {
         switch (args) {
             case 2:
-                return [200, 300, 10, 4, 3, 70, 10]
+                return filtroMes(todo)
             case 3:
-                return [1000, 750, 650, 2500]
+                return [200, 300, 10, 4, 3, 70, 10]
             case 4:
                 return [4000, 6500, 3400, 1200, 7000, 6400]
             default:
