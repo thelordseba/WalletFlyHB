@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import Todo from './screens/Todo';
 import Ingresos from './screens/Ingresos';
@@ -7,31 +7,23 @@ import { Appbar } from 'react-native-paper';
 import { PieChart } from "react-native-chart-kit";
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import api from '../../../../reducer/ActionCreator';
+import { useSelector } from 'react-redux';
 
 const Tab = createMaterialTopTabNavigator();
 
 export default function StackEstadisticas({ navigation }){
-    const { id } = useSelector(state => state.user)
-    const dispatch = useDispatch();
-    const { TRANSACCIONES } = api;
-    const transacciones = useSelector(state => state.transacciones)
-    console.log(transacciones)
-    console.log(transacciones.ingreso)
-    const saldo = useSelector(state => state.saldo)
+    const { ingreso, gasto } = useSelector(state => state.transacciones)
+
     const SumIngreso = () => {
         let suma = 0;
-        transacciones.ingreso &&
-            transacciones.ingreso.map(el => {
+        ingreso && ingreso.map(el => {
                 suma += el.total
             })
         return suma
     }
     const SumGastos = () => {
         let gastos = 0;
-        transacciones.gasto && transacciones.gasto.map(el => {
+        gasto && gasto.map(el => {
             gastos += el.total
         })
         return gastos
@@ -62,21 +54,7 @@ export default function StackEstadisticas({ navigation }){
         barPercentage: 0.5,
         useShadowColorFromDataset: false
     };
-    useEffect(() => {
-        axios.get(`http://192.168.0.2:3001/transaction/${id}`)
-        .then(({data}) => {
-            dispatch({
-                type: TRANSACCIONES,
-                payload: {
-                    todo: data,
-                    ingreso: data.transactions.length ? data.transactions.filter(ingreso => ingreso.type === "ingreso") : false,
-                    gasto: data.transactions.length ? data.transactions.filter(gasto => gasto.type === "egreso") : false,
-                }
-            })
-            console.log(data)
-        })
-        .catch(err => console.log(`Sucedio un error ${err}`))
-    }, [saldo])
+
     return (
         <>
             <Appbar.Header>
