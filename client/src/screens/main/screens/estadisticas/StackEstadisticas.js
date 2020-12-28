@@ -10,6 +10,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 import api from '../../../../reducer/ActionCreator';
+import { APP_API } from "../../../../../env";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -63,7 +64,7 @@ export default function StackEstadisticas({ navigation }){
         useShadowColorFromDataset: false
     };
     useEffect(() => {
-        axios.get(`http://192.168.0.2:3001/transaction/${id}`)
+        axios.get(`http://${APP_API}/transaction/${id}`)
         .then(({data}) => {
             dispatch({
                 type: TRANSACCIONES,
