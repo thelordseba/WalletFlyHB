@@ -8,6 +8,10 @@ import { PieChart } from "react-native-chart-kit";
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
+import { useSelector, useDispatch } from 'react-redux';
+import api from '../../../../reducer/ActionCreator';
+import { APP_API } from "../../../../../env";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -54,7 +58,6 @@ export default function StackEstadisticas({ navigation }){
         barPercentage: 0.5,
         useShadowColorFromDataset: false
     };
-
     return (
         <>
             <Appbar.Header>

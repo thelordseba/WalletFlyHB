@@ -6,6 +6,8 @@ import api from "../../../reducer/ActionCreator";
 import { Button, Dialog, Paragraph, Appbar } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { APP_API } from "../../../../env";
+
 
 export default function Login({ route, navigation }) {
   const [state, setState] = useState({
@@ -24,6 +26,8 @@ export default function Login({ route, navigation }) {
 
   const [error, setError] = useState("");
 
+
+
   useEffect(() => {
     if (!state.password || !state.email) {
       setError("Este campo es obligatorio");
@@ -34,10 +38,11 @@ export default function Login({ route, navigation }) {
 
   const validateUser = () => {
     if (state.email === "" || state.password === "") {
+      console.log(APP_API);
       setVisible(!visible);
     } else {
       axios
-        .post(`http://localhost:3001/users/login`, state)
+        .post(`http://${APP_API}/users/login`, state)
         .then(({ data }) => {
           dispatch({
             type: USER,

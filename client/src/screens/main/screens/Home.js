@@ -8,6 +8,7 @@ import api from '../../../reducer/ActionCreator'
 import { Appbar } from 'react-native-paper';
 import { diasDeSemana, diasMes, seisMeses, unAño } from '../../../utils/Days';
 import { SieteDias, filtroMes, filtroSeisMeses, filtroUnAño } from '../../../utils/Valores'
+import { APP_API } from "../../../../env";
 
 export default function Home({ navigation }) {
     const [value, setValue] = useState(0)
@@ -57,7 +58,7 @@ export default function Home({ navigation }) {
         }
     }
     useEffect(() => {
-        axios.get(`http://localhost:3001/transaction/${user.id}`)
+        axios.get(`http://${APP_API}/transaction/${user.id}`)
             .then(({ data }) => {
                 dispatch({
                     type: TRANSACCIONES,
@@ -67,10 +68,10 @@ export default function Home({ navigation }) {
                         gasto: data.transactions.length ? data.transactions.filter(gasto => gasto.type === "egreso") : false,
                     }
                 })
-                console.log(data)
             })
             .catch(err => console.log(`Sucedio un error ${err}`))
     }, [saldo])
+
     return (
         <>
             <Appbar.Header>

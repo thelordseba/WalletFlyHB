@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import api from "../../../reducer/ActionCreator";
 import { Button, Dialog, Paragraph } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
+import { APP_API } from "../../../../env";
 
 export default function UpdateUserScreen({ route, navigation }) {
   
@@ -47,7 +48,7 @@ export default function UpdateUserScreen({ route, navigation }) {
       setVisible(!visible);
     } else {
       axios
-        .put(`http://localhost:3001/users/${state.id}/userAccount`, state)
+        .put(`http://${APP_API}/users/${state.id}/userAccount`, state)
         .then(({ data }) => {
           dispatch({
             type: USER,

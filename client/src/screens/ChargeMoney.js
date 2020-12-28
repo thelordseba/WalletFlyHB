@@ -7,6 +7,7 @@ import api from '../reducer/ActionCreator';
 import { Button, Dialog, Paragraph } from 'react-native-paper';
 import stylesInputs from './registro/screens/styles/inputs/s';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { APP_API } from "../../env";
 
 export default function ChargeMoney(props) {
   const [state, setState] = useState({
@@ -40,7 +41,7 @@ export default function ChargeMoney(props) {
         description: 'Recarga de dinero a tavés de Pago Facil.',
         total: parseInt(state.monto, 10)
       };
-      axios.post(`http://localhost:3001/transaction/byUserEmail/${recarga.email}`, data)
+      axios.post(`http://${APP_API}/transaction/byUserEmail/${recarga.email}`, data)
         .then(({ data }) => {
           dispatch({
             type: SALDO,

@@ -4,6 +4,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Appbar, Avatar } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
+import { APP_API } from "../../../../../env";
 import api from '../../../../reducer/ActionCreator'
 import { useDispatch } from 'react-redux';
 
@@ -18,7 +19,7 @@ export default function ModificarContacto({ navigation, route }){
     const [ active, setActive ] = useState(false);
     const handleEdit = (value) => {
         axios
-          .put(`http://localhost:3001/contacts/${userId}?contactId=${contactId}`, {
+          .put(`http://${APP_API}/contacts/${userId}?contactId=${contactId}`, {
             alias: value
           })
           .then(({ data }) => {
