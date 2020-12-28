@@ -22,9 +22,7 @@ export default function Contactos({ navigation }) {
       .get(`http://${APP_API}/users/getUserByEmail/?email=${text.email}`)
       .then(({ data }) => {
         axios
-          .post(
-            `http://${APP_API}/contacts/${user.id}?contactId=${data.id}`
-          )
+          .post(`http://${APP_API}/contacts/${user.id}?contactId=${data.id}`)
           .then(({ data }) => {
             dispatch({
               type: CONTACTOS,
@@ -45,6 +43,7 @@ export default function Contactos({ navigation }) {
   const handleDelete = (contacto) => {
     axios
       .delete(`http://${APP_API}/contacts/${user.id}?contactId=${contacto}`)
+
       .then(({ data }) => {
         dispatch({
           type: CONTACTOS,
