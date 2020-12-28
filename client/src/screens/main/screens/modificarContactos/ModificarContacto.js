@@ -18,7 +18,7 @@ export default function ModificarContacto({ navigation, route }){
     const [ active, setActive ] = useState(false);
     const handleEdit = (value) => {
         axios
-          .put(`http://192.168.0.2:3001/contacts/${userId}?contactId=${contactId}`, {
+          .put(`http://localhost:3001/contacts/${userId}?contactId=${contactId}`, {
             alias: value
           })
           .then(({ data }) => {

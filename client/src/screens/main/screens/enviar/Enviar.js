@@ -21,18 +21,18 @@ export default function Enviar(props) {
     setText({ ...text, [name]: value });
   };
   const sendMoney = () => {
-    Axios.get(`http://192.168.0.2:3001/users/getUserByEmail?email=${text.email}`) //trae el destinatario
+    Axios.get(`http://localhost:3001/users/getUserByEmail?email=${text.email}`) //trae el destinatario
       .then(({ data }) => {
         var contact = data;
         Axios.get(
-          `http://192.168.0.2:3001/users/getUserByEmail/?email=${user.email}`
+          `http://localhost:3001/users/getUserByEmail/?email=${user.email}`
         )
           .then(({ data }) => {
             if (data.accounts[0].balance < text.amount) {
               alert("no posees el saldo suficiente");
             } else {
               Axios.post(
-                `http://192.168.0.2:3001/transaction/${data.accounts[0].id}`,
+                `http://localhost:3001/transaction/${data.accounts[0].id}`,
                 {
                   title: text.title,
                   description: text.description,
@@ -46,7 +46,7 @@ export default function Enviar(props) {
                     payload: data.balance
                   })
                   Axios.post(
-                    `http://192.168.0.2:3001/transaction/${contact.accounts[0].id}`,
+                    `http://localhost:3001/transaction/${contact.accounts[0].id}`,
                     {
                       title: text.title,
                       description: text.description,

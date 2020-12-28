@@ -18,11 +18,11 @@ export default function Contactos({ navigation }) {
 
   const addContact = () => {
     axios
-      .get(`http://192.168.0.2:3001/users/getUserByEmail/?email=${text.email}`)
+      .get(`http://localhost:3001/users/getUserByEmail/?email=${text.email}`)
       .then(({ data }) => {
         axios
           .post(
-            `http://192.168.0.2:3001/contacts/${user.id}?contactId=${data.id}`
+            `http://localhost:3001/contacts/${user.id}?contactId=${data.id}`
           )
           .then(({ data }) => {
             dispatch({
@@ -43,7 +43,7 @@ export default function Contactos({ navigation }) {
 
   const handleDelete = (contacto) => {
     axios
-      .delete(`http://192.168.0.2:3001/contacts/${user.id}?contactId=${contacto}`)
+      .delete(`http://localhost:3001/contacts/${user.id}?contactId=${contacto}`)
       .then(({ data }) => {
         dispatch({
           type: CONTACTOS,
@@ -57,7 +57,7 @@ export default function Contactos({ navigation }) {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.0.2:3001/contacts/${user.id}`)
+      .get(`http://localhost:3001/contacts/${user.id}`)
       .then(({data}) => {
         if(data.length){
           dispatch({

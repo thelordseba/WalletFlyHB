@@ -37,7 +37,7 @@ export default function Login({ route, navigation }) {
       setVisible(!visible);
     } else {
       axios
-        .post(`http://192.168.0.2:3001/users/login`, state)
+        .post(`http://localhost:3001/users/login`, state)
         .then(({ data }) => {
           dispatch({
             type: USER,

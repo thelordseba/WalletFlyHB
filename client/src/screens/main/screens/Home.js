@@ -6,8 +6,8 @@ import { Avatar } from 'react-native-paper';
 import axios from 'axios';
 import api from '../../../reducer/ActionCreator'
 import { Appbar } from 'react-native-paper';
-import { diasDeSemana } from '../../../utils/Days';
-import { SieteDias, filtroMes } from '../../../utils/Valores'
+import { diasDeSemana, diasMes, seisMeses, unAño } from '../../../utils/Days';
+import { SieteDias, filtroMes, filtroSeisMeses, filtroUnAño } from '../../../utils/Valores'
 
 export default function Home({ navigation }) {
     const [value, setValue] = useState(0)
@@ -18,6 +18,10 @@ export default function Home({ navigation }) {
     const { TRANSACCIONES } = api
     const date = new Date();
     const day = date.getDay()
+    let dayMonth = date.getDate()
+    let currentYear = date.getFullYear();
+    let month = date.getMonth()
+
     const CreatedAt = () => {
         todo && todo.transactions.map(el => {
             if (el.createdAt.indexOf('T') !== -1) {
@@ -28,33 +32,32 @@ export default function Home({ navigation }) {
         })
     }
     CreatedAt()
-    console.log(todo)
     const Datos = (args) => {
         switch (args) {
             case 2:
-                return filtroMes(todo)
+                return filtroMes(todo, dayMonth, month, currentYear)
             case 3:
-                return [200, 300, 10, 4, 3, 70, 10]
+                return filtroSeisMeses(todo, dayMonth, month, currentYear)
             case 4:
-                return [4000, 6500, 3400, 1200, 7000, 6400]
+                return filtroUnAño(todo, dayMonth, month, currentYear)
             default:
-                return SieteDias(todo)
+                return SieteDias(todo, dayMonth, month, currentYear)
         }
     }
     const Label = (args) => {
         switch (args) {
             case 2:
-                return ["1/4", "2/4", "3/4", "4/4"]
+                return diasMes(dayMonth, month)
             case 3:
-                return ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
+                return seisMeses(month)
             case 4:
-                return ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+                return unAño(month)
             default:
                 return diasDeSemana(day)
         }
     }
     useEffect(() => {
-        axios.get(`http://192.168.0.2:3001/transaction/${user.id}`)
+        axios.get(`http://localhost:3001/transaction/${user.id}`)
             .then(({ data }) => {
                 dispatch({
                     type: TRANSACCIONES,
@@ -64,6 +67,7 @@ export default function Home({ navigation }) {
                         gasto: data.transactions.length ? data.transactions.filter(gasto => gasto.type === "egreso") : false,
                     }
                 })
+                console.log(data)
             })
             .catch(err => console.log(`Sucedio un error ${err}`))
     }, [saldo])
