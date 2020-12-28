@@ -6,6 +6,7 @@ import { Avatar } from 'react-native-paper';
 import Axios from 'axios';
 import api from '../../../reducer/ActionCreator'
 import { Appbar } from 'react-native-paper';
+import { APP_API } from "../../../../env";
 
 export default function Home({ navigation }){
     const [ value, setValue ] = useState(0)
@@ -42,7 +43,7 @@ export default function Home({ navigation }){
         }
     }
     useEffect(() => {
-        Axios.get(`http://192.168.0.2:3001/users/getUserByEmail/?email=${user.email}`)
+        Axios.get(`http://${APP_API}/users/getUserByEmail/?email=${user.email}`)
         .then(({data}) => dispatch({
             type: SALDO,
             payload: data.accounts[0].balance
