@@ -47,19 +47,35 @@ export default function UpdateUserScreen({ route, navigation }) {
       setVisible(!visible);
     } else {
       axios
-        .put(`http://192.168.0.2:3001/users/${state.id}/userAccount`, state)
-        .then(({ data }) => {
-          dispatch({
-            type: USER,
-            payload: data,
+        .get(`https://apis.datos.gob.ar/georef/api/direcciones?direccion=${state.address} ${state.addressNumber}&localidad=${state.city}`)
+        .then(({data}) => {
+          console.log(data.direcciones[0])
+          var address = data.direcciones[0].calle.nombre;
+          var addressNumber = data.direcciones[0].altura.valor;
+          var city = data.direcciones[0].localidad_censal.nombre; 
+          console.log({"LA ADDRESS ES, ": address, "EL NUMBER ES, ": addressNumber, "LA CITY ES, ": city})
+          setState({...state, 
+            address: address,
+            addressNumber: addressNumber,
+            city: city
+          })
+        })
+        .then((data) => {
+          axios
+            .put(`http://localhost:3001/users/${state.id}/userAccount`, state)
+            .then(({ data }) => {
+              dispatch({
+                type: USER,
+                payload: data,
+              });
+            })
+          .catch((err) => {
+            setAlertMessage(`Error! ${err}`);
+            setVisible(!visible);
           });
         })
-        .catch((err) => {
-          setAlertMessage(`Error! ${err}`);
-          setVisible(!visible);
-        });
-    }
-  };
+      }
+    };
   const [error, setError] = useState("");
   useEffect(() => {
     if (

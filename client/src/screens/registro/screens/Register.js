@@ -67,7 +67,7 @@ export default function CreateUserScreen(props) {
     }
 
     axios
-      .post(`http://192.168.0.2:3001/userEmail`, state)
+      .post(`http://localhost:3001/userEmail`, state)
       .then(({ data }) => {
         props.navigation.navigate("AuthEmail", { id: data.user.id, state });
       })
