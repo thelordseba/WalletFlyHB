@@ -50,15 +50,14 @@ export default function UpdateUserScreen({ route, navigation }) {
         .get(`https://apis.datos.gob.ar/georef/api/direcciones?direccion=${state.address} ${state.addressNumber}&localidad=${state.city}`)
         .then(({data}) => {
           console.log(data.direcciones[0])
-          var address = data.direcciones[0].calle.nombre;
-          var addressNumber = data.direcciones[0].altura.valor;
-          var city = data.direcciones[0].localidad_censal.nombre; 
-          console.log({"LA ADDRESS ES, ": address, "EL NUMBER ES, ": addressNumber, "LA CITY ES, ": city})
-          setState({...state, 
-            address: address,
-            addressNumber: addressNumber,
-            city: city
-          })
+          let addressNueva = data.direcciones[0].calle.nombre;
+          let addressNumberNueva = data.direcciones[0].altura.valor;
+          let cityNueva = data.direcciones[0].localidad_censal.nombre; 
+          console.log({"LA ADDRESS ES, ": addressNueva, "EL NUMBER ES, ": addressNumberNueva, "LA CITY ES, ": cityNueva});
+          state.address = addressNueva;
+          state.addressNumber = addressNumberNueva;
+          state.city = cityNueva;
+          console.log("EL STATE ESTA ASI: ", state);
         })
         .then((data) => {
           axios
