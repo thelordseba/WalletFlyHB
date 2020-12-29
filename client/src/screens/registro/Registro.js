@@ -3,7 +3,6 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import Register from './screens/Register';
 import Login from './screens/Login';
 import { Text, View } from 'react-native';
-import { Appbar } from 'react-native-paper';
 
 const Tab = createMaterialTopTabNavigator();
 export default function Registro(props){

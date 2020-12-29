@@ -9,7 +9,7 @@ export default function EnEfectivo(props) {
   const code = Math.round(Math.random() * 1000000000000);
   const user = useSelector(state => state.user);
   const dispatch = useDispatch();
-  const { EFECTIVO, RECARGA } = api;
+  const { RECARGA } = api;
   const data = {
     code: code,
     email: user.email
@@ -19,10 +19,6 @@ export default function EnEfectivo(props) {
     dispatch({
       type: RECARGA,
       payload: data
-    })
-    dispatch({
-      type: EFECTIVO,
-      payload: true
     })
   }
 

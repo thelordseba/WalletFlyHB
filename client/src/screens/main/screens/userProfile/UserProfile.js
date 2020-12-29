@@ -4,30 +4,32 @@ import { useSelector } from 'react-redux';
 import { Button, Avatar, Appbar } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function UserProfile(props) {
+export default function UserProfile({ navigation }) {
+    
     const user = useSelector(state => state.user)
 
     return (
         <>
             <Appbar.Header>
-                <Appbar.Action icon="menu" onPress={() => props.navigation.toggleDrawer()} />
+                <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
                 <Appbar.Content title="Perfil" />
+                <Appbar.Action icon="chart-pie" onPress={() => navigation.navigate('StackEstadisticas')} />
             </Appbar.Header>
             <SafeAreaView>
                 <View style={s.container}>
                     <View style={s.containerImg}>
                         {/* en celular no muestra el icono, segun doc hay que importar img */}
-                        <Avatar.Image size={70} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" />
+                        <Avatar.Image size={70} source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"}}/>
                         <Text style={s.textUser}>{user.firstName} {user.lastName}</Text>
                         <Text style={s.textEmail}>{user.email}</Text>
                     </View>
-                    <Button mode="outlined" onPress={() => props.navigation.navigate("DatosPersonales")}>
+                    <Button mode="outlined" onPress={() => navigation.navigate("DatosPersonales")}>
                         Mi Código QR
                 </Button>
-                    <Button mode="outlined" onPress={() => props.navigation.navigate("DatosPersonales")}>
+                    <Button mode="outlined" onPress={() => navigation.navigate("DatosPersonales")}>
                         MI CVU
                 </Button>
-                    <Button mode="outlined" onPress={() => props.navigation.navigate("DatosPersonales")}>
+                    <Button mode="outlined" onPress={() => navigation.navigate("DatosPersonales")}>
                         Datos Personales
                 </Button>
                 </View>
