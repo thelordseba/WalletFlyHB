@@ -6,6 +6,7 @@ import { Avatar, Appbar } from 'react-native-paper';
 import api from '../../../reducer/ActionCreator';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ScrollView } from "react-native-gesture-handler";
+import { APP_API } from "../../../../env";
 
 export default function Contactos({ navigation }) {
 
@@ -18,12 +19,10 @@ export default function Contactos({ navigation }) {
 
   const addContact = () => {
     axios
-      .get(`http://192.168.0.2:3001/users/getUserByEmail/?email=${text.email}`)
+      .get(`http://${APP_API}/users/getUserByEmail/?email=${text.email}`)
       .then(({ data }) => {
         axios
-          .post(
-            `http://192.168.0.2:3001/contacts/${user.id}?contactId=${data.id}`
-          )
+          .post(`http://${APP_API}/contacts/${user.id}?contactId=${data.id}`)
           .then(({ data }) => {
             dispatch({
               type: CONTACTOS,
@@ -43,7 +42,8 @@ export default function Contactos({ navigation }) {
 
   const handleDelete = (contacto) => {
     axios
-      .delete(`http://192.168.0.2:3001/contacts/${user.id}?contactId=${contacto}`)
+      .delete(`http://${APP_API}/contacts/${user.id}?contactId=${contacto}`)
+
       .then(({ data }) => {
         dispatch({
           type: CONTACTOS,
@@ -57,7 +57,7 @@ export default function Contactos({ navigation }) {
 
   useEffect(() => {
     axios
-      .get(`http://192.168.0.2:3001/contacts/${user.id}`)
+      .get(`http://${APP_API}/contacts/${user.id}`)
       .then(({data}) => {
         if(data.length){
           dispatch({
