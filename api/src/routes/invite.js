@@ -1,9 +1,6 @@
 require("dotenv").config()
 const server = require("express").Router();
-const { User } = require("../db");
 const nodemailer = require("nodemailer");
-//import logo from "../logo.jpeg";
-
 
 //Transporter para nodemailer
 let transporter = nodemailer.createTransport({
@@ -15,7 +12,8 @@ let transporter = nodemailer.createTransport({
 });
 
 
-var returnHTML = function(segNumber){
+
+var returnHTML = function(){
   return (` 
     <!DOCTYPE html>
       <html lang="en">
@@ -48,8 +46,8 @@ var returnHTML = function(segNumber){
         <hr>
         
         <div>
-          <h1>Su codigo para activar su cuenta es:</h1>
-          <h1> ${segNumber} </h1>
+          <h1> Un conocido suyo lo invito a unirse a la comunidad bancaria mas grande de latinoamerica</h1>
+          <h1> La aplicacion bancaria mas prometedora </h1>
         </div>
 
         <h3 style="padding:20px">De parte de este equipo agradecemos que hayas elegido una app tan increible</h3>
@@ -66,47 +64,21 @@ var returnHTML = function(segNumber){
 
 
 
-//Ruta para crear usuario
+//Ruta para invitar a amigo por EMAIL
 
-server.post("/", (req, res, next) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
-    return res
-      .status(400)
-      .json({ message: "Parametros incompletos o invalidos" });
-  }
-  var segNumber = Math.ceil(Math.random()*1000000);
-  User.create({
-    email: email,
-    password: password,
-    segNumber: segNumber,
-    active: false
-  })
-  .then((user) => {
-    console.log("ESTE ES EL USUARIO ", user.dataValues)
-    const trueUser = user.dataValues;
-    setTimeout( async function(){
-      console.log("ENTRAMOS AL SET")
-      const user = await User.findOne({
-        where:{
-          id: trueUser.id  
-        }      
-      });
-      if(!user.active){
-        await user.destroy();
-        console.log("DESTRUIMOS AL TRAIDOR!!!")
-        res.send("OK");
-      }
-      console.log("ALGO MALIO SAL, CREO QUE ERA DE VERDAD")
-    },300000)
-    res.status(200).json({ user })
-  })
-  .then((user) => {
+server.post("/email", (req, res, next) => {
+  	const { email } = req.body;
+  	if (!email) {
+    	return res
+      	.status(400)
+      	.json({ message: "No declaraste el mail de a quien invitar" });
+  	}
+  	
   	let mailOptions = {
 		from: process.env.EMAIL,
 		to: email,
-		subject: "Felicitaciones por tu nueva cuenta",
-    html:  returnHTML(segNumber), 
+		subject: "Fuiste invitado",
+    	html:  returnHTML(), 
   	};
   	transporter.sendMail(mailOptions, function(err, data) {
 		if(err){
@@ -114,9 +86,39 @@ server.post("/", (req, res, next) => {
 		} else {
 			console.log("Success")
 		}
-  	})  	
- 	})
- 	.catch(next);
+  	})  		
 });
+
+
+//Ruta para invitar a un amigo por SMS
+
+const accountSid = process.env.ACCOUNT_SID_TWILIO;
+const authToken = process.env.AUTH_TOKEN_TWILIO;
+const ourNumber = process.env.OUR_NUMBER;
+
+const client = require("twilio")(accountSid, authToken)
+
+server.post("/SMS", (req, res, next) => {
+  const { number } = req.body;
+  if (!number) {
+    return res
+      .status(400)
+      .json({ message: "No pasaron el NUMERO del amigo" });
+  }
+    
+  client.messages.create({
+    to: number,
+    from: ourNumber,
+    body: "Te invitaron para unirte a este banco medio turbio que lava plata a lo loco. Te va mover billete a lo Pablo Escobar?", 
+  })
+  .then(message => { 
+    console.log(message.sid)
+    return res.status(200).json({ message: "SE ENVIO PERFECTIRIJILLO"})
+  }) 
+  .catch(err => {
+    return res.status(400).json({ message: err })
+  })  
+});
+
 
 module.exports = server;
