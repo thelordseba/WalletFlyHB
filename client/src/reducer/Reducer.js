@@ -1,7 +1,7 @@
 import actionCreators from './ActionCreator';
 import thunk from 'redux-thunk';
 import { createStore, applyMiddleware } from 'redux'
-const { USER, SALDO, EFECTIVO, RECARGA, CONTACTOS, TRANSACCIONES } = actionCreators;
+const { USER, SALDO, RECARGA, CONTACTOS, TRANSACCIONES } = actionCreators;
 
 const initialState = {
     user: false,
@@ -12,7 +12,7 @@ const initialState = {
 }
 
 const reducer = (state = initialState, action) => {
-    console.log(action.payload)
+    // console.log(action.payload)
     switch (action.type) {
         case USER:
             return {

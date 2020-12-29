@@ -57,8 +57,8 @@ export default function DrawerContent(props) {
                         icon={({ color, size }) => (
                             <MaterialCommunityIcons name="chart-bar" size={size} color={color} />
                         )}
-                        label="Transacciones"
-                        onPress={() => props.navigation.navigate('Transacciones')}
+                        label="Estadisticas"
+                        onPress={() => props.navigation.navigate('StackEstadisticas')}
                     />
                     <DrawerItem
                         icon={({ color, size }) => (

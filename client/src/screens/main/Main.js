@@ -1,13 +1,13 @@
 import React from 'react';
 // componentes
 import Home from './screens/Home';
-import Transacciones from './screens/Transacciones';
 import UserProfile from './screens/userProfile/UserProfile';
 import Contactos from './screens/Contactos';
 // react navigation
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 // icons
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import StackEstadisticas from './screens/estadisticas/StackEstadisticas';
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -28,10 +28,10 @@ export default function Footer() {
             ),
           }} />
         <Tab.Screen
-          name="Transacciones"
-          component={Transacciones}
+          name="Estadisticas"
+          component={StackEstadisticas}
           options={{
-            tabBarLabel: 'Transacciones',
+            tabBarLabel: 'Estadisticas',
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="chart-bar" size={26} color={color} />
             ),
