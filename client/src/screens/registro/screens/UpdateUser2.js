@@ -50,16 +50,19 @@ export default function UpdateUserScreen({ route, navigation }) {
         .get(`https://apis.datos.gob.ar/georef/api/direcciones?direccion=${state.address} ${state.addressNumber}&localidad=${state.city}`)
         .then(({data}) => {
           console.log(data.direcciones[0])
-          let addressNueva = data.direcciones[0].calle.nombre;
-          let addressNumberNueva = data.direcciones[0].altura.valor;
-          let cityNueva = data.direcciones[0].localidad_censal.nombre; 
-          console.log({"LA ADDRESS ES, ": addressNueva, "EL NUMBER ES, ": addressNumberNueva, "LA CITY ES, ": cityNueva});
-          state.address = addressNueva;
-          state.addressNumber = addressNumberNueva;
-          state.city = cityNueva;
-          console.log("EL STATE ESTA ASI: ", state);
-        })
-        .then((data) => {
+          if(!data.direcciones[0]){
+            setAlertMessage("TU CALLE ES MAS TRUCHA QUE EL BILLETE DE 3 PESOS PELOTUDO");
+            setVisible(!visible);
+            return
+          } else {
+            let addressNueva = data.direcciones[0].calle.nombre;
+            let addressNumberNueva = data.direcciones[0].altura.valor;
+            let cityNueva = data.direcciones[0].localidad_censal.nombre; 
+            console.log({"LA ADDRESS ES, ": addressNueva, "EL NUMBER ES, ": addressNumberNueva, "LA CITY ES, ": cityNueva});
+            state.address = addressNueva;
+            state.addressNumber = addressNumberNueva;
+            state.city = cityNueva;
+            console.log("EL STATE ESTA ASI: ", state);
           axios
             .put(`http://localhost:3001/users/${state.id}/userAccount`, state)
             .then(({ data }) => {
@@ -68,13 +71,17 @@ export default function UpdateUserScreen({ route, navigation }) {
                 payload: data,
               });
             })
-          .catch((err) => {
-            setAlertMessage(`Error! ${err}`);
-            setVisible(!visible);
-          });
+          }
         })
+        .then((data) => {
+          console.log("OK")
+        })
+        .catch((err) => {
+          setAlertMessage(`Error! ${err}`);
+          setVisible(!visible);
+        });
       }
-    };
+  };
   const [error, setError] = useState("");
   useEffect(() => {
     if (
