@@ -54,9 +54,8 @@ var returnHTML = function(segNumber){
 
         <h3 style="padding:20px">De parte de este equipo agradecemos que hayas elegido una app tan increible</h3>
         <h4 style="padding:20px">
-          Al aceptar usar esta aplicacion acepta las bases y condiciones de que solo se va a 
-          manejar dinero ficticio que no es mas que muchos 1 y 0 que realmente no afectan para nada 
-          tu billetera por lo que es algo mas decorativo que otra cosa. La plata no existe
+          Al aceptar usar esta aplicacion acepta las bases y condiciones de la empresa sobre el desarrollo
+          y manejo de dinero 
         </h4>
   </div> 
   </body> 

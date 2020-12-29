@@ -51,7 +51,7 @@ export default function UpdateUserScreen({ route, navigation }) {
         .then(({data}) => {
           console.log(data.direcciones[0])
           if(!data.direcciones[0]){
-            setAlertMessage("TU CALLE ES MAS TRUCHA QUE EL BILLETE DE 3 PESOS PELOTUDO");
+            setAlertMessage("Tu direccion no es valida");
             setVisible(!visible);
             return
           } else {
