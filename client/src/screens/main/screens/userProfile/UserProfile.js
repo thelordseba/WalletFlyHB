@@ -13,7 +13,6 @@ export default function UserProfile({ navigation }) {
             <Appbar.Header>
                 <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
                 <Appbar.Content title="Perfil" />
-                <Appbar.Action icon="chart-pie" onPress={() => navigation.navigate('StackEstadisticas')} />
             </Appbar.Header>
             <SafeAreaView>
                 <View style={s.container}>

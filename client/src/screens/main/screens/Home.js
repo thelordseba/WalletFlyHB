@@ -77,7 +77,6 @@ export default function Home({ navigation }) {
             <Appbar.Header>
                 <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
                 <Appbar.Content title={`Bienvenido ${user.firstName}`} />
-                <Appbar.Action icon="chart-pie" onPress={() => navigation.navigate('StackEstadisticas')} />
             </Appbar.Header>
             <View style={s.container}>
                 <View style={s.containerPerfil}>

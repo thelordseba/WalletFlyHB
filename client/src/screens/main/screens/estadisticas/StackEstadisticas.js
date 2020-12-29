@@ -57,19 +57,20 @@ export default function StackEstadisticas({ navigation }){
     return (
         <>
             <Appbar.Header>
-                <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
+                <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
                 <Appbar.Content title="Estadisticas" />
             </Appbar.Header>
             <Text style={{textAlign: "center", marginTop: 5, marginBottom: 5}}>Saldo Actual: $ {SumIngreso() - SumGastos()} ARS</Text>
-            <PieChart
-                data={dataGrafico}
-                width={Dimensions.get('screen').width}
-                height={200}
-                chartConfig={chartConfig}
-                accessor={"population"}
-                backgroundColor={"transparent"}
-                paddingLeft={"15"}
-            />
+            {ingreso.length &&
+                <PieChart
+                    data={dataGrafico}
+                    width={Dimensions.get('screen').width}
+                    height={200}
+                    chartConfig={chartConfig}
+                    accessor={"population"}
+                    backgroundColor={"transparent"}
+                    paddingLeft={"15"}
+                />}
             <View style={{ display: 'flex', flexDirection: "row", justifyContent: "space-around" }}>
                 <TouchableOpacity onPress={() => navigation.navigate('Ingresos')} >
                     <View style={s.containerIngresos} >
