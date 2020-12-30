@@ -1,6 +1,10 @@
 import actionCreators from './ActionCreator';
 import thunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist'
+import { createLogger } from 'redux-logger';
+import AsyncStorage from '@react-native-community/async-storage';
+
 const { USER, SALDO, RECARGA, CONTACTOS, TRANSACCIONES } = actionCreators;
 
 const initialState = {
@@ -43,10 +47,20 @@ const reducer = (state = initialState, action) => {
             return {...state}
     }
 }
-export default function generateStore() {
+
+export default () => {
+    const persistConfig = {
+        key: 'root',
+        storage: AsyncStorage,
+        // whitelist: ['reducer']
+    }
+    const persistedReducer = persistReducer(persistConfig, reducer)
+    
     const store = createStore(
-      reducer,
-      applyMiddleware(thunk)
+        persistedReducer,
+        applyMiddleware(thunk, createLogger())
     );
-    return store;
-  }
+    const persistor = persistStore(store)
+    return { store, persistor }
+}
+  

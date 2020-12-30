@@ -4,6 +4,8 @@ import { Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '../../../../reducer/ActionCreator';
 import { Appbar } from 'react-native-paper';
+import AsyncStorage from "@react-native-community/async-storage";
+import * as LocalAuthentication from "expo-local-authentication";
 
 export default function EnEfectivo(props) {
   const code = Math.round(Math.random() * 1000000000000);
@@ -14,12 +16,30 @@ export default function EnEfectivo(props) {
     code: code,
     email: user.email
   }
-  const recargar = () => {
-    props.navigation.navigate('ChargeMoney');
-    dispatch({
-      type: RECARGA,
-      payload: data
-    })
+  const recargar = async () => {
+    const res = await LocalAuthentication.hasHardwareAsync();
+    if (!res) {
+      return Alert.alert("Su dispositivo no soporta los metodos de login");
+    }
+    const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync({});
+    if (!autorization) return Alert.alert("No autorizado");
+    const huella = await LocalAuthentication.isEnrolledAsync();
+    if (!huella) return Alert.alert("No tiene autorizacion");
+    const login = await LocalAuthentication.authenticateAsync("Ponga su huella");
+    if (login.success) {
+      props.navigation.navigate('ChargeMoney');
+      dispatch({
+        type: RECARGA,
+        payload: data
+      })
+    }
+
+    // Comentar esto para usar la huella
+    // props.navigation.navigate('ChargeMoney');
+    // dispatch({
+    //   type: RECARGA,
+    //   payload: data
+    // })
   }
 
   return (

@@ -85,7 +85,7 @@ export default function Contactos({ navigation }) {
             contactos && contactos.map(el =>
               <View key={el.id} style={s.containerView}>
                 <View style={s.containerNameAvatar}>
-                  <Avatar.Image size={50} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" />
+                  <Avatar.Image size={50} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" }} />
                   <View style={s.containerNameEmail}>
                     {
                       !el.alias ?

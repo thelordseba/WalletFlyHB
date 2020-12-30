@@ -40,7 +40,7 @@ export default function MyStack(props) {
                         <Stack.Screen name="QuestionAndAnswers" component={QuestionAndAnswers} />
                         <Stack.Screen name="ModificarContacto" component={ModificarContacto} />
                         <Stack.Screen name="StackEstadisticas" component={StackEstadisticas} />
-                        <Stack.Screen name="DetallesEstadistica" component={DetallesEstadistica}/>
+                        <Stack.Screen name="DetallesEstadistica" component={DetallesEstadistica} />
                         <Stack.Screen name="ChargeMoney" component={ChargeMoney} />
 
                     </Drawer.Navigator>
@@ -66,7 +66,7 @@ export default function MyStack(props) {
                             <Stack.Screen name="QuestionAndAnswers" component={QuestionAndAnswers} options={{
                                 headerTitle: "Preguntas y Respuestas",
                                 headerTintColor: "#FFFFFF"
-                            }}/>
+                            }} />
                         </Stack.Navigator>
                     </>
             }
