@@ -24,33 +24,33 @@ export default function Login() {
   const [error, setError] = useState("");
 
   // Descomentar esta funcion en dia de la demo
-  const AuthWithFinger = async () => {
-    if (state.email !== ""  && !state.password !== "") {
-      const res = await LocalAuthentication.hasHardwareAsync();
-      if (!res) {
-        return Alert.alert("Su dispositivo no soporta los metodos de login");
-      }
-      const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync({});
-      if (!autorization) return Alert.alert("No autorizado");
-      const huella = await LocalAuthentication.isEnrolledAsync();
-      if (!huella) return Alert.alert("No tiene autorizacion");
-      const login = await LocalAuthentication.authenticateAsync("Ponga su huella");
-      if (login.success) {
-        axios
-          .post(`http://${APP_API}/users/login`, state)
-          .then(({ data }) => {
-            dispatch({
-              type: USER,
-              payload: data,
-            });
-          })
-          .catch((err) => alert(`Error! ${err}`));
-      }
-    } else {
-      Alert.alert("Complete todos los campos por favor")
-    }
+  // const AuthWithFinger = async () => {
+  //   if (state.email !== ""  && !state.password !== "") {
+  //     const res = await LocalAuthentication.hasHardwareAsync();
+  //     if (!res) {
+  //       return Alert.alert("Su dispositivo no soporta los metodos de login");
+  //     }
+  //     const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync({});
+  //     if (!autorization) return Alert.alert("No autorizado");
+  //     const huella = await LocalAuthentication.isEnrolledAsync();
+  //     if (!huella) return Alert.alert("No tiene autorizacion");
+  //     const login = await LocalAuthentication.authenticateAsync("Ponga su huella");
+  //     if (login.success) {
+  //       axios
+  //         .post(`http://${APP_API}/users/login`, state)
+  //         .then(({ data }) => {
+  //           dispatch({
+  //             type: USER,
+  //             payload: data,
+  //           });
+  //         })
+  //         .catch((err) => alert(`Error! ${err}`));
+  //     }
+  //   } else {
+  //     Alert.alert("Complete todos los campos por favor")
+  //   }
 
-  };
+  // };
 
   useEffect(() => {
     if (!state.password || !state.email) {
@@ -60,21 +60,21 @@ export default function Login() {
     }
   }, [state, setError]);
 
-  // const validateUser = () => {
-  //   if (state.email === "" || state.password === "") {
-  //     Alert.alert("Complete todos los campos por favor")
-  //   } else {
-  //     axios
-  //       .post(`http://${APP_API}/users/login`, state)
-  //       .then(({ data }) => {
-  //         dispatch({
-  //           type: USER,
-  //           payload: data,
-  //         });
-  //       })
-  //       .catch((err) => alert(`Error! ${err}`));
-  //   }
-  // };
+  const validateUser = () => {
+    if (state.email === "" || state.password === "") {
+      Alert.alert("Complete todos los campos por favor")
+    } else {
+      axios
+        .post(`http://${APP_API}/users/login`, state)
+        .then(({ data }) => {
+          dispatch({
+            type: USER,
+            payload: data,
+          });
+        })
+        .catch((err) => alert(`Error! ${err}`));
+    }
+  };
 
   return (
     <View style={s.container}>
@@ -103,8 +103,8 @@ export default function Login() {
       <Button
         style={{ marginTop: 20 }}
         mode="contained"
-        onPress={() => AuthWithFinger()}
-        // onPress={() => validateUser()}
+        // onPress={() => AuthWithFinger()}
+        onPress={() => validateUser()}
       >
         Ingresar
         </Button>

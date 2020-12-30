@@ -17,29 +17,29 @@ export default function EnEfectivo(props) {
     email: user.email
   }
   const recargar = async () => {
-    const res = await LocalAuthentication.hasHardwareAsync();
-    if (!res) {
-      return Alert.alert("Su dispositivo no soporta los metodos de login");
-    }
-    const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync({});
-    if (!autorization) return Alert.alert("No autorizado");
-    const huella = await LocalAuthentication.isEnrolledAsync();
-    if (!huella) return Alert.alert("No tiene autorizacion");
-    const login = await LocalAuthentication.authenticateAsync("Ponga su huella");
-    if (login.success) {
-      props.navigation.navigate('ChargeMoney');
-      dispatch({
-        type: RECARGA,
-        payload: data
-      })
-    }
+    // const res = await LocalAuthentication.hasHardwareAsync();
+    // if (!res) {
+    //   return Alert.alert("Su dispositivo no soporta los metodos de login");
+    // }
+    // const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync({});
+    // if (!autorization) return Alert.alert("No autorizado");
+    // const huella = await LocalAuthentication.isEnrolledAsync();
+    // if (!huella) return Alert.alert("No tiene autorizacion");
+    // const login = await LocalAuthentication.authenticateAsync("Ponga su huella");
+    // if (login.success) {
+    //   props.navigation.navigate('ChargeMoney');
+    //   dispatch({
+    //     type: RECARGA,
+    //     payload: data
+    //   })
+    // }
 
     // Comentar esto para usar la huella
-    // props.navigation.navigate('ChargeMoney');
-    // dispatch({
-    //   type: RECARGA,
-    //   payload: data
-    // })
+    props.navigation.navigate('ChargeMoney');
+    dispatch({
+      type: RECARGA,
+      payload: data
+    })
   }
 
   return (
