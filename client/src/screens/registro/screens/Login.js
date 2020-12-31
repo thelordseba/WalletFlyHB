@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, TextInput, StyleSheet, Text, Alert, TouchableOpacity } from "react-native";
+import { View, TextInput, StyleSheet, Text, Alert, } from "react-native";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import api from "../../../reducer/ActionCreator";
-import { Button, Dialog, Paragraph } from "react-native-paper";
+import { Button } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { APP_API } from "../../../../env";
-import AsyncStorage from "@react-native-community/async-storage";
 import * as LocalAuthentication from "expo-local-authentication";
 
 export default function Login() {
@@ -15,6 +14,7 @@ export default function Login() {
     email: "",
     password: "",
   });
+  const { active } = useSelector(state => state.huella)
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
@@ -24,42 +24,34 @@ export default function Login() {
   const [error, setError] = useState("");
 
   // Descomentar esta funcion en dia de la demo
-  // const AuthWithFinger = async () => {
-  //   if (state.email !== ""  && !state.password !== "") {
-  //     const res = await LocalAuthentication.hasHardwareAsync();
-  //     if (!res) {
-  //       return Alert.alert("Su dispositivo no soporta los metodos de login");
-  //     }
-  //     const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync({});
-  //     if (!autorization) return Alert.alert("No autorizado");
-  //     const huella = await LocalAuthentication.isEnrolledAsync();
-  //     if (!huella) return Alert.alert("No tiene autorizacion");
-  //     const login = await LocalAuthentication.authenticateAsync("Ponga su huella");
-  //     if (login.success) {
-  //       axios
-  //         .post(`http://${APP_API}/users/login`, state)
-  //         .then(({ data }) => {
-  //           dispatch({
-  //             type: USER,
-  //             payload: data,
-  //           });
-  //         })
-  //         .catch((err) => alert(`Error! ${err}`));
-  //     }
-  //   } else {
-  //     Alert.alert("Complete todos los campos por favor")
-  //   }
-
-  // };
-
-  useEffect(() => {
-    if (!state.password || !state.email) {
-      setError("Este campo es obligatorio");
+  const AuthWithFinger = async () => {
+    if (state.email !== "" && !state.password !== "") {
+      const res = await LocalAuthentication.hasHardwareAsync();
+      if (!res) {
+        return Alert.alert("Su dispositivo no soporta los metodos de login");
+      }
+      const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync({});
+      if (!autorization) return Alert.alert("No autorizado");
+      const huella = await LocalAuthentication.isEnrolledAsync();
+      if (!huella) return Alert.alert("No tiene autorizacion");
+      const login = await LocalAuthentication.authenticateAsync({
+        promptMessage: "Ingrese su huella por favor"
+      });
+      if (login.success) {
+        axios
+          .post(`http://${APP_API}/users/login`, state)
+          .then(({ data }) => {
+            dispatch({
+              type: USER,
+              payload: data,
+            });
+          })
+          .catch((err) => alert(`Error! ${err}`));
+      }
     } else {
-      setError(null);
+      Alert.alert("Complete todos los campos por favor")
     }
-  }, [state, setError]);
-
+  }
   const validateUser = () => {
     if (state.email === "" || state.password === "") {
       Alert.alert("Complete todos los campos por favor")
@@ -74,7 +66,20 @@ export default function Login() {
         })
         .catch((err) => alert(`Error! ${err}`));
     }
+  }
+  const validateUserLogin = () => {
+    active ? AuthWithFinger() : validateUser()  
   };
+
+  useEffect(() => {
+    if (!state.password || !state.email) {
+      setError("Este campo es obligatorio");
+    } else {
+      setError(null);
+    }
+  }, [state, setError]);
+
+
 
   return (
     <View style={s.container}>
@@ -103,8 +108,7 @@ export default function Login() {
       <Button
         style={{ marginTop: 20 }}
         mode="contained"
-        // onPress={() => AuthWithFinger()}
-        onPress={() => validateUser()}
+        onPress={() => validateUserLogin()}
       >
         Ingresar
         </Button>

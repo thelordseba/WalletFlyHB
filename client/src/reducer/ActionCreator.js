@@ -7,6 +7,7 @@ const actionCreators = {
     RECARGA: "RECARGA",
     CONTACTOS: "CONTACTOS",
     TRANSACCIONES: "TRANSACCIONES",
+    HUELLA: "HUELLA",
     getME: function(id){
         return dispatch => {
             // const promise = axios.get(`${process.env.REACT_APP_API_URL}/users/${id}`)
