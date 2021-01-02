@@ -175,7 +175,7 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
             }
             status = true
         }
-        console.log(valor)
+        
         arrayFri = status ?
             array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltroPrimeroDias)
