@@ -14,6 +14,7 @@ router.use('/transaction', require('./transaction.js'))
 router.use('/contacts', require('./contacts.js'))
 router.use("/userEmail",require("./userEmail.js"))
 router.use("/invite", require("./invite.js"))
+router.use("/passwordEmail", require("./passwordEmail.js"))
 
 module.exports = router;
 
