@@ -35,35 +35,35 @@ export default function ModificarContacto({ navigation, route }){
       };
     
     return (
-        <>
-            <Appbar.Header>
-                <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
-                <Appbar.Content title="Contactos" />
-            </Appbar.Header>
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <Avatar.Image size={100} source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" />
-                <View style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
-                    <View style={{ display: "flex", flexDirection: "row" }}>
-                        <Text style={{ fontWeight: "700", marginRight: 5 }}>Nombre: </Text>
-                        {
-                            active ?
-                                <TextInput
-                                    autoFocus
-                                    onChangeText={(value) => setValue(value)}
-                                />
-                                :
-                                <Text>{alias ? alias : Name}</Text>
-                        }
-                    </View>
-                    <TouchableOpacity onPress={() => setActive(!active)} style={s.buttonEdit}>
-                        <Text><MaterialCommunityIcons name="pencil" size={15} /></Text>
-                    </TouchableOpacity>
-                </View>
+      <>
+        <Appbar.Header>
+          <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
+          <Appbar.Content title="Contactos" />
+        </Appbar.Header>
+        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+          <Avatar.Image size={100} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" }} />
+          <View style={{ display: "flex", flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <Text style={{ fontWeight: "700", marginRight: 5 }}>Nombre: </Text>
+              {
+                active ?
+                  <TextInput
+                    autoFocus
+                    onChangeText={(value) => setValue(value)}
+                  />
+                  :
+                  <Text>{alias ? alias : Name}</Text>
+              }
             </View>
-            <TouchableOpacity onPress={() => handleEdit(value)} style={s.button} >
-                <Text>Aceptar Cambios</Text>
+            <TouchableOpacity onPress={() => setActive(!active)} style={s.buttonEdit}>
+              <Text><MaterialCommunityIcons name="pencil" size={15} /></Text>
             </TouchableOpacity>
-        </>
+          </View>
+        </View>
+        <TouchableOpacity onPress={() => handleEdit(value)} style={s.button} >
+          <Text>Aceptar Cambios</Text>
+        </TouchableOpacity>
+      </>
     )
 }
 
