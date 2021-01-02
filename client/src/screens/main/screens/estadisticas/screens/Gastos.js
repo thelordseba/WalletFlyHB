@@ -11,8 +11,8 @@ export default function Gastos({ navigation }){
             <ScrollView >
                 {
                     gasto && gasto.map(el => (
-                        <TouchableOpacity onPress={() => navigation.navigate("DetallesEstadistica", {id: el.id})}>
-                            <View style={s.container} key={el.id}>
+                        <TouchableOpacity key={el.id} onPress={() => navigation.navigate("DetallesEstadistica", {id: el.id})} >
+                            <View style={s.container}>
                                 <View style={s.containerIconDireccion}>
                                     <View style={s.containerIconSaleDinero}>
                                         <MaterialCommunityIcons name="currency-usd-off" size={20} />

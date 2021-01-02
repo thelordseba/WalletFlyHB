@@ -12,8 +12,8 @@ export default function Todo({ navigation }){
             <ScrollView >
                 {
                     todo && todo.transactions.map(el => (
-                        <TouchableOpacity onPress={() => navigation.navigate("DetallesEstadistica", {id: el.id})}>
-                            <View style={s.container} key={el.id}>
+                        <TouchableOpacity key={el.id} onPress={() => navigation.navigate("DetallesEstadistica", {id: el.id})}>
+                            <View style={s.container} >
                                 <View style={s.containerIconDireccion}>
                                     <View style={el.type === "ingreso" ? s.containerIconIngresaDinero : s.containerIconSaleDinero}>
                                         {el.type === "ingreso" ? <MaterialCommunityIcons name="currency-usd" size={20} /> : <MaterialCommunityIcons name="currency-usd-off" size={20} />}
