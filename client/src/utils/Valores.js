@@ -13,8 +13,8 @@ let MesesEscritos = {
     noviembre: [],
     diciembre: []
 }
-const imprimeDias = (dayMonth, month, currentYear) => {
-    for (let i = 1; i <= totalDays(month, dayMonth, currentYear); i++) {
+const imprimeDias = (month, currentYear) => {
+    for (let i = 1; i <= totalDays(month, currentYear); i++) {
         if (month == 0) MesesEscritos.enero.push(i)
         if (month == 1) MesesEscritos.febrero.push(i)
         if (month == 2) MesesEscritos.marzo.push(i)
@@ -29,8 +29,7 @@ const imprimeDias = (dayMonth, month, currentYear) => {
         if (month == 11) MesesEscritos.diciembre.push(i)
     }
 }
-const totalDays = (month, dayMonth, currentYear) => {
-    if (dayMonth === -1) month = 11;
+const totalDays = (month, currentYear) => {
 
     if (month == 0 || month == 2 || month == 4 || month == 6 || month == 7 || month == 9 || month == 11) return 31;
     else if (month == 3 || month == 5 || month == 8 || month == 10) return 30
@@ -56,32 +55,13 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
     let Acc6 = 0;
     let Acc7 = 0;
     let newArray = todo && todo.transactions
-
     let array7Dias
     let final;
+    let arraySun, arrayMon, arrayTue, arrayWed, arrayThu, arrayFri, arraySat = []
+
     if ((dayMonth - 6) >= 0) {
         array7Dias = newArray && newArray.filter(pasa =>
             pasa.createdAt[2] >= (dayMonth - 6) && pasa.createdAt[1] == (month + 1) && pasa.createdAt[0] == currentYear)
-
-    } else {
-        let arrayDiasRestantes = newArray.filter(pasa => pasa.createdAt[2] <= dayMonth)
-        --month;
-        if (month < 0) {
-            month = 11;
-            --currentYear;
-        }
-        imprimeDias(dayMonth, month, currentYear)
-        let anterior = MesesEscritos[arrayMeses[month]]
-        final = anterior.slice(anterior.length + (dayMonth - 7), anterior.length)
-
-        let arrayDiasFaltantes = newArray.filter(pasa =>
-            pasa.createdAt[2] >= final[0] && pasa.createdAt[1] == (month + 1) && pasa.createdAt[0] == currentYear)
-
-        array7Dias = arrayDiasFaltantes.concat(arrayDiasRestantes)
-
-    }
-    let arraySun, arrayMon, arrayTue, arrayWed, arrayThu, arrayFri, arraySat = []
-    if ((dayMonth - 6) >= 0) {
 
         arraySun = array7Dias && array7Dias.filter(pasa =>
             pasa.createdAt[2] == (dayMonth - 6))
@@ -97,86 +77,191 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
             pasa.createdAt[2] == (dayMonth - 1))
         arraySat = array7Dias && array7Dias.filter(pasa =>
             pasa.createdAt[2] == dayMonth)
-    } else {
-        arraySun = array7Dias && array7Dias[0]
-        arrayMon = array7Dias && array7Dias[1]
-        arrayTue = array7Dias && array7Dias[2]
-        arrayWed = array7Dias && array7Dias[3]
-        arrayThu = array7Dias && array7Dias[4]
-        arrayFri = array7Dias && array7Dias[5]
-        arraySat = array7Dias && array7Dias[6]
+
+    }
+    if (dayMonth - 5 < 0) {
+
+        let arrayDiasRestantes = newArray.filter(pasa => pasa.createdAt[2] <= dayMonth)
+        --month;
+        if (month < 0) {
+            month = 11;
+            --currentYear;
+        }
+        imprimeDias(month, currentYear)
+        let anterior = MesesEscritos[arrayMeses[month]]
+        final = anterior.slice(anterior.length - (7 - dayMonth))
+        let arrayDiasFaltantes = newArray.filter(pasa =>
+            pasa.createdAt[2] >= final[0] && pasa.createdAt[1] == (month + 1) && pasa.createdAt[0] == currentYear)
+
+        array7Dias = arrayDiasFaltantes.concat(arrayDiasRestantes)
+        let numeroDeCorte = final[final.length - 1]
+
+        let valorFiltro
+        let valorFiltroPrimeroDias = 0
+        let valor = 0
+        let status = false
+        arraySun = array7Dias.filter(el =>
+            el.createdAt[2] == final[0])
+
+        // 
+        if (final[0] + 1 <= numeroDeCorte) {
+            valorFiltro = final[0] + 1
+        } else {
+            if (valorFiltroPrimeroDias < 10) {
+                valorFiltroPrimeroDias = "0" + (++valor)
+            }
+            status = true
+        }
+
+        arrayMon = status ?
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltroPrimeroDias)
+            :
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltro)
+        // 
+        if (final[0] + 2 <= numeroDeCorte) {
+            valorFiltro = final[0] + 2
+        } else {
+            if (valorFiltroPrimeroDias < 10) {
+                valorFiltroPrimeroDias = "0" + (++valor)
+            }
+            status = true
+        }
+        arrayTue = status ?
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltroPrimeroDias)
+            :
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltro)
+
+        // 
+        if (final[0] + 3 <= numeroDeCorte) {
+            valorFiltro = final[0] + 3
+        } else {
+            if (valorFiltroPrimeroDias < 10) {
+                valorFiltroPrimeroDias = "0" + (++valor)
+            }
+            status = true
+        }
+        arrayWed = status ?
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltroPrimeroDias)
+            :
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltro)
+
+        // 
+        if (final[0] + 4 <= numeroDeCorte) {
+            valorFiltro = final[0] + 4
+        } else {
+            if (valorFiltroPrimeroDias < 10) {
+                valorFiltroPrimeroDias = "0" + (++valor)
+            }
+            status = true
+        }
+        arrayThu = status ?
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltroPrimeroDias)
+            :
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltro)
+        // 
+        if (final[0] + 5 <= numeroDeCorte) {
+            valorFiltro = final[0] + 5
+        } else {
+            if (valorFiltroPrimeroDias < 10) {
+                valorFiltroPrimeroDias = "0" + (++valor)
+            }
+            status = true
+        }
+        
+        arrayFri = status ?
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltroPrimeroDias)
+            :
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltro)
+        // 
+        if (final[0] + 6 <= numeroDeCorte) {
+            valorFiltro = final[0] + 6
+        } else {
+            if (valorFiltroPrimeroDias < 10) {
+                valorFiltroPrimeroDias = "0" + (++valor)
+            }
+            status = true
+        }
+        arraySat = status ?
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltroPrimeroDias)
+            :
+            array7Dias.filter(el =>
+                el.createdAt[2] == valorFiltro)
     }
 
-    if (arraySun !== undefined) {
-        arraySun.map(el => {
-            if (el.type === "ingreso") {
-                Sun += el.total
-            } else {
-                Sun -= el.total
-            }
-        })
-    }
+    arraySun && arraySun.map(el => {
+        if (el.type === "ingreso") {
+            Sun += el.total
+        } else {
+            Sun -= el.total
+        }
+    })
     Acc1 = Sun
-    if (arrayMon !== undefined) {
-        arrayMon.map(el => {
-            if (el.type === "ingreso") {
-                Mon += el.total
-            } else {
-                Mon -= el.total
-            }
-        })
-    }
+
+    arrayMon && arrayMon.map(el => {
+        if (el.type === "ingreso") {
+            Mon += el.total
+        } else {
+            Mon -= el.total
+        }
+    })
     Acc2 = (Acc1 + Mon)
-    if (arrayTue !== undefined) {
-        arrayTue.map(el => {
-            if (el.type === "ingreso") {
-                Tue += el.total
-            } else {
-                Tue -= el.total
-            }
-        })
-    }
+
+    arrayTue && arrayTue.map(el => {
+        if (el.type === "ingreso") {
+            Tue += el.total
+        } else {
+            Tue -= el.total
+        }
+    })
     Acc3 = (Acc2 + Tue)
-    if (arrayWed !== undefined) {
-        arrayWed.map(el => {
-            if (el.type === "ingreso") {
-                Wed += el.total
-            } else {
-                Wed -= el.total
-            }
-        })
-    }
+
+    arrayWed && arrayWed.map(el => {
+        if (el.type === "ingreso") {
+            Wed += el.total
+        } else {
+            Wed -= el.total
+        }
+    })
     Acc4 = (Acc3 + Wed)
-    if (arrayThu !== undefined) {
-        arrayThu.map(el => {
-            if (el.type === "ingreso") {
-                Thu += el.total
-            } else {
-                Thu -= el.total
-            }
-        })
-    }
+
+    arrayThu && arrayThu.map(el => {
+        if (el.type === "ingreso") {
+            Thu += el.total
+        } else {
+            Thu -= el.total
+        }
+    })
     Acc5 = (Acc4 + Thu)
-    if (arrayFri !== undefined) {
-        arrayFri.map(el => {
-            if (el.type === "ingreso") {
-                Fri += el.total
-            } else {
-                Fri -= el.total
-            }
-        })
-    }
+
+    arrayFri && arrayFri.map(el => {
+        if (el.type === "ingreso") {
+            Fri += el.total
+        } else {
+            Fri -= el.total
+        }
+    })
     Acc6 = (Acc5 + Fri)
-    if (arraySat !== undefined) {
-        arraySat.map(el => {
-            if (el.type === "ingreso") {
-                Sat += el.total
-            } else {
-                Sat -= el.total
-            }
-        })
-    }
+
+    arraySat && arraySat.map(el => {
+        if (el.type === "ingreso") {
+            Sat += el.total
+        } else {
+            Sat -= el.total
+        }
+    })
     Acc7 = (Acc6 + Sat)
+
     return [Acc1, Acc2, Acc3, Acc4, Acc5, Acc6, Acc7]
 }
 export const filtroMes = (todo, dayMonth, month, currentYear) => {
@@ -192,7 +277,7 @@ export const filtroMes = (todo, dayMonth, month, currentYear) => {
     let accumuladorSemanaCuatro = 0;
 
     let arrayAcumuladoUltimasDosSemanas = newArrayTodo && newArrayTodo.filter(el => el.createdAt[1] == (month + 1) && el.createdAt[2] <= dayMonth && el.createdAt[0] == currentYear)
-
+   
     if(month >= 0){
         --month
     }
@@ -200,7 +285,7 @@ export const filtroMes = (todo, dayMonth, month, currentYear) => {
         --currentYear
         month = 11
     } 
-    let arrayAcumuladoPrimerasDosSemanas = newArrayTodo && newArrayTodo.filter(el => el.createdAt[1] == (month + 1) && el.createdAt[2] <= dayMonth && el.createdAt[0] == currentYear)
+    let arrayAcumuladoPrimerasDosSemanas = newArrayTodo && newArrayTodo.filter(el => el.createdAt[1] == (month + 1) && el.createdAt[2] >= dayMonth && el.createdAt[0] == currentYear)
 
     let arraySemanaUno = arrayAcumuladoPrimerasDosSemanas && arrayAcumuladoPrimerasDosSemanas.splice(0, arrayAcumuladoPrimerasDosSemanas.length / 2)
 
@@ -287,7 +372,7 @@ export const filtroSeisMeses = (todo, dayMonth, month, currentYear, status) =>{
         month = 11
     }
     let arrayQuintoMes = newArray && newArray.filter(el =>
-        el.createdAt[0] == currentYear && el.createdAt[1] == (month + 1) && el.createdAt[2] <= dayMonth)
+        el.createdAt[0] == currentYear && el.createdAt[1] == (month + 1))
     if (month >= 0) {
         --month
     }
@@ -296,7 +381,7 @@ export const filtroSeisMeses = (todo, dayMonth, month, currentYear, status) =>{
         month = 11
     }
     let arrayCuartoMes = newArray && newArray.filter(el =>
-        el.createdAt[0] == currentYear && el.createdAt[1] == (month + 1) && el.createdAt[2] <= dayMonth)
+        el.createdAt[0] == currentYear && el.createdAt[1] == (month + 1))
     if (month >= 0) {
         --month
     }
@@ -305,7 +390,7 @@ export const filtroSeisMeses = (todo, dayMonth, month, currentYear, status) =>{
         month = 11
     }
     let arrayTercerMes = newArray && newArray.filter(el =>
-        el.createdAt[0] == currentYear && el.createdAt[1] == (month + 1) && el.createdAt[2] <= dayMonth)
+        el.createdAt[0] == currentYear && el.createdAt[1] == (month + 1))
     if (month >= 0) {
         --month
     }
@@ -314,7 +399,7 @@ export const filtroSeisMeses = (todo, dayMonth, month, currentYear, status) =>{
         month = 11
     }
     let arraySegundoMes = newArray && newArray.filter(el =>
-        el.createdAt[0] == currentYear && el.createdAt[1] == (month + 1) && el.createdAt[2] <= dayMonth)
+        el.createdAt[0] == currentYear && el.createdAt[1] == (month + 1))
     if (month >= 0) {
         --month
     }
@@ -323,7 +408,7 @@ export const filtroSeisMeses = (todo, dayMonth, month, currentYear, status) =>{
         month = 11
     }
     let arrayPrimerMes = newArray && newArray.filter(el => 
-        el.createdAt[0] == currentYear && el.createdAt[1] == (month + 1) && el.createdAt[2] <= dayMonth)
+        el.createdAt[0] == currentYear && el.createdAt[1] == (month + 1) && el.createdAt[2] >= dayMonth)
     
     arrayPrimerMes && arrayPrimerMes.map(el => {
         if(el.type === "ingreso"){

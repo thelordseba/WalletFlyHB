@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Alert, StyleSheet, View } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,11 +9,12 @@ import api from '../../../reducer/ActionCreator';
 export default function DrawerContent(props) {
     const user = useSelector(state => state.user)
     const [isDarkTheme, setIsDarkTheme] = useState(false)
+    const huella = useSelector(state => state.huella)
     const toggleTheme = () => {
         setIsDarkTheme(!isDarkTheme)
     }
     const dispatch = useDispatch()
-    const { USER } = api
+    const { USER, HUELLA } = api
     return (
         <View style={{ flex: 1 }}>
             <DrawerContentScrollView {...props}>
@@ -68,12 +69,48 @@ export default function DrawerContent(props) {
                         onPress={() => props.navigation.navigate('QuestionAndAnswers')}
                     />
                 </Drawer.Section>
-                <Drawer.Section title="Preferences">
+                <Drawer.Section title="Configuración">
                     <TouchableRipple onPress={() => toggleTheme()}>
                         <View style={s.preference}>
                             <Text>Tema Oscuro</Text>
                             <View pointerEvents="none">
                                 <Switch value={isDarkTheme} />
+                            </View>
+                        </View>
+                    </TouchableRipple>
+                    <TouchableRipple onPress={() => {
+                        let codigoHuella = huella.code ? huella.code : Math.round(Math.random() * 8999 + 1000);
+                        if (!huella.active) {
+                            dispatch({
+                                type: HUELLA,
+                                payload: {
+                                    active: true,
+                                    dialogVisible: true,
+                                    showCode: true,
+                                    enterCode: false,
+                                    code: codigoHuella
+                                }
+                            })
+                        }
+                        if (huella.active) {
+                            dispatch({
+                                type: HUELLA,
+                                payload: {
+                                    active: true,
+                                    dialogVisible: true,
+                                    showCode: false,
+                                    enterCode: true,
+                                    code: codigoHuella
+                                }
+                            })
+                        }
+                        props.navigation.toggleDrawer()
+                        props.navigation.navigate("Home")
+                    }}>
+                        <View style={s.preference}>
+                            <Text>Huella Digital</Text>
+                            <View pointerEvents="none">
+                                <Switch value={huella.active} />
                             </View>
                         </View>
                     </TouchableRipple>

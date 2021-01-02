@@ -12,8 +12,8 @@ export default function Ingresos({ navigation }) {
             <ScrollView >
                 {
                     ingreso && ingreso.map(el => (
-                        <TouchableOpacity onPress={() => navigation.navigate("DetallesEstadistica", {id: el.id})}>
-                            <View style={s.container} key={el.id}>
+                        <TouchableOpacity key={el.id} onPress={() => navigation.navigate("DetallesEstadistica", {id: el.id})}>
+                            <View style={s.container} >
                                 <View style={s.containerIconDireccion}>
                                     <View style={s.containerIconIngresaDinero}>
                                         <MaterialCommunityIcons name="currency-usd" size={20} />
