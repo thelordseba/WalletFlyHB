@@ -71,7 +71,7 @@ export default function Contactos({ navigation }) {
             payload: data,
           });
         }
-        console.log(data);
+
       })
       .catch((err) => console.error(err));
   }, []);
@@ -84,7 +84,7 @@ export default function Contactos({ navigation }) {
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
         <Appbar.Content title="Contactos" />
-        <Appbar.Action
+      <Appbar.Action
           icon="chart-pie"
           onPress={() => navigation.navigate("StackEstadisticas")}
         />
@@ -117,6 +117,7 @@ export default function Contactos({ navigation }) {
                           {el.user.firstName} {el.user.lastName}
                         </Text>
                       ) : (
+
                         <Text style={s.name}>{el.alias}</Text>
                       )}
                       <Text>{el.user.email}</Text>

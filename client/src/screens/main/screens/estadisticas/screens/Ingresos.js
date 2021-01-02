@@ -1,10 +1,10 @@
 import React from 'react';
-import { Text, View, StyleSheet  } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity  } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import { ScrollView } from "react-native-gesture-handler";
 
-export default function Ingresos() {
+export default function Ingresos({ navigation }) {
 
     const { ingreso } = useSelector(state => state.transacciones)
     return (
@@ -12,16 +12,19 @@ export default function Ingresos() {
             <ScrollView >
                 {
                     ingreso && ingreso.map(el => (
-                        <View style={s.container} key={el.id}>
-                            <View style={s.containerIconDireccion}>
-                                <View style={s.containerIconIngresaDinero}>
-                                    <MaterialCommunityIcons name="currency-usd" size={20} />
+                        <TouchableOpacity key={el.id} onPress={() => navigation.navigate("DetallesEstadistica", {id: el.id})}>
+                            <View style={s.container} >
+                                <View style={s.containerIconDireccion}>
+                                    <View style={s.containerIconIngresaDinero}>
+                                        <MaterialCommunityIcons name="currency-usd" size={20} />
+                                    </View>
+                                    <Text style={s.textDireccion}>{el.title}</Text>
                                 </View>
-                                <Text style={s.textDireccion}>{el.title}</Text>
+                                <Text style={s.ingresaDinero}>
+                                    ${el.total} USD
+                                </Text>
                             </View>
-                            <Text style={s.ingresaDinero}>${el.total} USD
-                            </Text>
-                        </View>
+                        </TouchableOpacity>
                     ))
                 }
             </ScrollView>

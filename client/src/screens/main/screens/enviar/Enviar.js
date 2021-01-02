@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, Alert } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import api from '../../../../reducer/ActionCreator';
 import Axios from "axios";
 import { Appbar } from 'react-native-paper';
 import styleInputs from '../../../registro/screens/styles/inputs/s';
 import { APP_API } from "../../../../../env";
+import AsyncStorage from "@react-native-community/async-storage";
+import * as LocalAuthentication from "expo-local-authentication";
 
 export default function Enviar(props) {
   const [text, setText] = useState({
@@ -14,72 +16,115 @@ export default function Enviar(props) {
     title: "",
     description: "",
   });
-
+  const { active } = useSelector(state => state.huella)
   const user = useSelector(state => state.user);
   const dispatch = useDispatch()
+  const saldo = useSelector(state => state.saldo)
   const { SALDO } = api
   const handleTextChange = (name, value) => {
     setText({ ...text, [name]: value });
   };
-  const sendMoney = () => {
-    Axios.get(`http://${APP_API}/users/getUserByEmail?email=${text.email}`) //trae el destinatario
-      .then(({ data }) => {
-        var contact = data;
-        Axios.get(
-          `http://${APP_API}/users/getUserByEmail/?email=${user.email}`
-        )
-          .then(({ data }) => {
-            if (data.accounts[0].balance < text.amount) {
-              alert("no posees el saldo suficiente");
-            } else {
-              Axios.post(
-                `http://${APP_API}/transaction/${data.accounts[0].id}`,
+  const sendMoney = async () => {
+    let contact
+    if (active) {
+      if (text.amount < saldo) {
+        const res = await LocalAuthentication.hasHardwareAsync();
+        if (!res) {
+          return Alert.alert("Su dispositivo no soporta los metodos de login");
+        }
+        const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync({});
+        if (!autorization) return Alert.alert("No autorizado");
+        const huella = await LocalAuthentication.isEnrolledAsync();
+        if (!huella) return Alert.alert("No tiene autorizacion");
+        const login = await LocalAuthentication.authenticateAsync({
+          promptMessage: "Ingrese su huella por favor"
+        });
+        if (login.success) {
+          Axios.get(`http://${APP_API}/users/getUserByEmail?email=${text.email}`)
+            .then(({ data }) => {
+              contact = data
+            })
+            .then((data) => {
+              return Axios.post(`http://${APP_API}/transaction/${user.id}`,
                 {
                   title: text.title,
                   description: text.description,
                   type: "egreso",
                   total: parseInt(text.amount, 10),
+                })
+            })
+            .then(({ data }) => {
+              dispatch({
+                type: SALDO,
+                payload: data.balance
+              })
+              return Axios.post(
+                `http://${APP_API}/transaction/${contact.accounts[0].id}`,
+                {
+                  title: text.title,
+                  description: text.description,
+                  type: "ingreso",
+                  total: parseInt(text.amount, 10),
                 }
               )
-                .then(({data}) => {
-                  dispatch({
-                    type: SALDO,
-                    payload: data.balance
-                  })
-                  Axios.post(
-                    `http://${APP_API}/transaction/${contact.accounts[0].id}`,
-                    {
-                      title: text.title,
-                      description: text.description,
-                      type: "ingreso",
-                      total: parseInt(text.amount, 10),
-                    }
-                  )
-                    .then(({ data }) => {
-                      alert("Envio de dinero realizado con exito");
-                      props.navigation.navigate('Home')
-                    })
-                    .catch((error) => {
-                      console.log("error en el destinatario");
-                      console.log(error);
-                    });
-                })
-                .catch((error) => {
-                  console.log("error en el envio");
-                  console.log(error);
-                });
-            }
+            })
+            .then(({ data }) => {
+              props.navigation.navigate('Home')
+              Alert.alert("Envio de dinero realizado con exito");
+            })
+            .catch(err => {
+              Alert.alert("Ocurrio un Error!")
+              console.log(err)
+            })
+        }
+      } else {
+        Alert.alert("No tiene saldo suficiente")
+      }
+    } else {
+      if (text.amount < saldo) {
+        Axios.get(`http://${APP_API}/users/getUserByEmail?email=${text.email}`)
+          .then(({ data }) => {
+            contact = data
           })
-          .catch((error) => {
-            console.log(error);
-          });
-      })
-      .catch((error) => {
-        console.log(error);
-        alert("el email no corresponde a un usuario");
-      });
-  };
+          .then((data) => {
+            return Axios.post(`http://${APP_API}/transaction/${user.id}`,
+              {
+                title: text.title,
+                description: text.description,
+                type: "egreso",
+                total: parseInt(text.amount, 10),
+              })
+          })
+          .then(({ data }) => {
+            dispatch({
+              type: SALDO,
+              payload: data.balance
+            })
+            return Axios.post(
+              `http://${APP_API}/transaction/${contact.accounts[0].id}`,
+              {
+                title: text.title,
+                description: text.description,
+                type: "ingreso",
+                total: parseInt(text.amount, 10),
+              }
+            )
+          })
+          .then(({ data }) => {
+            props.navigation.navigate('Home')
+            Alert.alert("Envio de dinero realizado con exito");
+          })
+          .catch(err => {
+            Alert.alert("Ocurrio un Error!")
+            console.log(err)
+          })
+      } else {
+        Alert.alert("No tiene saldo Suficiente")
+      }
 
+    }
+  }
+  
   return (
     <>
       <Appbar.Header>

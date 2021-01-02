@@ -1,26 +1,29 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ScrollView } from "react-native-gesture-handler";
 
-export default function Gastos(){
+export default function Gastos({ navigation }){
     const { gasto } = useSelector(state => state.transacciones)
     return(
         <View style={{ flex: 1 }}>
             <ScrollView >
                 {
                     gasto && gasto.map(el => (
-                        <View style={s.container} key={el.id}>
-                            <View style={s.containerIconDireccion}>
-                                <View style={s.containerIconSaleDinero}>
-                                    <MaterialCommunityIcons name="currency-usd-off" size={20} />
+                        <TouchableOpacity key={el.id} onPress={() => navigation.navigate("DetallesEstadistica", {id: el.id})} >
+                            <View style={s.container}>
+                                <View style={s.containerIconDireccion}>
+                                    <View style={s.containerIconSaleDinero}>
+                                        <MaterialCommunityIcons name="currency-usd-off" size={20} />
+                                    </View>
+                                    <Text style={s.textDireccion}>{el.title}</Text>
                                 </View>
-                                <Text style={s.textDireccion}>{el.title}</Text>
+                                <Text style={s.saleDinero}>
+                                    ${el.total} USD
+                                </Text>
                             </View>
-                            <Text style={s.saleDinero}>${el.total} USD
-                        </Text>
-                        </View>
+                        </TouchableOpacity>
                     ))
                 }
             </ScrollView>

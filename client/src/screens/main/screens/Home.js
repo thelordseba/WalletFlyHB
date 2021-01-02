@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, StyleSheet, Text, View, Dimensions } from 'react-native';
+import { Button, StyleSheet, Text, View, Dimensions, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { LineChart } from "react-native-chart-kit";
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar } from 'react-native-paper';
@@ -9,14 +9,17 @@ import { Appbar } from 'react-native-paper';
 import { diasDeSemana, diasMes, seisMeses, unAño } from '../../../utils/Days';
 import { SieteDias, filtroMes, filtroSeisMeses, filtroUnAño } from '../../../utils/Valores'
 import { APP_API } from "../../../../env";
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function Home({ navigation }) {
     const [value, setValue] = useState(0)
     const user = useSelector(state => state.user)
     const saldo = useSelector(state => state.saldo)
+    const { dialogVisible, showCode, enterCode, code } = useSelector(state => state.huella)
+    const [ codeHuellaValue, setCodeHuellaValue ] = useState("")
     const dispatch = useDispatch()
     const { todo } = useSelector(state => state.transacciones)
-    const { TRANSACCIONES } = api
+    const { TRANSACCIONES, HUELLA } = api
     const date = new Date();
     const day = date.getDay()
     let dayMonth = date.getDate()
@@ -57,6 +60,33 @@ export default function Home({ navigation }) {
                 return diasDeSemana(day)
         }
     }
+    const onHandleHuella = () => {
+        if(codeHuellaValue == code){
+            dispatch({
+                type: HUELLA,
+                payload: {
+                    active: false,
+                    dialogVisible: false,
+                    showCode: false,
+                    code: false,
+                    enterCode: false
+                }
+            })
+            Alert.alert('Huella digital Desactivada')
+        }else {
+            dispatch({
+                type: HUELLA,
+                payload: {
+                    active: true,
+                    dialogVisible: false,
+                    showCode: false,
+                    code: code,
+                    enterCode: false
+                }
+            })
+            Alert.alert("El codigo ingresado es Incorrecto")
+        }
+    }
     useEffect(() => {
         axios.get(`http://${APP_API}/transaction/${user.id}`)
             .then(({ data }) => {
@@ -77,7 +107,6 @@ export default function Home({ navigation }) {
             <Appbar.Header>
                 <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
                 <Appbar.Content title={`Bienvenido ${user.firstName}`} />
-                <Appbar.Action icon="chart-pie" onPress={() => navigation.navigate('StackEstadisticas')} />
             </Appbar.Header>
             <View style={s.container}>
                 <View style={s.containerPerfil}>
@@ -132,6 +161,66 @@ export default function Home({ navigation }) {
                     <Button title="Enviar" onPress={() => navigation.navigate("Enviar")} />
                 </View>
             </View>
+            {
+                dialogVisible && showCode ?
+                    <View style={s.containerAgregar}>
+                        <View style={s.containerAgregar2}>
+                            <TouchableOpacity onPress={() => {
+                                dispatch({
+                                    type: HUELLA,
+                                    payload: {
+                                        active: true,
+                                        dialogVisible: false,
+                                        showCode: false,
+                                        code: code,
+                                        enterCode: false
+                                    }
+                                })
+                            }} style={s.buttonClose}>
+                                <Text><MaterialCommunityIcons name="close" size={26} /></Text>
+                            </TouchableOpacity>
+                            <Text style={{ marginTop: 40, marginBottom: 10 }}>
+                                Por su seguridad, se le pedirá este codigo, si quiere desactivar su huella digital. No la pierda!
+                            </Text>
+                            <Text style={{ textAlign: "center", fontSize: 24, fontWeight: "bold" }}>
+                                {code && code}
+                            </Text>
+                        </View>
+                    </View>
+                    : null
+            }
+            {
+                dialogVisible && enterCode ?
+                    <View style={s.containerAgregar}>
+                        <View style={s.containerAgregar2}>
+                            <TouchableOpacity onPress={() => {
+                                dispatch({
+                                    type: HUELLA,
+                                    payload: {
+                                        active: true,
+                                        dialogVisible: false,
+                                        showCode: false,
+                                        code: code,
+                                        enterCode: false
+                                    }
+                                })
+                            }} style={s.buttonClose}>
+                                <Text><MaterialCommunityIcons name="close" size={26} /></Text>
+                            </TouchableOpacity>
+                            <Text style={{ marginTop: 40, marginBottom: 10 }}>
+                                Ingrese el codigo de seguridad para desactivar su huella digital
+                            </Text>
+                            <TextInput
+                                placeholder="Ingrese el codigo"
+                                onChangeText={(e) => setCodeHuellaValue(e)}
+                            />
+                            <TouchableOpacity onPress={() => onHandleHuella()}>
+                                <Text>Ingresar Codigo</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    : null
+            }
         </>
     )
 }
@@ -189,4 +278,46 @@ const s = StyleSheet.create({
         paddingRight: 5,
         paddingLeft: 5,
     },
+    containerAgregar:{
+        flex: 1, 
+        justifyContent: "center", 
+        alignItems: "center", 
+        position: "absolute", 
+        bottom: 0,
+        top: 0,
+        backgroundColor: "rgba(0,0,0,0.6)",
+        width: '100%',
+      },
+      containerAgregar2:{
+        display: "flex",
+        backgroundColor: "#fff",
+        borderRadius: 10,
+        padding: 20,
+      },
+      buttonClose:{
+        position: "absolute",
+        right: 10,
+        top: 10,
+        justifyContent:"center",
+        alignItems: "center",
+        borderWidth:1,
+        width: 40,
+        height:40,
+        backgroundColor:'#fff',
+        borderRadius: 60,
+      },
+      buttonAceptarCambios: {
+        borderWidth: 1,
+        borderColor: 'rgba(0,0,0,0.8)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 200,
+        height: 30,
+        marginLeft: "auto",
+        marginRight: 'auto',
+        marginBottom: 10,
+        backgroundColor: '#fff',
+        borderRadius: 80,
+        marginTop: 20,
+      }
 });

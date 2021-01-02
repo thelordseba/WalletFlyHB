@@ -18,7 +18,7 @@ import ModificarContacto from '../screens/main/screens/modificarContactos/Modifi
 import SideBar from '../screens/main/screens/DrawerContent';
 import EnEfectivo from '../screens/main/screens/recargar/EnEfectivo';
 import StackEstadisticas from '../screens/main/screens/estadisticas/StackEstadisticas';
-
+import DetallesEstadistica from '../screens/main/screens/estadisticas/screens/DetallesEstadistica'
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
 
@@ -40,6 +40,7 @@ export default function MyStack(props) {
                         <Stack.Screen name="QuestionAndAnswers" component={QuestionAndAnswers} />
                         <Stack.Screen name="ModificarContacto" component={ModificarContacto} />
                         <Stack.Screen name="StackEstadisticas" component={StackEstadisticas} />
+                        <Stack.Screen name="DetallesEstadistica" component={DetallesEstadistica} />
                         <Stack.Screen name="ChargeMoney" component={ChargeMoney} />
 
                     </Drawer.Navigator>
@@ -65,7 +66,7 @@ export default function MyStack(props) {
                             <Stack.Screen name="QuestionAndAnswers" component={QuestionAndAnswers} options={{
                                 headerTitle: "Preguntas y Respuestas",
                                 headerTintColor: "#FFFFFF"
-                            }}/>
+                            }} />
                         </Stack.Navigator>
                     </>
             }

@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useSelector } from 'react-redux';
 import { ScrollView } from "react-native-gesture-handler";
 
-export default function Todo(){
+export default function Todo({ navigation }){
 
     const { todo } = useSelector(state => state.transacciones)
     return(
@@ -12,18 +12,21 @@ export default function Todo(){
             <ScrollView >
                 {
                     todo && todo.transactions.map(el => (
-                        <View style={s.container} key={el.id}>
-                            <View style={s.containerIconDireccion}>
-                                <View style={el.type === "ingreso" ? s.containerIconIngresaDinero : s.containerIconSaleDinero}>
-                                    {el.type === "ingreso" ? <MaterialCommunityIcons name="currency-usd" size={20} /> : <MaterialCommunityIcons name="currency-usd-off" size={20} />}
+                        <TouchableOpacity key={el.id} onPress={() => navigation.navigate("DetallesEstadistica", {id: el.id})}>
+                            <View style={s.container} >
+                                <View style={s.containerIconDireccion}>
+                                    <View style={el.type === "ingreso" ? s.containerIconIngresaDinero : s.containerIconSaleDinero}>
+                                        {el.type === "ingreso" ? <MaterialCommunityIcons name="currency-usd" size={20} /> : <MaterialCommunityIcons name="currency-usd-off" size={20} />}
+                                    </View>
+                                    <Text style={s.textDireccion}>{el.title}</Text>
                                 </View>
-                                <Text style={s.textDireccion}>{el.title}</Text>
+                                <Text style={el.type === "ingreso" ? s.ingresaDinero : s.saleDinero}>
+                                    ${el.total} USD
+                                </Text>
                             </View>
-                            <Text style={el.type === "ingreso" ? s.ingresaDinero : s.saleDinero}>${el.total} USD
-                        </Text>
-                        </View>
+                        </TouchableOpacity>
                     ))
-                }
+                }         
             </ScrollView>
         </View>
     )

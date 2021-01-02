@@ -8,6 +8,7 @@ import { APP_API } from "../../../../../env";
 import api from "../../../../reducer/ActionCreator";
 import { useDispatch } from "react-redux";
 
+
 export default function ModificarContacto({ navigation, route }) {
   const { CONTACTOS } = api;
   const dispatch = useDispatch();
@@ -103,6 +104,7 @@ export default function ModificarContacto({ navigation, route }) {
       </TouchableOpacity>
     </>
   );
+
 }
 
 const s = StyleSheet.create({
