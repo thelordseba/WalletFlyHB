@@ -109,7 +109,7 @@ export default function Contactos({ navigation }) {
                   <View style={s.containerNameAvatar}>
                     <Avatar.Image
                       size={50}
-                      source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"
+                      source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"}}
                     />
                     <View style={s.containerNameEmail}>
                       {!el.alias ? (

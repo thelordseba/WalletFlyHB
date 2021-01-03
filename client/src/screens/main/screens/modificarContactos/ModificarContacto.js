@@ -64,7 +64,7 @@ export default function ModificarContacto({ navigation, route }) {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Avatar.Image
           size={100}
-          source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"
+          source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"}}
         />
         <View
           style={{
