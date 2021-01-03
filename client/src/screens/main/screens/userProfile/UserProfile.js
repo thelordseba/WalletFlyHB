@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, SafeAreaView } from "react-native";
 import { useSelector } from 'react-redux';
 import { Button, Avatar, Appbar } from 'react-native-paper';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+//import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import UploadImage from './UploadImage';
 
 export default function UserProfile({ navigation }) {
     
@@ -14,11 +15,14 @@ export default function UserProfile({ navigation }) {
                 <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
                 <Appbar.Content title="Perfil" />
             </Appbar.Header>
+
             <SafeAreaView>
                 <View style={s.container}>
                     <View style={s.containerImg}>
-                        {/* en celular no muestra el icono, segun doc hay que importar img */}
-                        <Avatar.Image size={70} source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"}}/>
+                        {/* en celular no muestra el icono, segun doc hay que importar img */}                       
+
+                        <UploadImage email= {user.email}/>                           
+
                         <Text style={s.textUser}>{user.firstName} {user.lastName}</Text>
                         <Text style={s.textEmail}>{user.email}</Text>
                     </View>
