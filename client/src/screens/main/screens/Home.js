@@ -8,7 +8,6 @@ import api from '../../../reducer/ActionCreator'
 import { Appbar } from 'react-native-paper';
 import { diasDeSemana, diasMes, seisMeses, unAño } from '../../../utils/Days';
 import { SieteDias, filtroMes, filtroSeisMeses, filtroUnAño } from '../../../utils/Valores'
-import { APP_API } from "../../../../env";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function Home({ navigation }) {
@@ -89,7 +88,7 @@ export default function Home({ navigation }) {
         }
     }
     useEffect(() => {
-        axios.get(`http://${APP_API}/transaction/${user.id}`)
+        axios.get(`https://walletfly.glitch.me/transaction/${user.id}`)
             .then(({ data }) => {
                 dispatch({
                     type: TRANSACCIONES,

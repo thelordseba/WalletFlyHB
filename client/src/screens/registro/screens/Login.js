@@ -6,7 +6,6 @@ import api from "../../../reducer/ActionCreator";
 import { Button } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { APP_API } from "../../../../env";
 import * as LocalAuthentication from "expo-local-authentication";
 
 export default function Login() {
@@ -39,7 +38,7 @@ export default function Login() {
       });
       if (login.success) {
         axios
-          .post(`http://${APP_API}/users/login`, state)
+          .post(`https://walletfly.glitch.me/users/login`, state)
           .then(({ data }) => {
             dispatch({
               type: USER,
@@ -57,7 +56,7 @@ export default function Login() {
       Alert.alert("Complete todos los campos por favor")
     } else {
       axios
-        .post(`http://${APP_API}/users/login`, state)
+        .post(`https://walletfly.glitch.me/users/login`, state)
         .then(({ data }) => {
           dispatch({
             type: USER,

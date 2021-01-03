@@ -13,7 +13,6 @@ import { Avatar, Appbar } from "react-native-paper";
 import api from "../../../reducer/ActionCreator";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
-import { APP_API } from "../../../../env";
 
 export default function Contactos({ navigation }) {
   const [text, setText] = useState({ email: "", alias: "" });
@@ -25,10 +24,10 @@ export default function Contactos({ navigation }) {
 
   const addContact = () => {
     axios
-      .get(`http://${APP_API}/users/getUserByEmail/?email=${text.email}`)
+      .get(`https://walletfly.glitch.me/users/getUserByEmail/?email=${text.email}`)
       .then(({ data }) => {
         axios
-          .post(`http://${APP_API}/contacts/${user.id}?contactId=${data.id}`)
+          .post(`https://walletfly.glitch.me/contacts/${user.id}?contactId=${data.id}`)
           .then(({ data }) => {
             dispatch({
               type: CONTACTOS,
@@ -63,7 +62,7 @@ export default function Contactos({ navigation }) {
 
   useEffect(() => {
     axios
-      .get(`http://${APP_API}/contacts/${user.id}`)
+      .get(`https://walletfly.glitch.me/contacts/${user.id}`)
       .then(({ data }) => {
         if (data.length) {
           dispatch({
@@ -94,6 +93,7 @@ export default function Contactos({ navigation }) {
           {contactos &&
             contactos.map((el) => (
               <TouchableOpacity
+                key={el.id}
                 onPress={() =>
                   navigation.navigate("ModificarContacto", {
                     id: el.contactId,
@@ -105,7 +105,7 @@ export default function Contactos({ navigation }) {
                   })
                 }
               >
-                <View key={el.id} style={s.containerView}>
+                <View style={s.containerView}>
                   <View style={s.containerNameAvatar}>
                     <Avatar.Image
                       size={50}
@@ -130,35 +130,6 @@ export default function Contactos({ navigation }) {
                       justifyContent: "flex-end",
                     }}
                   >
-                    {/* <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("ModificarContacto", {
-                        id: el.contactId,
-                        idUser: user.id,
-                        firstName: el.user.firstName,
-                        lastName: el.user.lastName,
-                        alias: el.alias,
-                        email: el.user.email,
-                      })
-                    }
-                    style={s.buttonEdit}
-                  > 
-                    <Text>
-                      <MaterialCommunityIcons name="pencil" size={15} />
-                    </Text>
-                  </TouchableOpacity> */}
-                    {/* <TouchableOpacity
-                      onPress={() => handleDelete(el.contactId)}
-                      style={s.buttonDelete}
-                    >
-                      <Text>
-                        <MaterialCommunityIcons
-                          name="delete"
-                          size={15}
-                          color="#a44"
-                        />
-                      </Text>
-                    </TouchableOpacity> */}
                   </View>
                 </View>
               </TouchableOpacity>

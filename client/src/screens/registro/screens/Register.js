@@ -4,7 +4,6 @@ import { View, TextInput, StyleSheet, Text } from "react-native";
 import { Button, Dialog, Paragraph } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { APP_API } from "../../../../env";
 
 export default function CreateUserScreen(props) {
   const [state, setState] = useState({
@@ -68,7 +67,7 @@ export default function CreateUserScreen(props) {
     }
 
     axios
-      .post(`http://${APP_API}/userEmail`, state)
+      .post(`https://walletfly.glitch.me/userEmail`, state)
       .then(({ data }) => {
         props.navigation.navigate("AuthEmail", { id: data.user.id, state });
       })
