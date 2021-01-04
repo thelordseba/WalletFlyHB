@@ -88,10 +88,7 @@ export default function UserProfile({ navigation }) {
         .catch(error => {
             //console.log(error);
         });
-    }
-
-    
-
+    }  
 
     return (
         <>
@@ -102,31 +99,27 @@ export default function UserProfile({ navigation }) {
 
             <SafeAreaView>
                 <View style={s.container}>
-                    <View style={s.containerImg}>                                        
-                       
-                        <View style={s.container}>
-                            <Avatar.Image 
-                               source={{ uri: userImage ? userImage : emptyAvatar}} 
-                               size= {100} 
-                            /> 
-
-                            <View>
-                                <MaterialCommunityIcons                                
-                                onPress={() => getDeviceImage('gallery')}
-                                name="lead-pencil"  
-                                size= {20}  
-                                color= '#FAFAFA'                        
-                                />
-                            </View>
-                            <View>
-                                <MaterialCommunityIcons                               
-                                onPress={() => getDeviceImage('camera')}
-                                name="camera-plus" 
-                                size= {20}                
-                                color= '#FAFAFA'                        
-                                />
-                            </View>           
+                    <View style={s.containerImg}>                                                                                    
+                        <Avatar.Image 
+                            source={{ uri: userImage ? userImage : emptyAvatar}} 
+                            size= {100} 
+                        /> 
+                        <View>
+                            <MaterialCommunityIcons                                
+                            onPress={() => getDeviceImage('gallery')}
+                            name="lead-pencil"  
+                            size= {20}  
+                            color= '#FAFAFA'                        
+                            />
                         </View>
+                        <View>
+                            <MaterialCommunityIcons                               
+                            onPress={() => getDeviceImage('camera')}
+                            name="camera-plus" 
+                            size= {20}                
+                            color= '#FAFAFA'                        
+                            />
+                        </View>                                 
 
                         <Text style={s.textUser}>{user.firstName} {user.lastName}</Text>
                         <Text style={s.textEmail}>{user.email}</Text>
