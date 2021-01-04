@@ -5,10 +5,12 @@ import { Avatar, Title, Caption, Drawer, Text, TouchableRipple, Switch } from 'r
 import { useSelector, useDispatch } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import api from '../../../reducer/ActionCreator';
+import emptyAvatar from '../../../../assets/descarga.png'
 
 export default function DrawerContent(props) {
     const user = useSelector(state => state.user)
     const [isDarkTheme, setIsDarkTheme] = useState(false)
+    const userImage = useSelector(state => state.userImage)
     const huella = useSelector(state => state.huella)
     const toggleTheme = () => {
         setIsDarkTheme(!isDarkTheme)
@@ -22,7 +24,7 @@ export default function DrawerContent(props) {
                 <View style={s.drawerContent}>
                     <View style={s.userInfoSection}>
                         <View style={{ flexDirection: "row", marginTop: 15 }}>
-                        <Avatar.Image size={50} source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"}}/>
+                        <Avatar.Image size={50} source={{ uri: userImage ? userImage : emptyAvatar }}/>
                             <View style={{ marginLeft: 15, flexDirection: "column" }}>
                                 <Title style={s.title}>{user.firstName} {user.lastName}</Title>
                                 <Caption style={s.caption}>{user.email}</Caption>

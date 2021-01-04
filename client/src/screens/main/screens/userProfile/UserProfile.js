@@ -8,6 +8,8 @@ import UploadImage from './UploadImage';
 export default function UserProfile({ navigation }) {
     
     const user = useSelector(state => state.user)
+    const image = useSelector(state => state.userImage)
+
 
     return (
         <>
@@ -18,8 +20,7 @@ export default function UserProfile({ navigation }) {
 
             <SafeAreaView>
                 <View style={s.container}>
-                    <View style={s.containerImg}>
-                        {/* en celular no muestra el icono, segun doc hay que importar img */}                       
+                    <View style={s.containerImg}>                                          
 
                         <UploadImage email= {user.email}/>                           
 

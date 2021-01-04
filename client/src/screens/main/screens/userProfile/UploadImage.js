@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, View, Image } from "react-native";
-import firebaseConfig from "../../../../firebase/firebase-config.js";
+import React, { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import firebase from "firebase/app";
 import 'firebase/storage';
 import * as ImagePicker from 'expo-image-picker';
@@ -8,21 +7,19 @@ import * as Permissions from 'expo-permissions';
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { Avatar } from 'react-native-paper';
 import emptyAvatar from '../../../../../assets/descarga.png';
-//import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import api from '../../../../reducer/ActionCreator';
 
-firebase.initializeApp(firebaseConfig);  //Establecemos la conexión con firebase
 
-export default function UploadImage(props){
-   // const user = useSelector(state => state.user);
-    
-    const [state, setState] = useState({
-        userEmail: props.email,
-        imageFirebase: ''
-    });    
+export default function UploadImage(){
+    const user = useSelector(state => state.user);  
+    const userImage = useSelector(state => state.userImage)
+    const dispatch = useDispatch();
+    const { USER_IMAGE } = api; 
 
     useEffect(()=>{
         loadImage();        
-    }, []);
+    }, [userImage]);
 
     const uploadImageFirebase = (uri) => {      
         return new Promise((resolve, reject) => {
@@ -58,46 +55,45 @@ export default function UploadImage(props){
             }
 
             if(resultImagePicker.cancelled === false){            
-                const imageUri = resultImagePicker.uri; 
-                const { userEmail } = state;
-    
-                var ref = firebase.storage().ref().child(`/profileImage/${userEmail}`);    
+                const imageUri = resultImagePicker.uri;           
+
+                var ref = firebase.storage().ref().child(`/profileImage/${user.email}`);                  
                 
                 uploadImageFirebase(imageUri)
                 .then(blob => {                    
                     ref.put(blob)    //Aqui agregamos efectivamente nuestro archivo (en formato blob) a firebase
-                    .then(() =>{
-                        //console.log('Imagen subida con éxito!!!');                        
-                        loadImage();
+                    .then(() =>{                       
+                        dispatch({
+                            type: USER_IMAGE,
+                            payload: imageUri
+                        });                        
                     });                
                 })
                 .catch(error=>{
-                    console.log(error);
+                   // console.log(error);
                 });               
             }                         
         }  
     }
 
-    const loadImage = async ()=>{
-        const { userEmail } = state;
-        firebase.storage().ref(`/profileImage/${userEmail}`).getDownloadURL()  
-        .then(image =>{
-            setState({   
-                ... state,             
-                imageFirebase: image
-            })
+       const loadImage = async ()=>{  
+        firebase.storage().ref(`/profileImage/${user.email}`).getDownloadURL()  
+        .then(image =>{      
+            dispatch({
+                type: USER_IMAGE,
+                payload: image
+            });
         })
         .catch(error => {
-            console.log(error);
+            //console.log(error);
         });
     }
 
-    const showImage = ()=>{
-        const {imageFirebase} = state;
-        if(imageFirebase){
+    const showImage = ()=>{    
+        if(userImage){
             return (
                 <Avatar.Image
-                    source={{ uri: imageFirebase }}
+                    source={{ uri: userImage }}
                     size= {100}                    
                 />                
             )
@@ -105,7 +101,7 @@ export default function UploadImage(props){
             return (
                 <Avatar.Image 
                   size={100}                   
-                  source={emptyAvatar}
+                  source={{uri: emptyAvatar}}
                 />
             )            
         }        

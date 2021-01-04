@@ -8,6 +8,7 @@ const actionCreators = {
     CONTACTOS: "CONTACTOS",
     TRANSACCIONES: "TRANSACCIONES",
     HUELLA: "HUELLA",
+    USER_IMAGE: 'USER_IMAGE',
     getME: function(id){
         return dispatch => {
             // const promise = axios.get(`${process.env.REACT_APP_API_URL}/users/${id}`)
