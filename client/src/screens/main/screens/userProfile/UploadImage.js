@@ -1,21 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Button, Image } from "react-native";
-import firebaseConfig from "../../../../firebase/firebase-config.js";
+import React, { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
 import firebase from "firebase/app";
 import 'firebase/storage';
 import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
-firebase.initializeApp(firebaseConfig);  //Establecemos la conexión con firebase
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Avatar } from 'react-native-paper';
+import emptyAvatar from '../../../../../assets/descarga.png';
+import { useSelector, useDispatch } from 'react-redux';
+import api from '../../../../reducer/ActionCreator';
 
-export default function UploadImage(){    
-    const [state, setState] = useState({
-        userEmail:"sebatruisi@gmail.com",
-        imageFirebase: ''
-    });    
+
+export default function UploadImage(){
+    const user = useSelector(state => state.user);  
+    const userImage = useSelector(state => state.userImage)
+    const dispatch = useDispatch();
+    const { USER_IMAGE } = api; 
 
     useEffect(()=>{
         loadImage();        
-    }, []);
+    }, [userImage]);
 
     const uploadImageFirebase = (uri) => {      
         return new Promise((resolve, reject) => {
@@ -40,85 +44,104 @@ export default function UploadImage(){
             let imageSettings = {
                 allowsEditing: true, 
                 aspect: [4, 4],
-                quality: 1                
+                quality: 1,
+                base64: true                
             }
 
             if(source === 'gallery'){
-                resultImagePicker = await ImagePicker.launchImageLibraryAsync(imageSettings);  //launchImageLibraryAsync para seleccionar una imagen de la galería del dispositivo  
+                resultImagePicker = await ImagePicker.launchImageLibraryAsync(imageSettings);  //launchImageLibraryAsync para seleccionar una imagen de la galería del dispositivo                  
             } else if(source === 'camera'){
-                resultImagePicker = await ImagePicker.launchCameraAsync(imageSettings);   //launchCameraAsync para tomar fotografía con el dispositivo 
+                resultImagePicker = await ImagePicker.launchCameraAsync(imageSettings);   //launchCameraAsync para tomar fotografía con el dispositivo                 
             }
 
             if(resultImagePicker.cancelled === false){            
-                const imageUri = resultImagePicker.uri; 
-                const { userEmail } = state;
-    
-                var ref = firebase.storage().ref().child(`/profileImage/${userEmail}`);    
+                const imageUri = resultImagePicker.uri;           
+
+                var ref = firebase.storage().ref().child(`/profileImage/${user.email}`);                  
                 
                 uploadImageFirebase(imageUri)
-                .then(blob => {
+                .then(blob => {                    
                     ref.put(blob)    //Aqui agregamos efectivamente nuestro archivo (en formato blob) a firebase
-                    .then(() =>{
-                        //console.log('Imagen subida con éxito!!!');
-                        loadImage();
+                    .then(() =>{                       
+                        dispatch({
+                            type: USER_IMAGE,
+                            payload: imageUri
+                        });                        
                     });                
                 })
                 .catch(error=>{
-                    console.log(error);
+                   // console.log(error);
                 });               
             }                         
         }  
     }
 
-    const loadImage = async ()=>{
-        const { userEmail } = state;
-        firebase.storage().ref(`/profileImage/${userEmail}`).getDownloadURL()  
-        .then(image =>{
-            setState({   
-                ... state,             
-                imageFirebase: image
-            })
+       const loadImage = async ()=>{  
+        firebase.storage().ref(`/profileImage/${user.email}`).getDownloadURL()  
+        .then(image =>{      
+            dispatch({
+                type: USER_IMAGE,
+                payload: image
+            });
         })
         .catch(error => {
-            console.log(error);
+            //console.log(error);
         });
     }
 
-    const checkImage = ()=>{
-        const {imageFirebase} = state;
-        if(imageFirebase){
+    const showImage = ()=>{    
+        if(userImage){
             return (
-                <Image
-                    style={{ width: 300, height: 300 }}
-                    source={{ uri: imageFirebase }}                
-                />
+                <Avatar.Image
+                    source={{ uri: userImage }}
+                    size= {100}                    
+                />                
             )
-        }
-        return null;
+        } else {          
+            return (
+                <Avatar.Image 
+                  size={100}                   
+                  source={{uri: emptyAvatar}}
+                />
+            )            
+        }        
     }
 
     return (
         <View style={styles.container}>
-            {checkImage()}
-            <Button
-            onPress={() => getDeviceImage('gallery')}
-            title="Selecionar imagen"
-            color="#841584"
-            />     
-            <Button
-            onPress={() => getDeviceImage('camera')}
-            title="Cámara del dispositivo"
-            color="#841584"
-            />           
+            {showImage()}
+
+            <View>
+                <MaterialCommunityIcons 
+                style = {styles.buttons}
+                onPress={() => getDeviceImage('gallery')}
+                name="lead-pencil"  
+                size= {20}                         
+                />
+            </View>
+
+            <View>
+                <MaterialCommunityIcons 
+                style = {styles.buttons}
+                onPress={() => getDeviceImage('camera')}
+                name="camera-plus" 
+                size= {20}                
+                />
+             </View>           
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      backgroundColor: "#fff",
+      flex: 1,     
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
+      width: '100%',
+      backgroundColor: '#232323',
+      height: '100%'
+    },
+    buttons:{
+        color: '#FAFAFA'        
     }
   });

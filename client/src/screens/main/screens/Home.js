@@ -9,22 +9,29 @@ import { Appbar } from 'react-native-paper';
 import { diasDeSemana, diasMes, seisMeses, unAño } from '../../../utils/Days';
 import { SieteDias, filtroMes, filtroSeisMeses, filtroUnAño } from '../../../utils/Valores'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import emptyAvatar from '../../../../assets/descarga.png'
+import firebaseConfig from "../../../firebase/firebase-config.js";
+import firebase from "firebase/app";
+import 'firebase/storage';
+
+firebase.initializeApp(firebaseConfig);
 
 export default function Home({ navigation }) {
-    const [value, setValue] = useState(0)
+    const [value, setValue] = useState(0)  
     const user = useSelector(state => state.user)
+    const userImage = useSelector(state => state.userImage)
     const saldo = useSelector(state => state.saldo)
+    const { todo } = useSelector(state => state.transacciones)
     const { dialogVisible, showCode, enterCode, code } = useSelector(state => state.huella)
     const [ codeHuellaValue, setCodeHuellaValue ] = useState("")
     const dispatch = useDispatch()
-    const { todo } = useSelector(state => state.transacciones)
-    const { TRANSACCIONES, HUELLA } = api
+    const { TRANSACCIONES, HUELLA, USER_IMAGE } = api
     const date = new Date();
     const day = date.getDay()
     let dayMonth = date.getDate()
     let currentYear = date.getFullYear();
     let month = date.getMonth()
-
+    
     const CreatedAt = () => {
         todo && todo.transactions.map(el => {
             if (el.createdAt.indexOf('T') !== -1) {
@@ -88,7 +95,9 @@ export default function Home({ navigation }) {
         }
     }
     useEffect(() => {
+
         axios.get(`https://walletfly.glitch.me/transaction/${user.id}`)
+
             .then(({ data }) => {
                 dispatch({
                     type: TRANSACCIONES,
@@ -102,6 +111,23 @@ export default function Home({ navigation }) {
             .catch(err => console.log(`Sucedio un error ${err}`))
     }, [saldo])
 
+    useEffect(()=>{       
+        firebase.storage().ref(`/profileImage/${user.email}`).getDownloadURL()  
+        .then(image =>{                     
+            dispatch({
+                type: USER_IMAGE,
+                payload: image
+            });
+        })
+        .catch(error => {
+            dispatch({
+                type: USER_IMAGE,
+                payload: false
+            })
+            //console.log(error);
+        });               
+    },[])
+
     return (
         <>
             <Appbar.Header>
@@ -110,7 +136,7 @@ export default function Home({ navigation }) {
             </Appbar.Header>
             <View style={s.container}>
                 <View style={s.containerPerfil}>
-                    <Avatar.Image size={70} source={{ uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU" }} />
+                    <Avatar.Image size={70} source={{ uri: userImage ? userImage : emptyAvatar  }} />
                     <View style={s.containerNameEmail}>
                         <Text style={s.textNombre}>{user.firstName} {user.lastName}</Text>
                         <Text style={s.textEmail}>{user.email}</Text>
