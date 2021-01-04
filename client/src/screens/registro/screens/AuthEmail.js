@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { View, TextInput, Text } from "react-native";
 import { Button, Dialog, Paragraph } from 'react-native-paper'
 import stylesInputs from './styles/inputs/s';
-import { APP_API } from "../../../../env"
 
 export default function AuthEmail({ route, navigation }) {
   const [authCode, setAuthCode] = useState(0);
@@ -18,7 +17,7 @@ export default function AuthEmail({ route, navigation }) {
   console.log(route)
   const authenticateEmail = () => {
     const userId = route.params.id;
-    axios.get(`http://${APP_API}/users/${userId}`)
+    axios.get(`https://walletfly.glitch.me/users/${userId}`)
       .then((user) => {
         let userCode = user.data.segNumber;
         if (userCode == authCode) {

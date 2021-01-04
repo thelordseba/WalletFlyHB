@@ -13,7 +13,6 @@ import { Avatar, Appbar } from "react-native-paper";
 import api from "../../../reducer/ActionCreator";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { ScrollView } from "react-native-gesture-handler";
-import { APP_API } from "../../../../env";
 
 export default function Contactos({ navigation }) {
   const [text, setText] = useState({ email: "", alias: "" });
@@ -25,10 +24,10 @@ export default function Contactos({ navigation }) {
 
   const addContact = () => {
     axios
-      .get(`http://${APP_API}/users/getUserByEmail/?email=${text.email}`)
+      .get(`https://walletfly.glitch.me/users/getUserByEmail/?email=${text.email}`)
       .then(({ data }) => {
         axios
-          .post(`http://${APP_API}/contacts/${user.id}?contactId=${data.id}`)
+          .post(`https://walletfly.glitch.me/contacts/${user.id}?contactId=${data.id}`)
           .then(({ data }) => {
             dispatch({
               type: CONTACTOS,
@@ -63,7 +62,7 @@ export default function Contactos({ navigation }) {
 
   useEffect(() => {
     axios
-      .get(`http://${APP_API}/contacts/${user.id}`)
+      .get(`https://walletfly.glitch.me/contacts/${user.id}`)
       .then(({ data }) => {
         if (data.length) {
           dispatch({
@@ -84,16 +83,13 @@ export default function Contactos({ navigation }) {
       <Appbar.Header>
         <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
         <Appbar.Content title="Contactos" />
-      <Appbar.Action
-          icon="chart-pie"
-          onPress={() => navigation.navigate("StackEstadisticas")}
-        />
       </Appbar.Header>
       <View style={s.container}>
         <ScrollView>
           {contactos &&
             contactos.map((el) => (
               <TouchableOpacity
+                key={el.id}
                 onPress={() =>
                   navigation.navigate("ModificarContacto", {
                     id: el.contactId,
@@ -105,11 +101,11 @@ export default function Contactos({ navigation }) {
                   })
                 }
               >
-                <View key={el.id} style={s.containerView}>
+                <View style={s.containerView}>
                   <View style={s.containerNameAvatar}>
                     <Avatar.Image
                       size={50}
-                      source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"
+                      source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"}}
                     />
                     <View style={s.containerNameEmail}>
                       {!el.alias ? (
@@ -130,35 +126,6 @@ export default function Contactos({ navigation }) {
                       justifyContent: "flex-end",
                     }}
                   >
-                    {/* <TouchableOpacity
-                    onPress={() =>
-                      navigation.navigate("ModificarContacto", {
-                        id: el.contactId,
-                        idUser: user.id,
-                        firstName: el.user.firstName,
-                        lastName: el.user.lastName,
-                        alias: el.alias,
-                        email: el.user.email,
-                      })
-                    }
-                    style={s.buttonEdit}
-                  > 
-                    <Text>
-                      <MaterialCommunityIcons name="pencil" size={15} />
-                    </Text>
-                  </TouchableOpacity> */}
-                    {/* <TouchableOpacity
-                      onPress={() => handleDelete(el.contactId)}
-                      style={s.buttonDelete}
-                    >
-                      <Text>
-                        <MaterialCommunityIcons
-                          name="delete"
-                          size={15}
-                          color="#a44"
-                        />
-                      </Text>
-                    </TouchableOpacity> */}
                   </View>
                 </View>
               </TouchableOpacity>

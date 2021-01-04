@@ -21,7 +21,7 @@ export default function Ingresos({ navigation }) {
                                     <Text style={s.textDireccion}>{el.title}</Text>
                                 </View>
                                 <Text style={s.ingresaDinero}>
-                                    ${el.total} USD
+                                    ${el.total} ARS
                                 </Text>
                             </View>
                         </TouchableOpacity>

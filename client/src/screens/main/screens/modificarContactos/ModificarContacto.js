@@ -4,7 +4,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { Appbar, Avatar } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
-import { APP_API } from "../../../../../env";
 import api from "../../../../reducer/ActionCreator";
 import { useDispatch } from "react-redux";
 
@@ -22,7 +21,7 @@ export default function ModificarContacto({ navigation, route }) {
 
   const handleEdit = (value) => {
     axios
-      .put(`http://${APP_API}/contacts/${userId}?contactId=${contactId}`, {
+      .put(`https://walletfly.glitch.me/contacts/${userId}?contactId=${contactId}`, {
         alias: value,
       })
       .then(({ data }) => {
@@ -41,7 +40,7 @@ export default function ModificarContacto({ navigation, route }) {
     console.log(userId);
     console.log(contactId);
     axios
-      .delete(`http://${APP_API}/contacts/${userId}?contactId=${contactId}`)
+      .delete(`https://walletfly.glitch.me/contacts/${userId}?contactId=${contactId}`)
 
       .then(({ data }) => {
         dispatch({
@@ -64,7 +63,7 @@ export default function ModificarContacto({ navigation, route }) {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Avatar.Image
           size={100}
-          source="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"
+          source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"}}
         />
         <View
           style={{

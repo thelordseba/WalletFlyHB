@@ -24,7 +24,9 @@ export default function DrawerContent(props) {
                 <View style={s.drawerContent}>
                     <View style={s.userInfoSection}>
                         <View style={{ flexDirection: "row", marginTop: 15 }}>
+
                         <Avatar.Image size={50} source={{ uri: userImage ? userImage : emptyAvatar }}/>
+
                             <View style={{ marginLeft: 15, flexDirection: "column" }}>
                                 <Title style={s.title}>{user.firstName} {user.lastName}</Title>
                                 <Caption style={s.caption}>{user.email}</Caption>
@@ -106,7 +108,7 @@ export default function DrawerContent(props) {
                                 }
                             })
                         }
-                        props.navigation.toggleDrawer()
+                        props.navigation.closeDrawer();
                         props.navigation.navigate("Home")
                     }}>
                         <View style={s.preference}>
@@ -125,7 +127,7 @@ export default function DrawerContent(props) {
                     )}
                     label="Cerrar sesión"
                     onPress={() => {
-                        props.navigation.toggleDrawer()
+                        props.navigation.closeDrawer();
                         dispatch({
                             type: USER,
                             payload: false
