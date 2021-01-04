@@ -3,6 +3,7 @@ const server = require("express").Router();
 const { User } = require("../db");
 const nodemailer = require("nodemailer");
 
+
 //Transporter para nodemailer
 let transporter = nodemailer.createTransport({
 	service: "gmail",
@@ -46,8 +47,13 @@ var returnHTML = function(segNumber){
         <hr>
         
         <div>
-          <h1>Su codigo para activar su cuenta es:</h1>
+          <h1>Su codigo para cambiar la contraseña es:</h1>
           <h1> ${segNumber} </h1>
+          <h2> En caso de que usted no haya requerido un cambio de contraseña ignore este mensaje.
+            Recuerde que su contraseña es privada y no deberia compartirla en ningun medio por su seguridad.
+            De parte de WalletFly le recomendamos no usarla en ningun formulario dentro ni fuera de esta aplicacion
+            ya que no se le pedira salvo para entrar a su cuenta.
+          </h2>  
         </div>
 
         <h3 style="padding:20px">De parte de este equipo agradecemos que hayas elegido una app tan increible</h3>
@@ -66,44 +72,24 @@ var returnHTML = function(segNumber){
 
 //Ruta para crear usuario
 
-server.post("/", (req, res, next) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
+server.put("/", async (req, res, next) => {
+  const userEmail = req.body.email;
+  const userId = req.body.userId;
+  if (!userEmail || !userId) {
     return res
       .status(400)
       .json({ message: "Parametros incompletos o invalidos" });
   }
   var segNumber = Math.ceil(Math.random()*1000000);
-  User.create({
-    email: email,
-    password: password,
-    segNumber: segNumber,
-    active: false
-  })
-  .then((user) => {
-    console.log("ESTE ES EL USUARIO ", user.dataValues)
-    const trueUser = user.dataValues;
-    setTimeout( async function(){
-      console.log("ENTRAMOS AL SET")
-      const user = await User.findOne({
-        where:{
-          id: trueUser.id  
-        }      
-      });
-      if(!user.active){
-        await user.destroy();
-        console.log("DESTRUIMOS AL TRAIDOR!!!")
-        res.send("OK");
-      }
-      console.log("ALGO MALIO SAL, CREO QUE ERA DE VERDAD")
-    },300000)
-    res.status(200).json({ user })
-  })
-  .then((user) => {
+  User.findOne({ where: {email: userEmail} })
+  .then( async (user) => {
+    await user.update({"segNumber": segNumber});
+    var usuario = user.dataValues;
+    console.log(usuario);
   	let mailOptions = {
 		from: process.env.EMAIL,
-		to: email,
-		subject: "Felicitaciones por tu nueva cuenta",
+		to: userEmail,
+		subject: "Verificacion cambio de contraseña",
     html:  returnHTML(segNumber), 
   	};
   	transporter.sendMail(mailOptions, function(err, data) {
