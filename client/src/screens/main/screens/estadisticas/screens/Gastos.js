@@ -20,7 +20,7 @@ export default function Gastos({ navigation }){
                                     <Text style={s.textDireccion}>{el.title}</Text>
                                 </View>
                                 <Text style={s.saleDinero}>
-                                    ${el.total} USD
+                                    ${el.total} ARS
                                 </Text>
                             </View>
                         </TouchableOpacity>
