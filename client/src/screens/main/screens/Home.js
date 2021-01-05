@@ -64,20 +64,6 @@ export default function Home({ navigation }) {
 
         }
   };
-  CreatedAt();
-  const Datos = (args) => {
-    switch (args) {
-      case 2:
-        return filtroMes(todo, dayMonth, month, currentYear);
-      case 3:
-        return filtroSeisMeses(todo, dayMonth, month, currentYear);
-      case 4:
-        return filtroUnAño(todo, dayMonth, month, currentYear);
-      default:
-        // return SieteDias(todo, dayMonth, month, currentYear);
-        return [1, 2, 3, 4, 5, 6, 7];
-    }
-  };
   const Label = (args) => {
     switch (args) {
       case 2:
