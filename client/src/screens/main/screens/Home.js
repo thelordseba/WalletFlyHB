@@ -63,7 +63,6 @@ export default function Home({ navigation }) {
                 // return [1,2,3,4,5,6,7];
 
         }
-      });
   };
   CreatedAt();
   const Datos = (args) => {
