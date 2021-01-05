@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { View, TextInput, StyleSheet, Text, Alert, } from "react-native";
+import {
+  View,
+  TextInput,
+  TouchableOpacity,
+  Text,
+  Alert,
+  Button,
+} from "react-native";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../reducer/ActionCreator";
-import { Button } from "react-native-paper";
+import { Dialog, Paragraph, Appbar } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as LocalAuthentication from "expo-local-authentication";
@@ -13,7 +20,7 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const { active } = useSelector(state => state.huella)
+  const { active } = useSelector((state) => state.huella);
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
@@ -22,19 +29,20 @@ export default function Login() {
 
   const [error, setError] = useState("");
 
-  // Descomentar esta funcion en dia de la demo
   const AuthWithFinger = async () => {
     if (state.email !== "" && !state.password !== "") {
       const res = await LocalAuthentication.hasHardwareAsync();
       if (!res) {
         return Alert.alert("Su dispositivo no soporta los metodos de login");
       }
-      const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync({});
+      const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync(
+        {}
+      );
       if (!autorization) return Alert.alert("No autorizado");
       const huella = await LocalAuthentication.isEnrolledAsync();
       if (!huella) return Alert.alert("No tiene autorizacion");
       const login = await LocalAuthentication.authenticateAsync({
-        promptMessage: "Ingrese su huella por favor"
+        promptMessage: "Ingrese su huella por favor",
       });
       if (login.success) {
         axios
@@ -48,12 +56,13 @@ export default function Login() {
           .catch((err) => alert(`Error! ${err}`));
       }
     } else {
-      Alert.alert("Complete todos los campos por favor")
+      Alert.alert("Complete todos los campos por favor");
     }
-  }
+  };
+
   const validateUser = () => {
     if (state.email === "" || state.password === "") {
-      Alert.alert("Complete todos los campos por favor")
+      Alert.alert("Complete todos los campos por favor");
     } else {
       axios
         .post(`https://walletfly.glitch.me/users/login`, state)
@@ -65,9 +74,9 @@ export default function Login() {
         })
         .catch((err) => alert(`Error! ${err}`));
     }
-  }
+  };
   const validateUserLogin = () => {
-    active ? AuthWithFinger() : validateUser()  
+    active ? AuthWithFinger() : validateUser();
   };
 
   useEffect(() => {
@@ -77,24 +86,31 @@ export default function Login() {
       setError(null);
     }
   }, [state, setError]);
-
-
-
   return (
-    <View style={s.container}>
-      <Text style={s.text}>Email</Text>
-      <View style={s.containerInput}>
-        <MaterialCommunityIcons name="account-outline" size={20} />
+    <View style={stylesInputs.container}>
+      <Text style={stylesInputs.inputsText}>Email</Text>
+      <View style={stylesInputs.containerInput}>
+        <MaterialCommunityIcons
+          name="account-outline"
+          color={"#f23b6c"}
+          size={30}
+          style={{ margin: "0.2rem" }}
+        />
         <TextInput
           style={stylesInputs.inputsLogin}
           placeholder="Ingrese su Email"
           onChangeText={(value) => handleTextChange("email", value)}
         />
       </View>
-      {!state.email && <Text style={s.error}>{error}</Text>}
-      <Text style={s.text}>Contraseña</Text>
-      <View style={s.containerInput}>
-        <MaterialCommunityIcons name="lock-outline" size={20} />
+      {!state.email && <Text style={stylesInputs.error}>{error}</Text>}
+      <Text style={stylesInputs.inputsText}>Contraseña</Text>
+      <View style={stylesInputs.containerInput}>
+        <MaterialCommunityIcons
+          name="lock-outline"
+          color={"#f23b6c"}
+          size={30}
+          style={{ margin: "0.2rem" }}
+        />
         <TextInput
           style={stylesInputs.inputsLogin}
           placeholder="Ingrese su Contraseña"
@@ -102,48 +118,26 @@ export default function Login() {
           onChangeText={(value) => handleTextChange("password", value)}
         />
       </View>
-      {!state.password && <Text style={s.error}>{error}</Text>}
+      {!state.password && <Text style={stylesInputs.error}>{error}</Text>}
+      <Text style={stylesInputs.forgottenPassword}>
+        ¿Olvidaste tu contraseña?
+      </Text>
 
-      <Button
-        style={{ marginTop: 20 }}
-        mode="contained"
-        onPress={() => validateUserLogin()}
+      <View style={stylesInputs.containerButton}>
+        <TouchableOpacity
+          style={stylesInputs.button}
+          onPress={() => validateUser()}
+        >
+          <Text style={stylesInputs.textButton}>Iniciar sesión</Text>
+        </TouchableOpacity>
+      </View>
+      <Text
+        style={
+          stylesInputs.help
+        } /* onPress={() => props.navigation.navigate("FAQ")} */
       >
-        Ingresar
-        </Button>
-      <Text style={{ textAlign: "center", marginTop: 10 }}>
-        ¿Olvidaste tu contraseña?{" "}
+        ¿Necesitas ayuda?
       </Text>
     </View>
   );
 }
-
-const s = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  text: {
-    fontSize: 13,
-    color: "#999",
-    marginLeft: 10,
-    marginTop: 10,
-  },
-  containerInput: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    width: "95%",
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: 5,
-    marginBottom: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
-  },
-  error: {
-    color: "#cB3065",
-    fontSize: 13,
-    marginLeft: 10,
-    marginBottom: 10,
-  },
-});

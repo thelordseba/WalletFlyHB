@@ -1,8 +1,8 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import { useSelector } from 'react-redux';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { useSelector } from "react-redux";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 // Tabs
 import Main from '../screens/main/Main';
 import AuthEmail from '../screens/registro/screens/AuthEmail';
@@ -24,54 +24,83 @@ const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
 
 export default function MyStack(props) {
-
-    const user = useSelector(state => state.user)
-    // const user = true
-    return (
+  const user = useSelector((state) => state.user);
+  // const user = true
+  return (
+    <>
+      {user ? (
+        <Drawer.Navigator
+          drawerStyle={{ width: 320 }}
+          drawerContent={(props) => <SideBar {...props} />}
+        >
+          <Stack.Screen name="HomeDrawer" component={Main} />
+          <Stack.Screen name="UserProfile" component={UserProfile} />
+          <Stack.Screen name="DatosPersonales" component={DatosPersonales} />
+          <Stack.Screen name="EnEfectivo" component={EnEfectivo} />
+          <Stack.Screen name="Enviar" component={Enviar} />
+          <Stack.Screen
+            name="QuestionAndAnswers"
+            component={QuestionAndAnswers}
+          />
+          <Stack.Screen
+            name="ModificarContacto"
+            component={ModificarContacto}
+          />
+          <Stack.Screen
+            name="StackEstadisticas"
+            component={StackEstadisticas}
+          />
+          <Stack.Screen
+            name="DetallesEstadistica"
+            component={DetallesEstadistica}
+          />
+          <Stack.Screen name="ChargeMoney" component={ChargeMoney} />
+          <Stack.Screen name="Tarjeta" component={Tarjeta} />
+        </Drawer.Navigator>
+      ) : (
         <>
-            {
-
-                user ?
-                    <Drawer.Navigator drawerStyle={{ width: 320 }} drawerContent={props => <SideBar {...props} />}>
-                        <Stack.Screen name="HomeDrawer" component={Main} />
-                        <Stack.Screen name="UserProfile" component={UserProfile} />
-                        <Stack.Screen name="DatosPersonales" component={DatosPersonales} />
-                        <Stack.Screen name="EnEfectivo" component={EnEfectivo} />
-                        <Stack.Screen name="Enviar" component={Enviar} />
-                        <Stack.Screen name="QuestionAndAnswers" component={QuestionAndAnswers} />
-                        <Stack.Screen name="ModificarContacto" component={ModificarContacto} />
-                        <Stack.Screen name="StackEstadisticas" component={StackEstadisticas} />
-                        <Stack.Screen name="DetallesEstadistica" component={DetallesEstadistica} />
-                        <Stack.Screen name="ChargeMoney" component={ChargeMoney} />
-                        <Stack.Screen name="Tarjeta" component={Tarjeta} />
-
-                    </Drawer.Navigator>
-                    :
-                    <>
-                        <Stack.Navigator screenOptions={({ navigation }) => ({
-                            headerStyle: {
-                                backgroundColor: "#22074D"
-                            },
-                            headerTitle: "",
-                            headerRight: () => (
-                                <MaterialCommunityIcons name="help-circle" size={26} color="#fff" style={{ marginRight: 10 }} onPress={() => navigation.navigate("QuestionAndAnswers")} />
-                            ),
-                            headerLeft: ({ canGoBack, onPress }) =>
-                                canGoBack && (
-                                    <MaterialCommunityIcons name="arrow-left" size={26} color="#fff" style={{ marginLeft: 10 }} onPress={onPress} />
-                                )
-                        })}>
-                            <Stack.Screen name="WalletFly" component={RegistroLogin} />
-                            <Stack.Screen name="AuthEmail" component={AuthEmail} />
-                            <Stack.Screen name="UpdateUser" component={UpdateUser} />
-                            <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
-                            <Stack.Screen name="QuestionAndAnswers" component={QuestionAndAnswers} options={{
-                                headerTitle: "Preguntas y Respuestas",
-                                headerTintColor: "#FFFFFF"
-                            }} />
-                        </Stack.Navigator>
-                    </>
-            }
+          <Stack.Navigator
+            screenOptions={({ navigation }) => ({
+              headerStyle: {
+                backgroundColor: "#F23B6C",
+              },
+              headerTitle: "",
+              headerRight: () => (
+                <MaterialCommunityIcons
+                  name="help-circle"
+                  size={26}
+                  color="#fff"
+                  style={{ marginRight: 10 }}
+                  onPress={() => navigation.navigate("QuestionAndAnswers")}
+                />
+              ),
+              headerLeft: ({ canGoBack, onPress }) =>
+                canGoBack && (
+                  <MaterialCommunityIcons
+                    name="arrow-left"
+                    size={26}
+                    color="#fff"
+                    style={{ marginLeft: 10 }}
+                    onPress={onPress}
+                  />
+                ),
+            })}
+          >
+            <Stack.Screen name="WalletFly" component={RegistroLogin} />
+            <Stack.Screen name="AuthEmail" component={AuthEmail} />
+            <Stack.Screen name="UpdateUser" component={UpdateUser} />
+            <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
+            <Stack.Screen
+              name="QuestionAndAnswers"
+              component={QuestionAndAnswers}
+              options={{
+                headerTitle: "Preguntas y Respuestas",
+                headerTintColor: "#FFFFFF",
+              }}
+            />
+          </Stack.Navigator>
         </>
-    )
-}      
+      )}
+    </>
+  );
+}

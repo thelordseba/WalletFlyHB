@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { View, TextInput, StyleSheet, Text } from "react-native";
-import { Button, Dialog, Paragraph } from "react-native-paper";
+import { View, TextInput, TouchableOpacity, Text, Button } from "react-native";
+import { Dialog, Paragraph } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 
 export default function UpdateUserScreen({ route, navigation }) {
@@ -69,59 +69,78 @@ export default function UpdateUserScreen({ route, navigation }) {
 
   return (
     <>
-      <View>
-        <TextInput
-          style={stylesInputs.inputs}
-          placeholder="Nombre"
-          onChangeText={(value) => handleTextChange("firstName", value)}
-        />
-        {!state.firstName && <Text style={s.error}>{error}</Text>}
-        <TextInput
-          style={stylesInputs.inputs}
-          placeholder="Apellido(s)"
-          onChangeText={(value) => handleTextChange("lastName", value)}
-        />
-        {!state.lastName && <Text style={s.error}>{error}</Text>}
-        <TextInput
-          style={stylesInputs.inputs}
-          placeholder="Fecha de Nacimiento"
-          onChangeText={(value) => handleTextChange("birthdate", value)}
-        />
-        {<Text style={s.error}>{alertMessage2}</Text>}
-        {!state.birthdate && <Text style={s.error}>{error}</Text>}
-        <TextInput
-          style={stylesInputs.inputs}
-          placeholder="Número de Documento"
-          onChangeText={(value) => handleTextChange("documentNumber", value)}
-        />
-        {!state.documentNumber && <Text style={s.error}>{error}</Text>}
-        <TextInput
-          style={stylesInputs.inputs}
-          placeholder="Teléfono"
-          onChangeText={(value) => handleTextChange("phone", value)}
-        />
-        {!state.phone && <Text style={s.error}>{error}</Text>}
-        <Button mode="contained" onPress={() => next()}>
-          Siguiente
-        </Button>
+      <View style={stylesInputs.container}>
+        <Text style={stylesInputs.inputsText}>Nombre</Text>
+        <View style={stylesInputs.containerInputSolo}>
+          <TextInput
+            style={stylesInputs.inputsLogin}
+            placeholder="Nombre"
+            onChangeText={(value) => handleTextChange("firstName", value)}
+          />
+        </View>
+        {!state.firstName && <Text style={stylesInputs.error}>{error}</Text>}
+        <Text style={stylesInputs.inputsText}>Apellido(s)</Text>
+        <View style={stylesInputs.containerInputSolo}>
+          <TextInput
+            style={stylesInputs.inputsLogin}
+            placeholder="Apellido(s)"
+            onChangeText={(value) => handleTextChange("lastName", value)}
+          />
+        </View>
+        {!state.lastName && <Text style={stylesInputs.error}>{error}</Text>}
+        <Text style={stylesInputs.inputsText}>Fecha de Nacimiento</Text>
+        <View style={stylesInputs.containerInputSolo}>
+          <TextInput
+            style={stylesInputs.inputsLogin}
+            placeholder="DD/MM/AAAA"
+            onChangeText={(value) => handleTextChange("birthdate", value)}
+          />
+        </View>
+        {<Text style={stylesInputs.error}>{alertMessage2}</Text>}
+        {!state.birthdate && <Text style={stylesInputs.error}>{error}</Text>}
+        <Text style={stylesInputs.inputsText}>Número de documento</Text>
+        <View style={stylesInputs.containerInputSolo}>
+          <TextInput
+            style={stylesInputs.inputsLogin}
+            placeholder="Número de Documento"
+            onChangeText={(value) => handleTextChange("documentNumber", value)}
+          />
+        </View>
+        {!state.documentNumber && (
+          <Text style={stylesInputs.error}>{error}</Text>
+        )}
+        <Text style={stylesInputs.inputsText}>Teléfono</Text>
+        <View style={stylesInputs.containerInputSolo}>
+          <TextInput
+            style={stylesInputs.inputsLogin}
+            placeholder="Teléfono"
+            onChangeText={(value) => handleTextChange("phone", value)}
+          />
+        </View>
+        {!state.phone && <Text style={stylesInputs.error}>{error}</Text>}
+
+        <View style={stylesInputs.containerButton}>
+          <TouchableOpacity
+            style={stylesInputs.buttonSecondary}
+            onPress={() => next()}
+          >
+            <Text style={stylesInputs.textButtonSecondary}>Siguiente</Text>
+          </TouchableOpacity>
+        </View>
       </View>
       <Dialog visible={visible} onDismiss={hideDialog}>
         <Dialog.Content>
-          <Paragraph>{alertMessage}</Paragraph>
+          <Text style={stylesInputs.dialogText}>{alertMessage}</Text>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button onPress={() => setVisible(!visible)}>Cerrar</Button>
+          <TouchableOpacity
+            style={stylesInputs.button}
+            onPress={() => setVisible(!visible)}
+          >
+            <Text style={stylesInputs.textButton}>Cerrar</Text>
+          </TouchableOpacity>
         </Dialog.Actions>
       </Dialog>
     </>
   );
 }
-
-const s = StyleSheet.create({
-  error: {
-    color: "#cB3065",
-    fontSize: 13,
-    marginLeft: 10,
-    marginBottom: 10,
-  },
-});
