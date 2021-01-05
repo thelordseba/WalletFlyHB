@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  Alert,
-  Dimensions,
-} from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View, Alert, Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "react-native-paper";
@@ -15,12 +8,7 @@ import api from "../../../reducer/ActionCreator";
 import { Appbar } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { diasDeSemana, diasMes, seisMeses, unAño } from "../../../utils/Days";
-import {
-  SieteDias,
-  filtroMes,
-  filtroSeisMeses,
-  filtroUnAño,
-} from "../../../utils/Valores";
+import { SieteDias, filtroMes, filtroSeisMeses, filtroUnAño, } from "../../../utils/Valores";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import emptyAvatar from "../../../../assets/descarga.png";
 import firebaseConfig from "../../../firebase/firebase-config.js";
@@ -126,8 +114,8 @@ export default function Home({ navigation }) {
             todo: data,
             ingreso: data.transactions.length
               ? data.transactions.filter(
-                  (ingreso) => ingreso.type === "ingreso"
-                )
+                (ingreso) => ingreso.type === "ingreso"
+              )
               : false,
             gasto: data.transactions.length
               ? data.transactions.filter((gasto) => gasto.type === "egreso")
@@ -137,6 +125,23 @@ export default function Home({ navigation }) {
       })
       .catch((err) => console.log(`Sucedio un error ${err}`));
   }, [saldo]);
+
+  useEffect(() => {
+    firebase.storage().ref(`/profileImage/${user.email}`).getDownloadURL()
+      .then(image => {
+        dispatch({
+          type: USER_IMAGE,
+          payload: image
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: USER_IMAGE,
+          payload: false
+        })
+        //console.log(error);
+      });
+  }, [])
   return (
     <>
       <Appbar.Header

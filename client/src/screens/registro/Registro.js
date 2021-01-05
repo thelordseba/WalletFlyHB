@@ -2,7 +2,6 @@ import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Register from "./screens/Register";
 import Login from "./screens/Login";
-import { Text, View } from "react-native";
 
 const Tab = createMaterialTopTabNavigator();
 export default function Registro(props) {

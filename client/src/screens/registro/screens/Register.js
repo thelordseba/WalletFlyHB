@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { View, TextInput, TouchableOpacity, Text, Button } from "react-native";
+import { View, TextInput, TouchableOpacity, Text } from "react-native";
 import { Dialog, Paragraph } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";

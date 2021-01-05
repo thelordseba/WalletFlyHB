@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, Dimensions } from 'react-native';
+import { View, Dimensions } from 'react-native';
 import { Appbar } from 'react-native-paper';
 import CreditCardDisplay from 'react-native-credit-card-display';
 import { useSelector } from 'react-redux';
@@ -7,8 +7,6 @@ import { useSelector } from 'react-redux';
 export default function Tarjeta({ navigation }){
 
     const user = useSelector(state => state.user)
-    const name = user.firstName + " " + user.lastName
-    const arrayNumber = []
     let parteUno = Math.round(Math.random() * (9999 - 1000 + 1) + 1000);
     let parteDos = Math.round(Math.random() * (9999 - 1000 + 1) + 1000);
     let parteTres = Math.round(Math.random() * (9999 - 1000 + 1) + 1000);
@@ -18,7 +16,6 @@ export default function Tarjeta({ navigation }){
     parteTres = parteTres.toString()
     parteCuatro = parteCuatro.toString()
     let stringNumber = `${parteUno} ${parteDos} ${parteTres} ${parteCuatro}`
-    console.log(stringNumber)
     return (
         <>
             <Appbar.Header>
