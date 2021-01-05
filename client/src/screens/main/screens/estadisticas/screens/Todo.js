@@ -21,7 +21,7 @@ export default function Todo({ navigation }){
                                     <Text style={s.textDireccion}>{el.title}</Text>
                                 </View>
                                 <Text style={el.type === "ingreso" ? s.ingresaDinero : s.saleDinero}>
-                                    ${el.total} USD
+                                    ${el.total} ARS
                                 </Text>
                             </View>
                         </TouchableOpacity>

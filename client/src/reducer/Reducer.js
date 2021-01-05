@@ -5,7 +5,7 @@ import { persistStore, persistReducer } from 'redux-persist'
 import { createLogger } from 'redux-logger';
 import AsyncStorage from '@react-native-community/async-storage';
 
-const { USER, SALDO, RECARGA, CONTACTOS, TRANSACCIONES, HUELLA } = actionCreators;
+const { USER, SALDO, RECARGA, CONTACTOS, TRANSACCIONES, HUELLA, USER_IMAGE } = actionCreators;
 
 const initialState = {
     user: false,
@@ -13,7 +13,8 @@ const initialState = {
     recarga: {},
     contactos: false,
     transacciones: false,
-    huella: {}
+    huella: {},
+    userImage: false
 }
 
 const reducer = (state = initialState, action) => {
@@ -49,6 +50,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 huella: action.payload
             }
+        case USER_IMAGE:
+            return{
+                ...state,
+                userImage: action.payload
+            }    
         default:
             return {...state}
     }

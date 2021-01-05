@@ -11,10 +11,12 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import api from "../../../../reducer/ActionCreator";
 import Axios from "axios";
+
 import { Appbar } from "react-native-paper";
 import styleInputs from "../../../registro/screens/styles/inputs/s";
 import { APP_API } from "../../../../../env";
 import AsyncStorage from "@react-native-community/async-storage";
+
 import * as LocalAuthentication from "expo-local-authentication";
 
 export default function Enviar(props) {
@@ -50,19 +52,22 @@ export default function Enviar(props) {
           promptMessage: "Ingrese su huella por favor",
         });
         if (login.success) {
-          Axios.get(
-            `http://${APP_API}/users/getUserByEmail?email=${text.email}`
-          )
+
+          Axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`)
+
             .then(({ data }) => {
               contact = data;
             })
             .then((data) => {
-              return Axios.post(`http://${APP_API}/transaction/${user.id}`, {
-                title: text.title,
-                description: text.description,
-                type: "egreso",
-                total: parseInt(text.amount, 10),
-              });
+
+              return Axios.post(`https://walletfly.glitch.me/transaction/${user.id}`,
+                {
+                  title: text.title,
+                  description: text.description,
+                  type: "egreso",
+                  total: parseInt(text.amount, 10),
+                })
+
             })
             .then(({ data }) => {
               dispatch({
@@ -70,7 +75,7 @@ export default function Enviar(props) {
                 payload: data.balance,
               });
               return Axios.post(
-                `http://${APP_API}/transaction/${contact.accounts[0].id}`,
+                `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
                 {
                   title: text.title,
                   description: text.description,
@@ -93,17 +98,20 @@ export default function Enviar(props) {
       }
     } else {
       if (text.amount < saldo) {
-        Axios.get(`http://${APP_API}/users/getUserByEmail?email=${text.email}`)
+        Axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`)
           .then(({ data }) => {
             contact = data;
           })
           .then((data) => {
-            return Axios.post(`http://${APP_API}/transaction/${user.id}`, {
-              title: text.title,
-              description: text.description,
-              type: "egreso",
-              total: parseInt(text.amount, 10),
-            });
+
+            return Axios.post(`https://walletfly.glitch.me/transaction/${user.id}`,
+              {
+                title: text.title,
+                description: text.description,
+                type: "egreso",
+                total: parseInt(text.amount, 10),
+              })
+
           })
           .then(({ data }) => {
             dispatch({
@@ -111,7 +119,7 @@ export default function Enviar(props) {
               payload: data.balance,
             });
             return Axios.post(
-              `http://${APP_API}/transaction/${contact.accounts[0].id}`,
+              `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
               {
                 title: text.title,
                 description: text.description,

@@ -25,7 +25,9 @@
     "expo-image-picker": "^9.2.1",
     "expo-linear-gradient": "^8.4.0",
     "expo-local-authentication": "^9.5.0",
+
     "firebase": "^8.2.1",
+
     "native-base": "^2.13.15",
     "react": "~16.13.0",
     "react-dom": "~16.13.0",
