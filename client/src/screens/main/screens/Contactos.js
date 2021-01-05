@@ -24,10 +24,14 @@ export default function Contactos({ navigation }) {
 
   const addContact = () => {
     axios
-      .get(`https://walletfly.glitch.me/users/getUserByEmail/?email=${text.email}`)
+      .get(
+        `https://walletfly.glitch.me/users/getUserByEmail/?email=${text.email}`
+      )
       .then(({ data }) => {
         axios
-          .post(`https://walletfly.glitch.me/contacts/${user.id}?contactId=${data.id}`)
+          .post(
+            `https://walletfly.glitch.me/contacts/${user.id}?contactId=${data.id}`
+          )
           .then(({ data }) => {
             dispatch({
               type: CONTACTOS,
@@ -84,7 +88,6 @@ export default function Contactos({ navigation }) {
       >
         <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
         <Appbar.Content title="Contactos" />
-
       </Appbar.Header>
       <View style={s.container}>
         <ScrollView>
@@ -107,11 +110,9 @@ export default function Contactos({ navigation }) {
                   <View style={s.containerNameAvatar}>
                     <Avatar.Image
                       size={50}
-
                       source={{
                         uri: require("../../../images/Avatar.png"),
                       }}
-
                     />
                     <View style={s.containerNameEmail}>
                       {!el.alias ? (
@@ -130,8 +131,7 @@ export default function Contactos({ navigation }) {
                       flexDirection: "row",
                       justifyContent: "flex-end",
                     }}
-                  >
-                  </View>
+                  ></View>
                 </View>
               </TouchableOpacity>
             ))}
@@ -150,8 +150,8 @@ export default function Contactos({ navigation }) {
               </Text>
               <Image
                 style={{
-                  width: "100%",
-                  height: 400,
+                  width: 200,
+                  height: 200,
                   marginLeft: "auto",
                   marginRight: "auto",
                 }}
@@ -163,6 +163,7 @@ export default function Contactos({ navigation }) {
                 style={{
                   fontSize: 16,
                   textAlign: "center",
+                  padding: 5,
                   fontFamily: "OpenSans-Regular",
                   color: "#cb3065",
                 }}
@@ -288,17 +289,7 @@ const s = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
   },
-  buttonEdit: {
-    borderWidth: 2,
-    borderColor: "#f23b6c",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 30,
-    height: 30,
-    backgroundColor: "#fff",
-    borderRadius: 50,
-  },
-  buttonDelete: {
+  buttonRound: {
     borderWidth: 2,
     borderColor: "#f23b6c",
     alignItems: "center",

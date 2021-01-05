@@ -75,13 +75,16 @@ export default function UpdateUserScreen({ route, navigation }) {
             state.city = cityNueva;
             console.log("EL STATE ESTA ASI: ", state);
 
-          axios
-            .put(`https://walletfly.glitch.me/users/${state.id}/userAccount`, state)
-            .then(({ data }) => {
-              dispatch({
-                type: USER,
-                payload: data,
-
+            axios
+              .put(
+                `https://walletfly.glitch.me/users/${state.id}/userAccount`,
+                state
+              )
+              .then(({ data }) => {
+                dispatch({
+                  type: USER,
+                  payload: data,
+                });
               });
           }
         })
@@ -94,6 +97,7 @@ export default function UpdateUserScreen({ route, navigation }) {
         });
     }
   };
+
   const [error, setError] = useState("");
   useEffect(() => {
     if (

@@ -6,10 +6,7 @@ import { View, TextInput, Text, Button, TouchableOpacity } from "react-native";
 import stylesInputs from "./styles/inputs/s";
 import { APP_API } from "../../../../env";
 
-
-import { Button, Dialog, Paragraph } from 'react-native-paper'
-
-
+import { Dialog, Paragraph } from "react-native-paper";
 
 export default function AuthEmail({ route, navigation }) {
   const [authCode, setAuthCode] = useState(0);
@@ -25,7 +22,8 @@ export default function AuthEmail({ route, navigation }) {
   const authenticateEmail = () => {
     const userId = route.params.id;
 
-    axios.get(`https://walletfly.glitch.me/users/${userId}`)
+    axios
+      .get(`https://walletfly.glitch.me/users/${userId}`)
 
       .then((user) => {
         let userCode = user.data.segNumber;
@@ -87,11 +85,14 @@ export default function AuthEmail({ route, navigation }) {
           <Text style={stylesInputs.dialogText}>{alertMessage}</Text>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button
-            title="Cerrar"
-            color="#f23b6c"
-            onPress={() => setVisible(!visible)}
-          />
+          <View style={stylesInputs.containerButton}>
+            <TouchableOpacity
+              style={stylesInputs.button}
+              onPress={() => setVisible(!visible)}
+            >
+              <Text style={stylesInputs.textButton}>Cerrar</Text>
+            </TouchableOpacity>
+          </View>
         </Dialog.Actions>
       </Dialog>
     </>
