@@ -104,7 +104,7 @@ export default function Home({ navigation }) {
   };
   useEffect(() => {
     axios
-      .get(`http://${APP_API}/transaction/${user.id}`)
+      .get(`https://walletfly.glitch.me/transaction/${user.id}`)
       .then(({ data }) => {
         dispatch({
           type: TRANSACCIONES,
