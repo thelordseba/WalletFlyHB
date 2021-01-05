@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Image, StyleSheet, TouchableOpacity, Text } from "react-native";
+import { View, TextInput, Image, StyleSheet, TouchableOpacity, Text, Linking } from "react-native";
 import axios from 'axios';
 import image from "../../assets/pagofacil.jpg";
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,6 +7,7 @@ import api from '../reducer/ActionCreator';
 import { Button, Dialog, Paragraph } from 'react-native-paper';
 import stylesInputs from './registro/screens/styles/inputs/s';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { TouchableRipple, Switch } from 'react-native-paper';
 
 export default function ChargeMoney(props) {
   const [state, setState] = useState({
@@ -21,9 +22,21 @@ export default function ChargeMoney(props) {
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
   };
+  const [wApp, setWApp] = useState(false);
   const recarga = useSelector(state => state.recarga)
+  const user = useSelector(state => state.user)
   const { SALDO, RECARGA } = api
   const dispatch = useDispatch()
+
+  const onWappPress = () => {
+    setWApp(!wApp);
+  };
+
+  const wAppNotification = async () => {
+    await Linking.openURL(
+      `https://wa.me/+54${user.phone}?text=Hola *${user.firstName}*, se le acredito un total de: ${state.monto} gracias por confiar en WalletFly.`
+    );
+  };
 
   const cerrarPaypal = () => {
     dispatch({
@@ -33,7 +46,7 @@ export default function ChargeMoney(props) {
     props.navigation.navigate('Home');
   }
   const chargeMoney = () => {
-    if (recarga.code) {
+    if (state.monto > 0) {
       const data = {
         title: 'PagoFacil',
         type: 'ingreso',
@@ -42,6 +55,9 @@ export default function ChargeMoney(props) {
       };
       axios.post(`https://walletfly.glitch.me/transaction/byUserEmail/${recarga.email}`, data)
         .then(({ data }) => {
+          if(wApp){
+            wAppNotification()
+          }
           dispatch({
             type: SALDO,
             payload: data.balance
@@ -56,14 +72,19 @@ export default function ChargeMoney(props) {
           console.log(error);
         });
     } else {
-      setAlertMessage("El código ingresado no es correcto")
-      setVisible(!visible)
+      if(state.monto < 0){
+        setAlertMessage("No puede recargar un numero negativo")
+        setVisible(!visible)
+      }else{
+        setAlertMessage("Ingrese un Monto")
+        setVisible(!visible)
+      }
     }
   };
 
   return (
     <>
-      <TouchableOpacity onPress={() => cerrarPaypal()} style={{marginTop: 90, marginLeft: 'auto'}}>
+      <TouchableOpacity onPress={() => cerrarPaypal()} style={{ marginTop: 90, marginLeft: 'auto' }}>
         <Text><MaterialCommunityIcons name="close" size={26} /></Text>
       </TouchableOpacity>
       <View>
@@ -72,7 +93,7 @@ export default function ChargeMoney(props) {
           source={image}
         />
         <View style={s.code}>
-          <Text style={{marginLeft: 10}}>{recarga.code}</Text>
+          <Text style={{ marginLeft: 10 }}>{recarga.code}</Text>
         </View>
         <TextInput
           style={stylesInputs.inputs}
@@ -83,6 +104,14 @@ export default function ChargeMoney(props) {
         <Button style={s.button} mode="contained" onPress={() => chargeMoney()}>
           Recargar Dinero
       </Button>
+        <TouchableRipple onPress={() => onWappPress()}>
+          <View>
+            <Text>Mensaje de Wasap</Text>
+            <View pointerEvents="none">
+              <Switch value={wApp} />
+            </View>
+          </View>
+        </TouchableRipple>
       </View>
       <Dialog visible={visible} onDismiss={hideDialog}>
         <Dialog.Content>
