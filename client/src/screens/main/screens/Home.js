@@ -14,7 +14,13 @@ import firebaseConfig from "../../../firebase/firebase-config.js";
 import firebase from "firebase/app";
 import 'firebase/storage';
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+    try {
+        firebase.initializeApp(firebaseConfig)
+    } catch (err) {
+        console.error('Firebase initialization error raised', err.stack)
+    }
+}
 
 export default function Home({ navigation }) {
     const [value, setValue] = useState(0)  

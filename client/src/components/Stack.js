@@ -19,6 +19,7 @@ import SideBar from '../screens/main/screens/DrawerContent';
 import EnEfectivo from '../screens/main/screens/recargar/EnEfectivo';
 import StackEstadisticas from '../screens/main/screens/estadisticas/StackEstadisticas';
 import DetallesEstadistica from '../screens/main/screens/estadisticas/screens/DetallesEstadistica'
+import Tarjeta from '../screens/main/screens/Tarjeta';
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
 
@@ -42,6 +43,7 @@ export default function MyStack(props) {
                         <Stack.Screen name="StackEstadisticas" component={StackEstadisticas} />
                         <Stack.Screen name="DetallesEstadistica" component={DetallesEstadistica} />
                         <Stack.Screen name="ChargeMoney" component={ChargeMoney} />
+                        <Stack.Screen name="Tarjeta" component={Tarjeta} />
 
                     </Drawer.Navigator>
                     :

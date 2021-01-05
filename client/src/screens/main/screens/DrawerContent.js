@@ -67,6 +67,13 @@ export default function DrawerContent(props) {
                     />
                     <DrawerItem
                         icon={({ color, size }) => (
+                            <MaterialCommunityIcons name="credit-card-outline" size={size} color={color} />
+                        )}
+                        label="Tarjeta"
+                        onPress={() => props.navigation.navigate('Tarjeta')}
+                    />
+                    <DrawerItem
+                        icon={({ color, size }) => (
                             <MaterialCommunityIcons name="help-circle" size={size} color={color} />
                         )}
                         label="Ayuda"
