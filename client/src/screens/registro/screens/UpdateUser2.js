@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import {
-  View,
-  TextInput,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, TextInput, Text, TouchableOpacity } from "react-native";
 import { useDispatch } from "react-redux";
 import api from "../../../reducer/ActionCreator";
 import { Dialog, Paragraph } from "react-native-paper";

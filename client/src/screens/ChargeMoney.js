@@ -7,7 +7,6 @@ import api from '../reducer/ActionCreator';
 import { Button, Dialog, Paragraph } from 'react-native-paper';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { TouchableRipple, Switch } from 'react-native-paper';
-import stylesInputs from "./registro/screens/styles/inputs/s";
 
 export default function ChargeMoney(props) {
   const [state, setState] = useState({

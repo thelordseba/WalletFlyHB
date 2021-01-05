@@ -58,49 +58,49 @@ export default function MyStack(props) {
           <Stack.Screen name="Tarjeta" component={Tarjeta} />
         </Drawer.Navigator>
       ) : (
-        <>
-          <Stack.Navigator
-            screenOptions={({ navigation }) => ({
-              headerStyle: {
-                backgroundColor: "#F23B6C",
-              },
-              headerTitle: "",
-              headerRight: () => (
-                <MaterialCommunityIcons
-                  name="help-circle"
-                  size={26}
-                  color="#fff"
-                  style={{ marginRight: 10 }}
-                  onPress={() => navigation.navigate("QuestionAndAnswers")}
-                />
-              ),
-              headerLeft: ({ canGoBack, onPress }) =>
-                canGoBack && (
+          <>
+            <Stack.Navigator
+              screenOptions={({ navigation }) => ({
+                headerStyle: {
+                  backgroundColor: "#F23B6C",
+                },
+                headerTitle: "",
+                headerRight: () => (
                   <MaterialCommunityIcons
-                    name="arrow-left"
+                    name="help-circle"
                     size={26}
                     color="#fff"
-                    style={{ marginLeft: 10 }}
-                    onPress={onPress}
+                    style={{ marginRight: 10 }}
+                    onPress={() => navigation.navigate("QuestionAndAnswers")}
                   />
                 ),
-            })}
-          >
-            <Stack.Screen name="WalletFly" component={RegistroLogin} />
-            <Stack.Screen name="AuthEmail" component={AuthEmail} />
-            <Stack.Screen name="UpdateUser" component={UpdateUser} />
-            <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
-            <Stack.Screen
-              name="QuestionAndAnswers"
-              component={QuestionAndAnswers}
-              options={{
-                headerTitle: "Preguntas y Respuestas",
-                headerTintColor: "#FFFFFF",
-              }}
-            />
-          </Stack.Navigator>
-        </>
-      )}
+                headerLeft: ({ canGoBack, onPress }) =>
+                  canGoBack && (
+                    <MaterialCommunityIcons
+                      name="arrow-left"
+                      size={26}
+                      color="#fff"
+                      style={{ marginLeft: 10 }}
+                      onPress={onPress}
+                    />
+                  ),
+              })}
+            >
+              <Stack.Screen name="WalletFly" component={RegistroLogin} />
+              <Stack.Screen name="AuthEmail" component={AuthEmail} />
+              <Stack.Screen name="UpdateUser" component={UpdateUser} />
+              <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
+              <Stack.Screen
+                name="QuestionAndAnswers"
+                component={QuestionAndAnswers}
+                options={{
+                  headerTitle: "Preguntas y Respuestas",
+                  headerTintColor: "#FFFFFF",
+                }}
+              />
+            </Stack.Navigator>
+          </>
+        )}
     </>
   );
 }

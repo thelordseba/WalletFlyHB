@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableOpacity,
-  Image,
-} from "react-native";
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "react-native";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Appbar } from "react-native-paper";

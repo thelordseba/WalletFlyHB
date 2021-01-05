@@ -1,16 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  Alert,
-  Button,
-} from "react-native";
+import { View, TextInput, TouchableOpacity, Text, Alert, } from "react-native";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../reducer/ActionCreator";
-import { Dialog, Paragraph, Appbar } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as LocalAuthentication from "expo-local-authentication";
@@ -53,7 +45,7 @@ export default function Login() {
               payload: data,
             });
           })
-          .catch((err) => alert(`Error! ${err}`));
+          .catch((err) => Alert.alert(`Error! ${err}`));
       }
     } else {
       Alert.alert("Complete todos los campos por favor");
@@ -72,7 +64,7 @@ export default function Login() {
             payload: data,
           });
         })
-        .catch((err) => alert(`Error! ${err}`));
+        .catch((err) => Alert.alert(`Error! ${err}`));
     }
   };
   const validateUserLogin = () => {
@@ -126,15 +118,14 @@ export default function Login() {
       <View style={stylesInputs.containerButton}>
         <TouchableOpacity
           style={stylesInputs.button}
-          onPress={() => validateUser()}
+          onPress={() => validateUserLogin()}
         >
           <Text style={stylesInputs.textButton}>Iniciar sesión</Text>
         </TouchableOpacity>
       </View>
       <Text
-        style={
-          stylesInputs.help
-        } /* onPress={() => props.navigation.navigate("FAQ")} */
+        style={stylesInputs.help} 
+        /* onPress={() => props.navigation.navigate("FAQ")} */
       >
         ¿Necesitas ayuda?
       </Text>

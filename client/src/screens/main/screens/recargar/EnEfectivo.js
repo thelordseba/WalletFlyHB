@@ -1,10 +1,8 @@
 import React from "react";
 import { TouchableOpacity, View, StyleSheet, Text } from "react-native";
-import { Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../../reducer/ActionCreator";
 import { Appbar } from "react-native-paper";
-import AsyncStorage from "@react-native-community/async-storage";
 import * as LocalAuthentication from "expo-local-authentication";
 
 export default function EnEfectivo(props) {
