@@ -5,8 +5,7 @@ import { Appbar, Avatar } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import axios from "axios";
 import api from "../../../../reducer/ActionCreator";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ModificarContacto({ navigation, route }) {
   const { CONTACTOS } = api;
@@ -15,15 +14,20 @@ export default function ModificarContacto({ navigation, route }) {
   const userId = route.params.idUser;
   const Name = route.params.firstName + " " + route.params.lastName;
   const alias = route.params.alias;
+  const user = useSelector((state) => state.user);
+  const userImage = useSelector((state) => state.userImage);
   const email = route.params.email;
   const [value, setValue] = useState("");
   const [active, setActive] = useState(false);
 
   const handleEdit = (value) => {
     axios
-      .put(`https://walletfly.glitch.me/contacts/${userId}?contactId=${contactId}`, {
-        alias: value,
-      })
+      .put(
+        `https://walletfly.glitch.me/contacts/${userId}?contactId=${contactId}`,
+        {
+          alias: value,
+        }
+      )
       .then(({ data }) => {
         dispatch({
           type: CONTACTOS,
@@ -40,7 +44,9 @@ export default function ModificarContacto({ navigation, route }) {
     console.log(userId);
     console.log(contactId);
     axios
-      .delete(`https://walletfly.glitch.me/contacts/${userId}?contactId=${contactId}`)
+      .delete(
+        `https://walletfly.glitch.me/contacts/${userId}?contactId=${contactId}`
+      )
 
       .then(({ data }) => {
         dispatch({
@@ -56,79 +62,142 @@ export default function ModificarContacto({ navigation, route }) {
 
   return (
     <>
-      <Appbar.Header>
+      <Appbar.Header
+        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
+      >
         <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Contactos" />
+        <Appbar.Content title={`Modificar a ${Name}`} />
       </Appbar.Header>
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Avatar.Image
-          size={100}
-          source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"}}
-        />
-        <View
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <View style={{ display: "flex", flexDirection: "row" }}>
-            <Text style={{ fontWeight: "700", marginRight: 5 }}>Alias: </Text>
-            {active ? (
-              <TextInput autoFocus onChangeText={(value) => setValue(value)} />
-            ) : (
-              <Text>{alias ? alias : Name}</Text>
-            )}
-          </View>
-          <TouchableOpacity
-            onPress={() => setActive(!active)}
-            style={s.buttonEdit}
+      <View style={s.container}>
+        <View style={s.userContainer}>
+          <Avatar.Image
+            size={100}
+            source={{
+              uri: userImage
+                ? userImage
+                : require("../../../../images/Avatar.png"),
+            }}
+          />
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            <Text>
-              <MaterialCommunityIcons name="pencil" size={15} />
+            <View style={{ display: "flex", flexDirection: "row" }}>
+              <Text
+                style={{
+                  color: "#f23b6c",
+                  fontFamily: "Bree-Serif",
+                  fontWeight: "700",
+                  marginRight: 5,
+                }}
+              >
+                Alias:{" "}
+              </Text>
+              {active ? (
+                <TextInput
+                  autoFocus
+                  onChangeText={(value) => setValue(value)}
+                />
+              ) : (
+                <Text style={{ color: "#cb3065", fontFamily: "Bree-Serif" }}>
+                  {alias ? alias : Name}
+                </Text>
+              )}
+            </View>
+            <TouchableOpacity
+              onPress={() => setActive(!active)}
+              style={s.buttonEdit}
+            >
+              <Text>
+                <MaterialCommunityIcons
+                  name="pencil"
+                  size={15}
+                  color={"#F23B6C"}
+                />
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Text
+              style={{
+                color: "#f23b6c",
+                fontFamily: "Bree-Serif",
+                fontWeight: "700",
+              }}
+            >
+              Nombre:
+            </Text>{" "}
+            <Text style={{ color: "#cb3065", fontFamily: "Bree-Serif" }}>
+              {Name}
             </Text>
-          </TouchableOpacity>
+            <Text
+              style={{
+                color: "#f23b6c",
+                fontFamily: "Bree-Serif",
+                fontWeight: "700",
+              }}
+            >
+              Email:
+            </Text>{" "}
+            <Text style={{ color: "#cb3065", fontFamily: "Bree-Serif" }}>
+              {email}
+            </Text>
+          </View>
         </View>
-        <View>
-          <Text>Nombre: {Name}</Text>
-          <Text>Email: {email}</Text>
-        </View>
+        <TouchableOpacity onPress={() => handleEdit(value)} style={s.button}>
+          <Text style={s.textButton}>Aceptar Cambios</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={s.button} onPress={() => handleDelete()}>
+          <Text style={s.textButton}>Borrar Contacto</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => handleEdit(value)} style={s.button}>
-        <Text>Aceptar Cambios</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={s.button} onPress={() => handleDelete()}>
-        <Text>Borrar Contacto</Text>
-      </TouchableOpacity>
     </>
   );
-
 }
 
 const s = StyleSheet.create({
   buttonEdit: {
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.5)",
+    borderWidth: 2,
+    borderColor: "#f23b6c",
     alignItems: "center",
     justifyContent: "center",
     width: 30,
     height: 30,
-    backgroundColor: "#fff",
+    backgroundColor: "#ffffff",
     borderRadius: 50,
     marginLeft: 10,
   },
   button: {
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.8)",
+    borderWidth: 2,
+    borderColor: "#f23b6c",
     alignItems: "center",
     justifyContent: "center",
-    width: 250,
-    height: 50,
+    width: "50%",
+    padding: 5,
+    height: "2.5rem",
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: 20,
-    backgroundColor: "#fff",
-    borderRadius: 80,
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
+  },
+  textButton: {
+    color: "#f23b6c",
+    fontSize: "1rem",
+    fontFamily: "Bree-Serif",
+    justifyContent: "center",
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#ffffff",
+  },
+  userContainer: {
+    flex: 0.8,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

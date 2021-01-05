@@ -24,10 +24,14 @@ export default function Contactos({ navigation }) {
 
   const addContact = () => {
     axios
-      .get(`https://walletfly.glitch.me/users/getUserByEmail/?email=${text.email}`)
+      .get(
+        `https://walletfly.glitch.me/users/getUserByEmail/?email=${text.email}`
+      )
       .then(({ data }) => {
         axios
-          .post(`https://walletfly.glitch.me/contacts/${user.id}?contactId=${data.id}`)
+          .post(
+            `https://walletfly.glitch.me/contacts/${user.id}?contactId=${data.id}`
+          )
           .then(({ data }) => {
             dispatch({
               type: CONTACTOS,
@@ -70,7 +74,6 @@ export default function Contactos({ navigation }) {
             payload: data,
           });
         }
-
       })
       .catch((err) => console.error(err));
   }, []);
@@ -80,7 +83,9 @@ export default function Contactos({ navigation }) {
   };
   return (
     <>
-      <Appbar.Header>
+      <Appbar.Header
+        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
+      >
         <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
         <Appbar.Content title="Contactos" />
       </Appbar.Header>
@@ -105,7 +110,9 @@ export default function Contactos({ navigation }) {
                   <View style={s.containerNameAvatar}>
                     <Avatar.Image
                       size={50}
-                      source={{uri: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGT5W0D9qW_SkbX2W1OR7vC_ttDmX0mNnBPg&usqp=CAU"}}
+                      source={{
+                        uri: require("../../../images/Avatar.png"),
+                      }}
                     />
                     <View style={s.containerNameEmail}>
                       {!el.alias ? (
@@ -113,10 +120,9 @@ export default function Contactos({ navigation }) {
                           {el.user.firstName} {el.user.lastName}
                         </Text>
                       ) : (
-
                         <Text style={s.name}>{el.alias}</Text>
                       )}
-                      <Text>{el.user.email}</Text>
+                      <Text style={s.textEmail}>{el.user.email}</Text>
                     </View>
                   </View>
                   <View
@@ -125,37 +131,66 @@ export default function Contactos({ navigation }) {
                       flexDirection: "row",
                       justifyContent: "flex-end",
                     }}
-                  >
-                  </View>
+                  ></View>
                 </View>
               </TouchableOpacity>
             ))}
           {contactos.length === 0 ? (
             <>
-              <Text style={{ fontSize: 30, textAlign: "center" }}>
-                NO TIENES AMIGOS
+              <Text
+                style={{
+                  fontSize: 25,
+                  textAlign: "center",
+                  color: "#F23B6C",
+                  padding: 10,
+                  fontFamily: "Bree-Serif",
+                }}
+              >
+                Aún no tienes ningun amigo
               </Text>
               <Image
                 style={{
-                  width: "100%",
-                  height: 400,
+                  width: 200,
+                  height: 200,
                   marginLeft: "auto",
                   marginRight: "auto",
                 }}
                 source={{
-                  uri:
-                    "https://staticsnews.medsbla.com/news-es/wp-content/uploads/2018/12/09085821/2fcfe96cb9172198211b9cade4bb77b2e92cd123.jpg",
+                  uri: require("../../../images/Icon.png"),
                 }}
               />
+              <Text
+                style={{
+                  fontSize: 16,
+                  textAlign: "center",
+                  padding: 5,
+                  fontFamily: "OpenSans-Regular",
+                  color: "#cb3065",
+                }}
+              >
+                ¿Que tal si comenzás agregando a las personas que conozcas?
+              </Text>
             </>
           ) : null}
         </ScrollView>
+
+        <Text
+          style={{
+            fontSize: 18,
+            textAlign: "center",
+            color: "#F23B6C",
+            marginBottom: "20px",
+            marginRight: "50px",
+            fontFamily: "Bree-Serif",
+          }}
+        >
+          Agregar amigos
+        </Text>
         <TouchableOpacity onPress={() => setVisible(!visible)} style={s.button}>
-          <Text>
-            <MaterialCommunityIcons name="plus" size={26} />
-          </Text>
+          <MaterialCommunityIcons name="plus" size={20} color={"#F23B6C"} />
         </TouchableOpacity>
       </View>
+
       {visible ? (
         <View style={s.containerAgregar}>
           <View style={s.containerAgregar2}>
@@ -164,13 +199,29 @@ export default function Contactos({ navigation }) {
               style={s.buttonClose}
             >
               <Text>
-                <MaterialCommunityIcons name="close" size={26} />
+                <MaterialCommunityIcons
+                  name="close"
+                  size={26}
+                  color="#F23B6C"
+                />
               </Text>
             </TouchableOpacity>
-            <Text style={{ marginTop: 40, marginBottom: 10 }}>
+            <Text
+              style={{
+                marginTop: 40,
+                marginBottom: 10,
+                color: "#F23B6C",
+                fontSize: 18,
+                fontFamily: "Bree-Serif",
+              }}
+            >
               Agregar Contacto
             </Text>
             <TextInput
+              style={{
+                fontFamily: "OpenSans-Regular",
+                placeholderTextColor: "#cb3065",
+              }}
               value={text.email}
               placeholder="Ingrese el email"
               onChangeText={(value) => handleTextChange("email", value)}
@@ -179,7 +230,9 @@ export default function Contactos({ navigation }) {
               onPress={() => addContact()}
               style={s.buttonAceptarCambios}
             >
-              <Text>Agregar Contacto</Text>
+              <Text style={{ color: "#F23B6C", fontFamily: "Bree-Serif" }}>
+                Agregar Contacto
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -189,8 +242,8 @@ export default function Contactos({ navigation }) {
 }
 const s = StyleSheet.create({
   container: {
-    width: "100%",
     flex: 1,
+    backgroundColor: "#ffffff",
   },
   containerNameAvatar: {
     display: "flex",
@@ -207,8 +260,14 @@ const s = StyleSheet.create({
     marginLeft: 5,
   },
   name: {
-    fontSize: 16,
-    fontWeight: "600",
+    color: "#F23B6C",
+    fontFamily: "Bree-Serif",
+    fontSize: 18,
+  },
+  textEmail: {
+    color: "#cb3065",
+    fontFamily: "Bree-Serif",
+    fontSize: 14,
   },
   email: {
     fontSize: 12,
@@ -230,19 +289,9 @@ const s = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
   },
-  buttonEdit: {
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.2)",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 30,
-    height: 30,
-    backgroundColor: "#fff",
-    borderRadius: 50,
-  },
-  buttonDelete: {
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.2)",
+  buttonRound: {
+    borderWidth: 2,
+    borderColor: "#f23b6c",
     alignItems: "center",
     justifyContent: "center",
     width: 30,
@@ -251,15 +300,15 @@ const s = StyleSheet.create({
     borderRadius: 50,
   },
   button: {
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.2)",
+    borderWidth: 2,
+    borderColor: "#f23b6c",
     alignItems: "center",
     justifyContent: "center",
-    width: 60,
+    width: 40,
     position: "absolute",
     bottom: 10,
-    right: 10,
-    height: 60,
+    right: 100,
+    height: 40,
     backgroundColor: "#fff",
     borderRadius: 80,
   },
@@ -285,24 +334,25 @@ const s = StyleSheet.create({
     top: 10,
     justifyContent: "center",
     alignItems: "center",
-    borderWidth: 1,
+    borderWidth: 2,
     width: 40,
     height: 40,
+    borderColor: "#f23b6c",
     backgroundColor: "#fff",
     borderRadius: 60,
   },
   buttonAceptarCambios: {
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.8)",
+    borderWidth: 2,
+    borderColor: "#f23b6c",
     alignItems: "center",
     justifyContent: "center",
     width: 200,
-    height: 30,
+    height: "2.5rem",
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: 10,
-    backgroundColor: "#fff",
-    borderRadius: 80,
+    backgroundColor: "#ffffff",
+    borderRadius: 10,
     marginTop: 20,
   },
 });
