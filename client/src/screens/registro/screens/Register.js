@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { View, TextInput, StyleSheet, Text } from "react-native";
-import { Button, Dialog, Paragraph } from "react-native-paper";
+import { View, TextInput, TouchableOpacity, Text, Button } from "react-native";
+import { Dialog, Paragraph } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { APP_API } from "../../../../env";
@@ -80,20 +80,30 @@ export default function CreateUserScreen(props) {
 
   return (
     <>
-      <View>
-        <Text style={s.text}>Email</Text>
-        <View style={s.containerInput}>
-          <MaterialCommunityIcons name="account-outline" size={20} />
+      <View style={stylesInputs.container}>
+        <Text style={stylesInputs.inputsText}>Email</Text>
+        <View style={stylesInputs.containerInput}>
+          <MaterialCommunityIcons
+            name="account-outline"
+            color={"#f23b6c"}
+            size={30}
+            style={{ margin: "0.2rem" }}
+          />
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Ingrese su Email"
             onChangeText={(value) => handleTextChange("email", value)}
           />
         </View>
-        {<Text style={s.error}>{alertMessage2}</Text>}
-        <Text style={s.text}>Contraseña</Text>
-        <View style={s.containerInput}>
-          <MaterialCommunityIcons name="lock-outline" size={20} />
+        {<Text style={stylesInputs.error}>{alertMessage2}</Text>}
+        <Text style={stylesInputs.inputsText}>Contraseña</Text>
+        <View style={stylesInputs.containerInput}>
+          <MaterialCommunityIcons
+            name="lock-outline"
+            color={"#f23b6c"}
+            size={30}
+            style={{ margin: "0.2rem" }}
+          />
           <TextInput
             style={stylesInputs.inputsLogin}
             secureTextEntry={true}
@@ -101,10 +111,15 @@ export default function CreateUserScreen(props) {
             onChangeText={(value) => handleTextChange("password", value)}
           />
         </View>
-        {<Text style={s.error}>{alertMessage4}</Text>}
-        <Text style={s.text}>Repita su contraseña</Text>
-        <View style={s.containerInput}>
-          <MaterialCommunityIcons name="lock-outline" size={20} />
+        {<Text style={stylesInputs.error}>{alertMessage4}</Text>}
+        <Text style={stylesInputs.inputsText}>Repita su contraseña</Text>
+        <View style={stylesInputs.containerInput}>
+          <MaterialCommunityIcons
+            name="lock-outline"
+            color={"#f23b6c"}
+            size={30}
+            style={{ margin: "0.2rem" }}
+          />
           <TextInput
             style={stylesInputs.inputsLogin}
             secureTextEntry={true}
@@ -112,52 +127,33 @@ export default function CreateUserScreen(props) {
             onChangeText={(value) => handleTextChange("passwordRepeat", value)}
           />
         </View>
-        {<Text style={s.error}>{alertMessage3}</Text>}
-        <Button
-          style={{ marginTop: 20 }}
-          mode="contained"
-          onPress={() => next()}
+        {<Text style={stylesInputs.error}>{alertMessage3}</Text>}
+        <View style={stylesInputs.containerButton}>
+          <TouchableOpacity style={stylesInputs.button} onPress={() => next()}>
+            <Text style={stylesInputs.textButton}>Registrarse</Text>
+          </TouchableOpacity>
+        </View>
+        <Text
+          style={
+            stylesInputs.help
+          } /* onPress={() => props.navigation.navigate("FAQ")} */
         >
-          Registarme
-        </Button>
+          ¿Necesitas ayuda?
+        </Text>
       </View>
       <Dialog visible={visible} onDismiss={hideDialog}>
         <Dialog.Content>
-          <Paragraph>{alertMessage}</Paragraph>
+          <Text style={stylesInputs.dialogText}>{alertMessage}</Text>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button onPress={() => setVisible(!visible)}>Cerrar</Button>
+          <TouchableOpacity
+            style={stylesInputs.button}
+            onPress={() => setVisible(!visible)}
+          >
+            <Text style={stylesInputs.textButton}>Cerrar</Text>
+          </TouchableOpacity>
         </Dialog.Actions>
       </Dialog>
     </>
   );
 }
-const s = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  containerInput: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    width: "95%",
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginTop: 5,
-    marginBottom: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: "#cccccc",
-  },
-  text: {
-    fontSize: 13,
-    color: "#999",
-    marginLeft: 10,
-    marginTop: 10,
-  },
-  error: {
-    color: "#cB3065",
-    fontSize: 13,
-    marginLeft: 10,
-    marginBottom: 10,
-  },
-});
