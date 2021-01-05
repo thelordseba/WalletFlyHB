@@ -16,7 +16,6 @@ export default function Tarjeta({ navigation }){
     parteTres = parteTres.toString()
     parteCuatro = parteCuatro.toString()
     let stringNumber = `${parteUno} ${parteDos} ${parteTres} ${parteCuatro}`
-    console.log(stringNumber)
     return (
         <>
             <Appbar.Header>
