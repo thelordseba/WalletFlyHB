@@ -4,22 +4,23 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useSelector } from "react-redux";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 // Tabs
-import Main from "../screens/main/Main";
-import AuthEmail from "../screens/registro/screens/AuthEmail";
-import UpdateUser from "../screens/registro/screens/UpdateUser";
-import UpdateUser2 from "../screens/registro/screens/UpdateUser2";
-import RegistroLogin from "../screens/registro/Registro";
-import ChargeMoney from "../screens/ChargeMoney";
-import QuestionAndAnswers from "../screens/faq/QuestionAndAnswers";
-import UserProfile from "../screens/main/screens/userProfile/UserProfile";
-import DatosPersonales from "../screens/main/screens/userProfile/DatosPersonales";
-import Enviar from "../screens/main/screens/enviar/Enviar";
-import ModificarContacto from "../screens/main/screens/modificarContactos/ModificarContacto";
-import SideBar from "../screens/main/screens/DrawerContent";
-import EnEfectivo from "../screens/main/screens/recargar/EnEfectivo";
-import StackEstadisticas from "../screens/main/screens/estadisticas/StackEstadisticas";
-import DetallesEstadistica from "../screens/main/screens/estadisticas/screens/DetallesEstadistica";
-const Stack = createStackNavigator();
+import Main from '../screens/main/Main';
+import AuthEmail from '../screens/registro/screens/AuthEmail';
+import UpdateUser from '../screens/registro/screens/UpdateUser';
+import UpdateUser2 from '../screens/registro/screens/UpdateUser2';
+import RegistroLogin from '../screens/registro/Registro';
+import ChargeMoney from '../screens/ChargeMoney';
+import QuestionAndAnswers from '../screens/faq/QuestionAndAnswers';
+import UserProfile from '../screens/main/screens/userProfile/UserProfile';
+import DatosPersonales from '../screens/main/screens/userProfile/DatosPersonales';
+import Enviar from '../screens/main/screens/enviar/Enviar';
+import ModificarContacto from '../screens/main/screens/modificarContactos/ModificarContacto';
+import SideBar from '../screens/main/screens/DrawerContent';
+import EnEfectivo from '../screens/main/screens/recargar/EnEfectivo';
+import StackEstadisticas from '../screens/main/screens/estadisticas/StackEstadisticas';
+import DetallesEstadistica from '../screens/main/screens/estadisticas/screens/DetallesEstadistica'
+import Tarjeta from '../screens/main/screens/Tarjeta';
+const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
 
 export default function MyStack(props) {
@@ -54,6 +55,7 @@ export default function MyStack(props) {
             component={DetallesEstadistica}
           />
           <Stack.Screen name="ChargeMoney" component={ChargeMoney} />
+          <Stack.Screen name="Tarjeta" component={Tarjeta} />
         </Drawer.Navigator>
       ) : (
         <>
