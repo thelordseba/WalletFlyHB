@@ -79,7 +79,7 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
             pasa.createdAt[2] == dayMonth)
 
     }
-    if (dayMonth - 5 < 0) {
+    if (dayMonth - 6 < 0) {
 
         let arrayDiasRestantes = newArray.filter(pasa => pasa.createdAt[2] <= dayMonth)
         --month;
