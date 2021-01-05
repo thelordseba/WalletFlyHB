@@ -239,6 +239,32 @@ return (
           </View>
         </View>
       </View>
+{	
+                dialogVisible && showCode ?	
+                    <View style={s.containerAgregar}>	
+                        <View style={s.containerAgregar2}>	
+                            <TouchableOpacity onPress={() => {	
+                                dispatch({	
+                                    type: HUELLA,	
+                                    payload: {	
+                                        active: true,	
+                                        dialogVisible: false,	
+                                        showCode: false,	
+                                        code: code,	
+                                        enterCode: false	
+                                    }	
+                                })	
+                            }} style={s.buttonClose}>	
+                                <Text><MaterialCommunityIcons name="close" size={26} /></Text>	
+                            </TouchableOpacity>	
+                            <Text style={{ marginTop: 40, marginBottom: 10 }}>	
+                                Por su seguridad, se le pedirá este codigo, si quiere desactivar su huella digital. No la pierda!	
+                            </Text>	
+                            <Text style={{ textAlign: "center", fontSize: 24, fontWeight: "bold" }}>	
+                                {code && code}	
+                            </Text>	
+                        </View>	
+                    </View>
                     : null
             }
             {
