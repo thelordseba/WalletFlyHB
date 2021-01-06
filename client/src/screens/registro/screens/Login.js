@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, TextInput, TouchableOpacity, Text, Alert, } from "react-native";
+import { View, TextInput, TouchableOpacity, Text, Alert } from "react-native";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../reducer/ActionCreator";
@@ -94,11 +94,12 @@ export default function Login({ navigation }) {
           name="account-outline"
           color={"#f23b6c"}
           size={30}
-          style={{ margin: "0.2rem" }}
+          style={{ margin: 3 }}
         />
         <TextInput
           style={stylesInputs.inputsLogin}
           placeholder="Ingrese su Email"
+          placeholderTextColor="#cb3065"
           onChangeText={(value) => handleTextChange("email", value)}
         />
       </View>
@@ -109,11 +110,12 @@ export default function Login({ navigation }) {
           name="lock-outline"
           color={"#f23b6c"}
           size={30}
-          style={{ margin: "0.2rem" }}
+          style={{ margin: 3 }}
         />
         <TextInput
           style={stylesInputs.inputsLogin}
           placeholder="Ingrese su Contraseña"
+          placeholderTextColor="#cb3065"
           secureTextEntry={true}
           onChangeText={(value) => handleTextChange("password", value)}
         />

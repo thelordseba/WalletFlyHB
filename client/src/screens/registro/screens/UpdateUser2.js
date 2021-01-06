@@ -116,6 +116,7 @@ export default function UpdateUserScreen({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Dirección"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("address", value)}
           />
         </View>
@@ -125,6 +126,7 @@ export default function UpdateUserScreen({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Número"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("addressNumber", value)}
           />
         </View>
@@ -136,6 +138,7 @@ export default function UpdateUserScreen({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Código Postal"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("postalCode", value)}
           />
         </View>
@@ -145,6 +148,7 @@ export default function UpdateUserScreen({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Ciudad"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("city", value)}
           />
         </View>
@@ -154,6 +158,7 @@ export default function UpdateUserScreen({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Provincia"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("province", value)}
           />
         </View>
@@ -163,6 +168,7 @@ export default function UpdateUserScreen({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="País"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("country", value)}
           />
         </View>

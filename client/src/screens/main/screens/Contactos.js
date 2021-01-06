@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Image,
+} from "react-native";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar, Appbar } from "react-native-paper";
@@ -10,10 +17,12 @@ import { ScrollView } from "react-native-gesture-handler";
 export default function Contactos({ navigation }) {
   const [text, setText] = useState({ email: "", alias: "" });
   const user = useSelector((state) => state.user);
+  const userImage = useSelector((state) => state.userImage);
   const dispatch = useDispatch();
   const contactos = useSelector((state) => state.contactos);
   const { CONTACTOS } = api;
   const [visible, setVisible] = useState(false);
+  const emptyAvatar = require("../../../../assets/Avatar.png");
 
   const addContact = () => {
     axios
@@ -104,7 +113,7 @@ export default function Contactos({ navigation }) {
                     <Avatar.Image
                       size={50}
                       source={{
-                        uri: require("../../../images/Avatar.png"),
+                        uri: userImage ? userImage : emptyAvatar,
                       }}
                     />
                     <View style={s.containerNameEmail}>
@@ -213,9 +222,9 @@ export default function Contactos({ navigation }) {
             <TextInput
               style={{
                 fontFamily: "OpenSans-Regular",
-                placeholderTextColor: "#cb3065",
               }}
               value={text.email}
+              placeholderTextColor="#cb3065"
               placeholder="Ingrese el email"
               onChangeText={(value) => handleTextChange("email", value)}
             />
@@ -340,7 +349,7 @@ const s = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: 200,
-    height: "2.5rem",
+    height: 40,
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: 10,

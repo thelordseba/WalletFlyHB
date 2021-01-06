@@ -75,6 +75,7 @@ export default function UpdateUserScreen({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Nombre"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("firstName", value)}
           />
         </View>
@@ -84,6 +85,7 @@ export default function UpdateUserScreen({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Apellido(s)"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("lastName", value)}
           />
         </View>
@@ -93,6 +95,7 @@ export default function UpdateUserScreen({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="DD/MM/AAAA"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("birthdate", value)}
           />
         </View>
@@ -103,6 +106,7 @@ export default function UpdateUserScreen({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Número de Documento"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("documentNumber", value)}
           />
         </View>
@@ -114,6 +118,7 @@ export default function UpdateUserScreen({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Teléfono"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("phone", value)}
           />
         </View>

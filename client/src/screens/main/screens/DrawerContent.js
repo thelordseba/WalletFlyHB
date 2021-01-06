@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
-import { Alert, StyleSheet, View } from 'react-native';
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
-import { Avatar, Drawer, Text, TouchableRipple, Switch } from 'react-native-paper';
-import { useSelector, useDispatch } from 'react-redux';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import api from '../../../reducer/ActionCreator';
-import emptyAvatar from '../../../../assets/descarga.png'
+import React, { useState } from "react";
+import { Alert, StyleSheet, View } from "react-native";
+import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
+import {
+  Avatar,
+  Drawer,
+  Text,
+  TouchableRipple,
+  Switch,
+} from "react-native-paper";
+import { useSelector, useDispatch } from "react-redux";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import api from "../../../reducer/ActionCreator";
+import emptyAvatar from "../../../../assets/Avatar.png";
 
 export default function DrawerContent(props) {
   const user = useSelector((state) => state.user);
@@ -34,9 +40,7 @@ export default function DrawerContent(props) {
               <Avatar.Image
                 size={50}
                 source={{
-                  uri: userImage
-                    ? userImage
-                    : require("../../../images/Avatar.png"),
+                  uri: userImage ? userImage : emptyAvatar,
                 }}
               />
               <View style={s.containerNameEmail}>
@@ -98,11 +102,15 @@ export default function DrawerContent(props) {
             onPress={() => props.navigation.navigate("Estadisticas")}
           />
           <DrawerItem
-             icon={({ color, size }) => (
-              <MaterialCommunityIcons name="credit-card-outline" size={size} color={"#F23B6C"} />
-              )}
-             label={() => <Text style={s.label}>Tarjeta</Text>}
-             onPress={() => props.navigation.navigate('Tarjeta')}
+            icon={({ color, size }) => (
+              <MaterialCommunityIcons
+                name="credit-card-outline"
+                size={size}
+                color={"#F23B6C"}
+              />
+            )}
+            label={() => <Text style={s.label}>Tarjeta</Text>}
+            onPress={() => props.navigation.navigate("Tarjeta")}
           />
           <DrawerItem
             icon={({ color, size }) => (
@@ -202,8 +210,8 @@ const s = StyleSheet.create({
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: "1rem",
-    marginRight: "1rem",
+    marginLeft: 16,
+    marginRight: 16,
   },
   textNombre: {
     color: "#F23B6C",
