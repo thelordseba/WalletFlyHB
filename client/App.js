@@ -1,48 +1,40 @@
-import React from "react";
-import { StyleSheet, Text, View, Platform } from "react-native";
-import { Router, Route, Link } from "./react-router";
+import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import Login from "./src/screens/Login";
-import UpdateUser from "./src/screens/UpdateUser";
-import UpdateUser2 from "./src/screens/UpdateUser2";
-import CreateUser from "./src/screens/CreateUser";
-import UserProfile from "./src/screens/userProfile/UserProfile";
-import Footer from './src/screens/footer/Footer';
-import DatosPersonales from "./src/screens/userProfile/DatosPersonales";
-import Transacciones from './src/screens/main/Transacciones';
-import Home from './src/screens/main/Home';
+import { Provider } from "react-redux";
+import getStore from "./src/reducer/Reducer";
+import MyStack from "./src/components/Stack";
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
+import { PersistGate } from "redux-persist/es/integration/react";
 
+const fetchFonts = () => {
+  return Font.loadAsync({
+    "Bree-Serif": require("./assets/fonts/BreeSerif-Regular.ttf"),
+    "OpenSans-Regular": require("./assets/fonts/OpenSans-Regular.ttf"),
+    "OpenSans-Light": require("./assets/fonts/OpenSans-Light.ttf"),
+  });
+};
 
-const Stack = createStackNavigator();
+const { store, persistor } = getStore();
+export default function App() {
+  const [dataLoaded, setDataLoaded] = useState(false);
 
-function MyStack() {
+  if (!dataLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setDataLoaded(true)}
+      />
+    );
+  }
+
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home}/>
-      <Stack.Screen name="Transacciones" component={Transacciones}/>
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="CreateUser" component={CreateUser} />
-      <Stack.Screen name="UpdateUser" component={UpdateUser} />
-      <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
-      <Stack.Screen name="DatosPersonales" component={DatosPersonales}/>
-      <Stack.Screen name="UserProfile" component={UserProfile} />
-      <Stack.Screen name="footer" component={Footer}/>
-    </Stack.Navigator>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <MyStack />
+        </NavigationContainer>
+      </PersistGate>
+    </Provider>
   );
 }
-
-// const Home = () => <Text>Home</Text>;
-
-const About = () => <Text>About</Text>;
-
-const App = () => (
-  <Router>
-    <NavigationContainer>
-      <MyStack />
-      <Footer />
-    </NavigationContainer>
-  </Router>
-);
-
-export default App;

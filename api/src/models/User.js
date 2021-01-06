@@ -2,6 +2,9 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define("user", {
+    active: {
+      type: DataTypes.BOOLEAN,
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -26,12 +29,13 @@ module.exports = (sequelize) => {
         return () => this.getDataValue("password");
       },
     }, 
+
     documentType: {
-      type: DataTypes.STRING,
+      type: DataTypes.ENUM("DNI", "PASAPORTE"),
     },
     documentNumber: {
       type: DataTypes.INTEGER,
-      unique: true
+      unique: true,
     },
     phone: {
       type: DataTypes.STRING,
@@ -42,16 +46,16 @@ module.exports = (sequelize) => {
     addressNumber: {
       type: DataTypes.INTEGER,
     },
-    postalCode:{
+    postalCode: {
       type: DataTypes.INTEGER,
     },
-    city:{
+    city: {
       type: DataTypes.STRING,
     },
-    province:{
+    province: {
       type: DataTypes.STRING,
     },
-    country:{
+    country: {
       type: DataTypes.STRING,
     },
     salt: {
@@ -61,10 +65,7 @@ module.exports = (sequelize) => {
       },
     },
     segNumber: {
-      type: DataTypes.INTEGER,
-      get() {
-        return () => this.getDataValue("segNumber");
-      },
+      type: DataTypes.INTEGER 
     },
   });
 };

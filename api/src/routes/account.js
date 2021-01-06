@@ -1,15 +1,14 @@
 const server = require("express").Router();
-const { User, Account } = require("../db");
+const { User, Account, Transaction } = require("../db");
 
 //Ruta para crear cuenta de usuario
 
 server.post('/:userId', async(req, res, next)=>{
     const userId = req.params.userId;
-    const {number, type} = req.body;
+    const {type} = req.body;
     try{
         const user = await User.findByPk(userId);
-        const account = await Account.create({
-            number: number,
+        const account = await Account.create({            
             type: type,
             balance: 0
         });
@@ -31,6 +30,5 @@ server.get('/', async(req, res, next)=>{
       next(error);
     }
   });
-
 
 module.exports = server;
