@@ -51,6 +51,7 @@ export default function Home({ navigation }) {
         }
       });
   };
+
   CreatedAt()
   const Datos = (args) => {
     switch (args) {
@@ -64,6 +65,7 @@ export default function Home({ navigation }) {
         return SieteDias(todo, dayMonth, month, currentYear)
     }
   }
+
   const Label = (args) => {
     switch (args) {
       case 2:
@@ -147,7 +149,7 @@ export default function Home({ navigation }) {
         style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
       >
         <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-        <Appbar.Content title={"Home"} />
+        <Appbar.Content title={"Inicio"} />
       </Appbar.Header>
       <View style={s.container}>
         <View style={s.containerPerfil}>
@@ -357,7 +359,6 @@ const s = StyleSheet.create({
     justifyContent: "center",
     marginTop: "0.5rem",
   },
-
   buttonRelieve: {
     flex: 1,
     width: "80%",

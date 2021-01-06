@@ -50,7 +50,7 @@ export default function DrawerContent(props) {
         </View>
         <Drawer.Section style={s.drawerSection}>
           <DrawerItem
-            name="Home"
+            name="Inicio"
             icon={({ color, size }) => (
               <MaterialCommunityIcons
                 name="home"
@@ -58,11 +58,11 @@ export default function DrawerContent(props) {
                 color={"#F23B6C"}
               />
             )}
-            label={() => <Text style={s.label}>Home</Text>}
-            onPress={() => props.navigation.navigate("Home")}
+            label={() => <Text style={s.label}>Inicio</Text>}
+            onPress={() => props.navigation.navigate("Inicio")}
           />
           <DrawerItem
-            name="Profile"
+            name="Perfil"
             icon={({ color, size }) => (
               <MaterialCommunityIcons
                 name="account"
@@ -71,7 +71,7 @@ export default function DrawerContent(props) {
               />
             )}
             label={() => <Text style={s.label}>Perfil</Text>}
-            onPress={() => props.navigation.navigate("Profile")}
+            onPress={() => props.navigation.navigate("Perfil")}
           />
           <DrawerItem
             icon={({ color, size }) => (
