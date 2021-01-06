@@ -1,5 +1,11 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Avatar, Appbar } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
@@ -7,7 +13,6 @@ import * as Permissions from "expo-permissions";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import firebase from "firebase/app";
 import "firebase/storage";
-import emptyAvatar from "../../../../../assets/descarga.png";
 import * as ImagePicker from "expo-image-picker";
 import api from "../../../../reducer/ActionCreator";
 
@@ -16,7 +21,7 @@ export default function UserProfile({ navigation }) {
   const userImage = useSelector((state) => state.userImage);
   const dispatch = useDispatch();
   const { USER_IMAGE } = api;
-
+  const emptyAvatar = require("../../../../../assets/Avatar.png");
   useEffect(() => {
     loadImage();
   }, [userImage]);
@@ -111,9 +116,7 @@ export default function UserProfile({ navigation }) {
         <View style={s.containerImg}>
           <Avatar.Image
             source={{
-              uri: userImage
-                ? userImage
-                : require("../../../../images/Avatar.png"),
+              uri: userImage ? userImage : emptyAvatar,
             }}
             size={100}
           />
@@ -242,10 +245,10 @@ const s = StyleSheet.create({
   buttonMenu: {
     flex: 1,
     width: "80%",
-    margin: "0.5rem",
+    margin: 8,
     alignSelf: "center",
-    paddingLeft: "1rem",
-    paddingRight: "1rem",
+    paddingLeft: 16,
+    paddingRight: 16,
     borderRadius: 5,
   },
   buttonText: {
@@ -253,7 +256,7 @@ const s = StyleSheet.create({
     margin: 5,
     backgroundColor: "transparent",
     color: "#ffffff",
-    fontSize: "1rem",
+    fontSize: 16,
     fontFamily: "Bree-Serif",
   },
 });

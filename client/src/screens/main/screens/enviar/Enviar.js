@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+  Alert,
+} from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import api from "../../../../reducer/ActionCreator";
 import Axios from "axios";
@@ -30,7 +37,9 @@ export default function Enviar(props) {
         if (active) {
           const res = await LocalAuthentication.hasHardwareAsync();
           if (!res) {
-            return Alert.alert("Su dispositivo no soporta los metodos de login");
+            return Alert.alert(
+              "Su dispositivo no soporta los metodos de login"
+            );
           }
           const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync(
             {}
@@ -42,18 +51,22 @@ export default function Enviar(props) {
             promptMessage: "Ingrese su huella por favor",
           });
           if (login.success) {
-            Axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`)
+            Axios.get(
+              `https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`
+            )
               .then(({ data }) => {
                 contact = data;
               })
               .then((data) => {
-                return Axios.post(`https://walletfly.glitch.me/transaction/${user.id}`,
+                return Axios.post(
+                  `https://walletfly.glitch.me/transaction/${user.id}`,
                   {
                     title: text.title,
                     description: text.description,
                     type: "egreso",
                     total: parseInt(text.amount, 10),
-                  })
+                  }
+                );
               })
               .then(({ data }) => {
                 dispatch({
@@ -80,18 +93,22 @@ export default function Enviar(props) {
               });
           }
         } else {
-          Axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`)
+          Axios.get(
+            `https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`
+          )
             .then(({ data }) => {
               contact = data;
             })
             .then((data) => {
-              return Axios.post(`https://walletfly.glitch.me/transaction/${user.id}`,
+              return Axios.post(
+                `https://walletfly.glitch.me/transaction/${user.id}`,
                 {
                   title: text.title,
                   description: text.description,
                   type: "egreso",
                   total: parseInt(text.amount, 10),
-                })
+                }
+              );
             })
             .then(({ data }) => {
               dispatch({
@@ -118,6 +135,7 @@ export default function Enviar(props) {
             });
         }
       } else {
+
         return alert('Saldo insuficiente')
       }
     } else {
@@ -126,6 +144,7 @@ export default function Enviar(props) {
       }
       if (text.amount == 0) {
         return alert('Ingresa un valor por favor')
+
       }
     }
   };
@@ -147,6 +166,7 @@ export default function Enviar(props) {
           <TextInput
             style={s.inputs}
             placeholder="Ingrese el email"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("email", value)}
           />
         </View>
@@ -155,6 +175,7 @@ export default function Enviar(props) {
           <TextInput
             style={s.inputs}
             placeholder="Ingrese un titulo"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("title", value)}
           />
         </View>
@@ -163,12 +184,14 @@ export default function Enviar(props) {
           <TextInput
             style={s.inputs}
             placeholder="Ingrese una descripcion"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("description", value)}
           />
         </View>
         <Text style={s.inputsText}>Monto del envio</Text>
         <View style={s.containerInput}>
           <TextInput
+            placeholderTextColor="#cb3065"
             style={s.inputs}
             placeholder="ingrese el monto"
             onChangeText={(value) => handleTextChange("amount", value)}
@@ -204,7 +227,6 @@ const s = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     fontFamily: "OpenSans-Regular",
-    placeholderTextColor: "#cb3065",
     borderColor: "#b58de8",
     width: "85%",
   },
@@ -228,7 +250,7 @@ const s = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderColor: "#f23b6c",
     width: "50%",
-    height: "2.5rem",
+    height: 40,
     borderWidth: 2,
     borderRadius: 10,
     padding: 5,
@@ -236,7 +258,7 @@ const s = StyleSheet.create({
   },
   textButton: {
     color: "#f23b6c",
-    fontSize: "1rem",
+    fontSize: 16,
     fontFamily: "Bree-Serif",
     textAlign: "center",
   },
