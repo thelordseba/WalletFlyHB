@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 const Tab = createMaterialTopTabNavigator();
 
 export default function StackEstadisticas({ navigation }) {
-  const { ingreso, gasto } = useSelector((state) => state.transacciones);
+  const { ingreso, gasto, todo } = useSelector((state) => state.transacciones);
 
   const SumIngreso = () => {
     let suma = 0;
@@ -70,7 +70,7 @@ export default function StackEstadisticas({ navigation }) {
             style={s.buttonRelieve}
           >
             <Text style={s.balance}>
-              Saldo Actual: $ {SumIngreso() - SumGastos()} ARS
+              Saldo Actual: $ {todo && todo.balance} ARS
             </Text>
           </LinearGradient>
         </View>
