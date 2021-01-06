@@ -7,7 +7,7 @@ import stylesInputs from "./styles/inputs/s";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as LocalAuthentication from "expo-local-authentication";
 
-export default function Login() {
+export default function Login({ navigation }) {
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -68,16 +68,24 @@ export default function Login() {
     }
   };
   const validateUserLogin = () => {
-    active ? AuthWithFinger() : validateUser();
+    if (state.password === "" || state.email === "") {
+      return Alert.alert('Llene todos los campos')
+    } else {
+      axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${state.email}`)
+        .then(({ data }) => {
+          if (data) {
+            active ? AuthWithFinger() : validateUser();
+          }
+          else {
+            return Alert.alert('Usuario o Contraseña incorrecta')
+          }
+        })
+        .catch(err => {
+          return Alert.alert('Sucedio un error' + err)
+        })
+    }
   };
 
-  useEffect(() => {
-    if (!state.password || !state.email) {
-      setError("Este campo es obligatorio");
-    } else {
-      setError(null);
-    }
-  }, [state, setError]);
   return (
     <View style={stylesInputs.container}>
       <Text style={stylesInputs.inputsText}>Email</Text>
@@ -114,7 +122,6 @@ export default function Login() {
       <Text style={stylesInputs.forgottenPassword}>
         ¿Olvidaste tu contraseña?
       </Text>
-
       <View style={stylesInputs.containerButton}>
         <TouchableOpacity
           style={stylesInputs.button}
@@ -123,12 +130,9 @@ export default function Login() {
           <Text style={stylesInputs.textButton}>Iniciar sesión</Text>
         </TouchableOpacity>
       </View>
-      <Text
-        style={stylesInputs.help} 
-        /* onPress={() => props.navigation.navigate("FAQ")} */
-      >
-        ¿Necesitas ayuda?
-      </Text>
+      <TouchableOpacity onPress={() => navigation.navigate("QuestionAndAnswers")}>
+        <Text style={stylesInputs.help}>¿Necesitas ayuda?</Text>
+      </TouchableOpacity>
     </View>
   );
 }
