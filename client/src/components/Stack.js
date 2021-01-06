@@ -4,22 +4,23 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useSelector } from "react-redux";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 // Tabs
-import Main from "../screens/main/Main";
-import AuthEmail from "../screens/registro/screens/AuthEmail";
-import UpdateUser from "../screens/registro/screens/UpdateUser";
-import UpdateUser2 from "../screens/registro/screens/UpdateUser2";
-import RegistroLogin from "../screens/registro/Registro";
-import ChargeMoney from "../screens/ChargeMoney";
-import QuestionAndAnswers from "../screens/faq/QuestionAndAnswers";
-import UserProfile from "../screens/main/screens/userProfile/UserProfile";
-import DatosPersonales from "../screens/main/screens/userProfile/DatosPersonales";
-import Enviar from "../screens/main/screens/enviar/Enviar";
-import ModificarContacto from "../screens/main/screens/modificarContactos/ModificarContacto";
-import SideBar from "../screens/main/screens/DrawerContent";
-import EnEfectivo from "../screens/main/screens/recargar/EnEfectivo";
-import StackEstadisticas from "../screens/main/screens/estadisticas/StackEstadisticas";
-import DetallesEstadistica from "../screens/main/screens/estadisticas/screens/DetallesEstadistica";
-const Stack = createStackNavigator();
+import Main from '../screens/main/Main';
+import AuthEmail from '../screens/registro/screens/AuthEmail';
+import UpdateUser from '../screens/registro/screens/UpdateUser';
+import UpdateUser2 from '../screens/registro/screens/UpdateUser2';
+import RegistroLogin from '../screens/registro/Registro';
+import ChargeMoney from '../screens/ChargeMoney';
+import QuestionAndAnswers from '../screens/faq/QuestionAndAnswers';
+import UserProfile from '../screens/main/screens/userProfile/UserProfile';
+import DatosPersonales from '../screens/main/screens/userProfile/DatosPersonales';
+import Enviar from '../screens/main/screens/enviar/Enviar';
+import ModificarContacto from '../screens/main/screens/modificarContactos/ModificarContacto';
+import SideBar from '../screens/main/screens/DrawerContent';
+import EnEfectivo from '../screens/main/screens/recargar/EnEfectivo';
+import StackEstadisticas from '../screens/main/screens/estadisticas/StackEstadisticas';
+import DetallesEstadistica from '../screens/main/screens/estadisticas/screens/DetallesEstadistica'
+import Tarjeta from '../screens/main/screens/Tarjeta';
+const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
 
 export default function MyStack(props) {
@@ -54,51 +55,52 @@ export default function MyStack(props) {
             component={DetallesEstadistica}
           />
           <Stack.Screen name="ChargeMoney" component={ChargeMoney} />
+          <Stack.Screen name="Tarjeta" component={Tarjeta} />
         </Drawer.Navigator>
       ) : (
-        <>
-          <Stack.Navigator
-            screenOptions={({ navigation }) => ({
-              headerStyle: {
-                backgroundColor: "#F23B6C",
-              },
-              headerTitle: "",
-              headerRight: () => (
-                <MaterialCommunityIcons
-                  name="help-circle"
-                  size={26}
-                  color="#fff"
-                  style={{ marginRight: 10 }}
-                  onPress={() => navigation.navigate("QuestionAndAnswers")}
-                />
-              ),
-              headerLeft: ({ canGoBack, onPress }) =>
-                canGoBack && (
+          <>
+            <Stack.Navigator
+              screenOptions={({ navigation }) => ({
+                headerStyle: {
+                  backgroundColor: "#F23B6C",
+                },
+                headerTitle: "",
+                headerRight: () => (
                   <MaterialCommunityIcons
-                    name="arrow-left"
+                    name="help-circle"
                     size={26}
                     color="#fff"
-                    style={{ marginLeft: 10 }}
-                    onPress={onPress}
+                    style={{ marginRight: 10 }}
+                    onPress={() => navigation.navigate("QuestionAndAnswers")}
                   />
                 ),
-            })}
-          >
-            <Stack.Screen name="WalletFly" component={RegistroLogin} />
-            <Stack.Screen name="AuthEmail" component={AuthEmail} />
-            <Stack.Screen name="UpdateUser" component={UpdateUser} />
-            <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
-            <Stack.Screen
-              name="QuestionAndAnswers"
-              component={QuestionAndAnswers}
-              options={{
-                headerTitle: "Preguntas y Respuestas",
-                headerTintColor: "#FFFFFF",
-              }}
-            />
-          </Stack.Navigator>
-        </>
-      )}
+                headerLeft: ({ canGoBack, onPress }) =>
+                  canGoBack && (
+                    <MaterialCommunityIcons
+                      name="arrow-left"
+                      size={26}
+                      color="#fff"
+                      style={{ marginLeft: 10 }}
+                      onPress={onPress}
+                    />
+                  ),
+              })}
+            >
+              <Stack.Screen name="WalletFly" component={RegistroLogin} />
+              <Stack.Screen name="AuthEmail" component={AuthEmail} />
+              <Stack.Screen name="UpdateUser" component={UpdateUser} />
+              <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
+              <Stack.Screen
+                name="QuestionAndAnswers"
+                component={QuestionAndAnswers}
+                options={{
+                  headerTitle: "Preguntas y Respuestas",
+                  headerTintColor: "#FFFFFF",
+                }}
+              />
+            </Stack.Navigator>
+          </>
+        )}
     </>
   );
 }

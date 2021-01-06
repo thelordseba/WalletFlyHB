@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-  View,
-  Alert,
-  Dimensions,
-} from "react-native";
+import { TouchableOpacity, StyleSheet, Text, View, Alert, Dimensions } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "react-native-paper";
@@ -15,19 +8,20 @@ import api from "../../../reducer/ActionCreator";
 import { Appbar } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 import { diasDeSemana, diasMes, seisMeses, unAño } from "../../../utils/Days";
-import {
-  SieteDias,
-  filtroMes,
-  filtroSeisMeses,
-  filtroUnAño,
-} from "../../../utils/Valores";
+import { SieteDias, filtroMes, filtroSeisMeses, filtroUnAño, } from "../../../utils/Valores";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import emptyAvatar from "../../../../assets/descarga.png";
 import firebaseConfig from "../../../firebase/firebase-config.js";
 import firebase from "firebase/app";
 import "firebase/storage";
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+    try {
+        firebase.initializeApp(firebaseConfig)
+    } catch (err) {
+        console.error('Firebase initialization error raised', err.stack)
+    }
+}
 
 export default function Home({ navigation }) {
   const [value, setValue] = useState(0);
@@ -58,19 +52,21 @@ export default function Home({ navigation }) {
       });
   };
 
+  CreatedAt()
   const Datos = (args) => {
     switch (args) {
       case 2:
-        return filtroMes(todo, dayMonth, month, currentYear);
+        return filtroMes(todo, dayMonth, month, currentYear)
       case 3:
-        return filtroSeisMeses(todo, dayMonth, month, currentYear);
+        return filtroSeisMeses(todo, dayMonth, month, currentYear)
       case 4:
-        return filtroUnAño(todo, dayMonth, month, currentYear);
+        return filtroUnAño(todo, dayMonth, month, currentYear)
       default:
-        // return SieteDias(todo, dayMonth, month, currentYear);
-        return [1, 10, 20, 25, 50, 100, 30];
+        return SieteDias(todo, dayMonth, month, currentYear)
+      // return [1,2,3,4,5,6,7];
     }
-  };
+  }
+
   const Label = (args) => {
     switch (args) {
       case 2:
@@ -120,8 +116,8 @@ export default function Home({ navigation }) {
             todo: data,
             ingreso: data.transactions.length
               ? data.transactions.filter(
-                  (ingreso) => ingreso.type === "ingreso"
-                )
+                (ingreso) => ingreso.type === "ingreso"
+              )
               : false,
             gasto: data.transactions.length
               ? data.transactions.filter((gasto) => gasto.type === "egreso")
@@ -131,6 +127,23 @@ export default function Home({ navigation }) {
       })
       .catch((err) => console.log(`Sucedio un error ${err}`));
   }, [saldo]);
+
+  useEffect(() => {
+    firebase.storage().ref(`/profileImage/${user.email}`).getDownloadURL()
+      .then(image => {
+        dispatch({
+          type: USER_IMAGE,
+          payload: image
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: USER_IMAGE,
+          payload: false
+        })
+        //console.log(error);
+      });
+  }, [])
   return (
     <>
       <Appbar.Header

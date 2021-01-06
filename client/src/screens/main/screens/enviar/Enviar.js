@@ -1,22 +1,10 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  Button,
-  Alert,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, Alert, } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import api from "../../../../reducer/ActionCreator";
 import Axios from "axios";
-
 import { Appbar } from "react-native-paper";
 import styleInputs from "../../../registro/screens/styles/inputs/s";
-import { APP_API } from "../../../../../env";
-import AsyncStorage from "@react-native-community/async-storage";
-
 import * as LocalAuthentication from "expo-local-authentication";
 
 export default function Enviar(props) {
@@ -52,14 +40,11 @@ export default function Enviar(props) {
           promptMessage: "Ingrese su huella por favor",
         });
         if (login.success) {
-
           Axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`)
-
             .then(({ data }) => {
               contact = data;
             })
             .then((data) => {
-
               return Axios.post(`https://walletfly.glitch.me/transaction/${user.id}`,
                 {
                   title: text.title,
@@ -67,7 +52,6 @@ export default function Enviar(props) {
                   type: "egreso",
                   total: parseInt(text.amount, 10),
                 })
-
             })
             .then(({ data }) => {
               dispatch({
@@ -103,7 +87,6 @@ export default function Enviar(props) {
             contact = data;
           })
           .then((data) => {
-
             return Axios.post(`https://walletfly.glitch.me/transaction/${user.id}`,
               {
                 title: text.title,
@@ -111,7 +94,6 @@ export default function Enviar(props) {
                 type: "egreso",
                 total: parseInt(text.amount, 10),
               })
-
           })
           .then(({ data }) => {
             dispatch({

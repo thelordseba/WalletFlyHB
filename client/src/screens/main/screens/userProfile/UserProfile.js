@@ -1,11 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  SafeAreaView,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Avatar, Appbar } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";

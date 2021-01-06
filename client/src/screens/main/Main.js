@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 // componentes
 import Home from "./screens/Home";
 import UserProfile from "./screens/userProfile/UserProfile";
