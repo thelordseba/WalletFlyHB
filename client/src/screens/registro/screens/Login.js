@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, TextInput, TouchableOpacity, Text, Alert } from "react-native";
+import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet } from "react-native";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../reducer/ActionCreator";
@@ -12,6 +12,7 @@ export default function Login({ navigation }) {
     email: "",
     password: "",
   });
+  const [ newPassword, setNewPassword ] = useState(false)
   const { active } = useSelector((state) => state.huella);
   const handleTextChange = (name, value) => {
     setState({ ...state, [name]: value });
@@ -86,7 +87,26 @@ export default function Login({ navigation }) {
     }
   };
 
+  const enviarEmail = () => {
+    if(state.email === ""){
+      return Alert.alert('Ingrese el email, para enviarle su codigo de recuperación')
+    }else if(!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(state.email)){
+      return Alert.alert('Has introducido una dirección de email no valida.')
+    }else {
+      axios.put('https://walletfly.glitch.me/passwordEmail', state.email)
+      .then(({config}) => {
+        setNewPassword(!newPassword)
+        navigation.navigate('ChangePassword', config.data)
+      })
+      .catch(err => {
+        return Alert.alert('Ocurrio un Error!' + err)
+      })
+    }
+    
+  }
+
   return (
+    <>
     <View style={stylesInputs.container}>
       <Text style={stylesInputs.inputsText}>Email</Text>
       <View style={stylesInputs.containerInput}>
@@ -121,9 +141,9 @@ export default function Login({ navigation }) {
         />
       </View>
       {!state.password && <Text style={stylesInputs.error}>{error}</Text>}
-      <Text style={stylesInputs.forgottenPassword}>
-        ¿Olvidaste tu contraseña?
-      </Text>
+      <TouchableOpacity onPress={() => setNewPassword(!newPassword)}>
+        <Text style={stylesInputs.forgottenPassword}>¿Olvidaste tu contraseña?</Text>
+      </TouchableOpacity>
       <View style={stylesInputs.containerButton}>
         <TouchableOpacity
           style={stylesInputs.button}
@@ -136,5 +156,61 @@ export default function Login({ navigation }) {
         <Text style={stylesInputs.help}>¿Necesitas ayuda?</Text>
       </TouchableOpacity>
     </View>
+      {newPassword &&
+        <View style={s.containerAgregar}>
+          <View style={s.containerAgregar2}>
+            <TouchableOpacity
+              onPress={() => setNewPassword(!newPassword)}
+              style={s.buttonClose}
+            >
+              <Text>
+                <MaterialCommunityIcons name="close" size={26} />
+              </Text>
+            </TouchableOpacity>
+            <Text style={{ marginTop: 40, marginBottom: 10 }}>
+              Ingrese su Email, para poder enviarle un correo con los pasos a seguir.
+            </Text>
+            <TextInput
+              placeholder="Email"
+              onChangeText={(value) => handleTextChange("email", value)}
+            />
+            <TouchableOpacity onPress={() => enviarEmail()}>
+              <Text>Enviar Codigo</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      }
+
+    </>
   );
 }
+const s = StyleSheet.create({
+  containerAgregar: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
+    top: 0,
+    backgroundColor: "rgba(0,0,0,0.6)",
+    width: "100%",
+  },
+  containerAgregar2: {
+    display: "flex",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 20,
+  },
+  buttonClose: {
+    position: "absolute",
+    right: 10,
+    top: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    width: 40,
+    height: 40,
+    backgroundColor: "#fff",
+    borderRadius: 60,
+  },
+})

@@ -20,6 +20,7 @@ import EnEfectivo from '../screens/main/screens/recargar/EnEfectivo';
 import StackEstadisticas from '../screens/main/screens/estadisticas/StackEstadisticas';
 import DetallesEstadistica from '../screens/main/screens/estadisticas/screens/DetallesEstadistica'
 import Tarjeta from '../screens/main/screens/Tarjeta';
+import ChangePassword from "../screens/registro/screens/ChangePassword";
 const Stack = createStackNavigator()
 const Drawer = createDrawerNavigator();
 
@@ -90,6 +91,7 @@ export default function MyStack(props) {
               <Stack.Screen name="AuthEmail" component={AuthEmail} />
               <Stack.Screen name="UpdateUser" component={UpdateUser} />
               <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
+              <Stack.Screen name="ChangePassword" component={ChangePassword} />
               <Stack.Screen
                 name="QuestionAndAnswers"
                 component={QuestionAndAnswers}
