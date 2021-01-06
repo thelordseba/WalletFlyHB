@@ -81,7 +81,7 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
     }
     if (dayMonth - 6 < 0) {
 
-        let arrayDiasRestantes = newArray.filter(pasa => pasa.createdAt[2] <= dayMonth)
+        let arrayDiasRestantes = newArray && newArray.filter(pasa => pasa.createdAt[2] <= dayMonth)
         --month;
         if (month < 0) {
             month = 11;
@@ -90,17 +90,17 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
         imprimeDias(month, currentYear)
         let anterior = MesesEscritos[arrayMeses[month]]
         final = anterior.slice(anterior.length - (7 - dayMonth))
-        let arrayDiasFaltantes = newArray.filter(pasa =>
+        let arrayDiasFaltantes = newArray && newArray.filter(pasa =>
             pasa.createdAt[2] >= final[0] && pasa.createdAt[1] == (month + 1) && pasa.createdAt[0] == currentYear)
 
-        array7Dias = arrayDiasFaltantes.concat(arrayDiasRestantes)
+        array7Dias = arrayDiasFaltantes && arrayDiasFaltantes.concat(arrayDiasRestantes)
         let numeroDeCorte = final[final.length - 1]
 
         let valorFiltro
         let valorFiltroPrimeroDias = 0
         let valor = 0
         let status = false
-        arraySun = array7Dias.filter(el =>
+        arraySun = array7Dias && array7Dias.filter(el =>
             el.createdAt[2] == final[0])
 
         // 
@@ -114,10 +114,10 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
         }
 
         arrayMon = status ?
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltroPrimeroDias)
             :
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltro)
         // 
         if (final[0] + 2 <= numeroDeCorte) {
@@ -129,10 +129,10 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
             status = true
         }
         arrayTue = status ?
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltroPrimeroDias)
             :
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltro)
 
         // 
@@ -145,10 +145,10 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
             status = true
         }
         arrayWed = status ?
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltroPrimeroDias)
             :
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltro)
 
         // 
@@ -161,10 +161,10 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
             status = true
         }
         arrayThu = status ?
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltroPrimeroDias)
             :
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltro)
         // 
         if (final[0] + 5 <= numeroDeCorte) {
@@ -177,10 +177,10 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
         }
         
         arrayFri = status ?
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltroPrimeroDias)
             :
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltro)
         // 
         if (final[0] + 6 <= numeroDeCorte) {
@@ -192,10 +192,10 @@ export const SieteDias = (todo, dayMonth, month, currentYear) => {
             status = true
         }
         arraySat = status ?
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltroPrimeroDias)
             :
-            array7Dias.filter(el =>
+            array7Dias && array7Dias.filter(el =>
                 el.createdAt[2] == valorFiltro)
     }
 
