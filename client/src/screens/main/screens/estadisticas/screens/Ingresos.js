@@ -5,7 +5,8 @@ import { useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function Ingresos({ navigation }) {
-  const { ingreso } = useSelector((state) => state.transacciones);
+  let { ingreso } = useSelector((state) => state.transacciones);
+  ingreso = ingreso && ingreso.reverse()
   return (
     <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
       <ScrollView>

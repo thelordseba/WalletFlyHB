@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   TouchableOpacity,
   StyleSheet,
@@ -7,7 +8,9 @@ import {
   Alert,
   Dimensions,
   StatusBar,
+  TextInput
 } from "react-native";
+
 import { LineChart } from "react-native-chart-kit";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "react-native-paper";

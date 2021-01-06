@@ -14,13 +14,13 @@ const Tab = createMaterialBottomTabNavigator();
 export default function Footer() {
   return (
     <Tab.Navigator
-      initialRouteName="Inicio"
+      initialRouteName="Home"
       activeColor="#ffffff"
       labelStyle={{ fontFamily: "Bree-Serif" }}
       barStyle={{ backgroundColor: "#F23B6C" }}
     >
       <Tab.Screen
-        name="Inicio"
+        name="Home"
         component={Home}
         options={{
           tabBarLabel: "Inicio",
@@ -44,7 +44,7 @@ export default function Footer() {
         }}
       />
       <Tab.Screen
-        name="Perfil"
+        name="Profile"
         component={UserProfile}
         options={{
           tabBarLabel: "Perfil",

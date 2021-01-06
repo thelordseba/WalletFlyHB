@@ -5,12 +5,14 @@ import { useSelector } from "react-redux";
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function Todo({ navigation }) {
-  const { todo } = useSelector((state) => state.transacciones);
+  let { todo } = useSelector((state) => state.transacciones);
+  let newArrayTodo = todo && todo.transactions.reverse()
+
   return (
     <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
       <ScrollView>
-        {todo &&
-          todo.transactions.map((el) => (
+        {newArrayTodo &&
+          newArrayTodo.map((el) => (
             <TouchableOpacity
               key={el.id}
               onPress={() =>

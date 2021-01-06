@@ -5,7 +5,8 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { ScrollView } from "react-native-gesture-handler";
 
 export default function Gastos({ navigation }) {
-  const { gasto } = useSelector((state) => state.transacciones);
+  let { gasto } = useSelector((state) => state.transacciones);
+  gasto = gasto && gasto.reverse()
   return (
     <View style={{ flex: 1, backgroundColor: "#ffffff" }}>
       <ScrollView>
