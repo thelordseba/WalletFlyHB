@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+
 import {
   TouchableOpacity,
   StyleSheet,
@@ -6,7 +7,10 @@ import {
   View,
   Alert,
   Dimensions,
+  StatusBar,
+  TextInput
 } from "react-native";
+
 import { LineChart } from "react-native-chart-kit";
 import { useDispatch, useSelector } from "react-redux";
 import { Avatar } from "react-native-paper";
@@ -22,17 +26,17 @@ import {
   filtroUnAño,
 } from "../../../utils/Valores";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import emptyAvatar from "../../../../assets/descarga.png";
+
 import firebaseConfig from "../../../firebase/firebase-config.js";
 import firebase from "firebase/app";
 import "firebase/storage";
 
 if (!firebase.apps.length) {
-    try {
-        firebase.initializeApp(firebaseConfig)
-    } catch (err) {
-        console.error('Firebase initialization error raised', err.stack)
-    }
+  try {
+    firebase.initializeApp(firebaseConfig);
+  } catch (err) {
+    console.error("Firebase initialization error raised", err.stack);
+  }
 }
 
 export default function Home({ navigation }) {
@@ -52,6 +56,7 @@ export default function Home({ navigation }) {
   let dayMonth = date.getDate();
   let currentYear = date.getFullYear();
   let month = date.getMonth();
+  const emptyAvatar = require("../../../../assets/Avatar.png");
 
   const CreatedAt = () => {
     todo &&
@@ -63,6 +68,21 @@ export default function Home({ navigation }) {
         }
       });
   };
+
+  CreatedAt();
+  const Datos = (args) => {
+    switch (args) {
+      case 2:
+        return filtroMes(todo, dayMonth, month, currentYear);
+      case 3:
+        return filtroSeisMeses(todo, dayMonth, month, currentYear);
+      case 4:
+        return filtroUnAño(todo, dayMonth, month, currentYear);
+      default:
+        return SieteDias(todo, dayMonth, month, currentYear);
+    }
+  };
+
   const Label = (args) => {
     switch (args) {
       case 2:
@@ -123,22 +143,49 @@ export default function Home({ navigation }) {
       })
       .catch((err) => console.log(`Sucedio un error ${err}`));
   }, [saldo]);
+
+  useEffect(() => {
+    firebase
+      .storage()
+      .ref(`/profileImage/${user.email}`)
+      .getDownloadURL()
+      .then((image) => {
+        dispatch({
+          type: USER_IMAGE,
+          payload: image,
+        });
+      })
+      .catch((error) => {
+        dispatch({
+          type: USER_IMAGE,
+          payload: false,
+        });
+        //console.log(error);
+      });
+  }, []);
   return (
     <>
+      <StatusBar backgroundColor="#f23b6c" barStyle={"light-content"} />
       <Appbar.Header
-        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
+        style={{
+          backgroundColor: "#ffffff",
+          borderBottomWidth: 2,
+          borderBottomColor: "#f23b6c",
+        }}
       >
-        <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-        <Appbar.Content title={"Home"} />
+        <Appbar.Action
+          icon="menu"
+          color="#F23B6C"
+          onPress={() => navigation.toggleDrawer()}
+        />
+        <Appbar.Content title={"Inicio"} color="#F23B6C" />
       </Appbar.Header>
       <View style={s.container}>
         <View style={s.containerPerfil}>
           <Avatar.Image
             size={50}
             source={{
-              uri: userImage
-                ? userImage
-                : require("../../../images/Avatar.png"),
+              uri: userImage ? userImage : emptyAvatar,
             }}
           />
           <View style={s.containerNameEmail}>
@@ -306,22 +353,22 @@ const s = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     // color: "#49e1f4",
-    marginTop: "1rem",
-    marginBottom: "1rem",
+    marginTop: 16,
+    marginBottom: 16,
   },
   containerPerfil: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: "1rem",
-    marginBottom: "1rem",
+    marginTop: 16,
+    marginBottom: 16,
   },
   containerNameEmail: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: "1rem",
-    marginRight: "1rem",
+    marginLeft: 16,
+    marginRight: 16,
   },
   textNombre: {
     color: "#F23B6C",
@@ -337,15 +384,14 @@ const s = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: "0.5rem",
+    marginTop: 8,
   },
-
   buttonRelieve: {
     flex: 1,
     width: "80%",
     alignSelf: "center",
-    paddingLeft: "1rem",
-    paddingRight: "1rem",
+    paddingLeft: 16,
+    paddingRight: 16,
     borderRadius: 5,
   },
   balance: {
@@ -353,7 +399,7 @@ const s = StyleSheet.create({
     margin: 10,
     backgroundColor: "transparent",
     color: "#ffffff",
-    fontSize: "1.3rem",
+    fontSize: 20,
     fontFamily: "Bree-Serif",
   },
 
@@ -362,7 +408,7 @@ const s = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderColor: "#f23b6c",
     width: "30%",
-    height: "2rem",
+    height: 32,
     borderWidth: 2,
     borderRadius: 10,
     padding: 5,

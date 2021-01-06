@@ -1,5 +1,4 @@
 import React from "react";
-import { StyleSheet } from "react-native";
 // componentes
 import Home from "./screens/Home";
 import UserProfile from "./screens/userProfile/UserProfile";
@@ -18,15 +17,15 @@ export default function Footer() {
       initialRouteName="Home"
       activeColor="#ffffff"
       labelStyle={{ fontFamily: "Bree-Serif" }}
-      style={{ backgroundColor: "rgb(242, 59, 108)" }}
+      barStyle={{ backgroundColor: "#F23B6C" }}
     >
       <Tab.Screen
         name="Home"
         component={Home}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Inicio",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" size={26} color={"#cb3065"} />
+            <MaterialCommunityIcons name="home" size={26} color={"#ffffff"} />
           ),
         }}
       />
@@ -39,7 +38,7 @@ export default function Footer() {
             <MaterialCommunityIcons
               name="chart-bar"
               size={26}
-              color={"#cb3065"}
+              color={"#ffffff"}
             />
           ),
         }}
@@ -48,12 +47,12 @@ export default function Footer() {
         name="Profile"
         component={UserProfile}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "Perfil",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="account"
               size={26}
-              color={"#cb3065"}
+              color={"#ffffff"}
             />
           ),
         }}
@@ -67,7 +66,7 @@ export default function Footer() {
             <MaterialCommunityIcons
               name="account-plus"
               size={26}
-              color={"#cb3065"}
+              color={"#ffffff"}
             />
           ),
         }}

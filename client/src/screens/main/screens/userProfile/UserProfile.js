@@ -8,11 +8,11 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Button, Avatar, Appbar } from "react-native-paper";
+import { LinearGradient } from "expo-linear-gradient";
 import * as Permissions from "expo-permissions";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import firebase from "firebase/app";
 import "firebase/storage";
-import emptyAvatar from "../../../../../assets/descarga.png";
 import * as ImagePicker from "expo-image-picker";
 import api from "../../../../reducer/ActionCreator";
 
@@ -21,7 +21,7 @@ export default function UserProfile({ navigation }) {
   const userImage = useSelector((state) => state.userImage);
   const dispatch = useDispatch();
   const { USER_IMAGE } = api;
-
+  const emptyAvatar = require("../../../../../assets/Avatar.png");
   useEffect(() => {
     loadImage();
   }, [userImage]);
@@ -105,24 +105,27 @@ export default function UserProfile({ navigation }) {
 
   return (
     <>
-      <Appbar.Header>
+      <Appbar.Header
+        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
+      >
         <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
         <Appbar.Content title="Perfil" />
       </Appbar.Header>
 
-      <SafeAreaView>
-        <View style={s.container}>
-          <View style={s.containerImg}>
-            <Avatar.Image
-              source={{ uri: userImage ? userImage : emptyAvatar }}
-              size={100}
-            />
-
+      <View style={s.container}>
+        <View style={s.containerImg}>
+          <Avatar.Image
+            source={{
+              uri: userImage ? userImage : emptyAvatar,
+            }}
+            size={100}
+          />
+          <View style={s.iconContainer}>
             <TouchableOpacity
               onPress={() => getDeviceImage("gallery")}
               style={s.buttonClose}
             >
-              <Text>
+              <Text style={s.icon}>
                 <MaterialCommunityIcons
                   name="lead-pencil"
                   size={20}
@@ -135,7 +138,7 @@ export default function UserProfile({ navigation }) {
               onPress={() => getDeviceImage("camera")}
               style={s.buttonClose}
             >
-              <Text>
+              <Text style={s.icon}>
                 <MaterialCommunityIcons
                   name="camera-plus"
                   size={20}
@@ -143,32 +146,48 @@ export default function UserProfile({ navigation }) {
                 />
               </Text>
             </TouchableOpacity>
-
-            <Text style={s.textUser}>
-              {user.firstName} {user.lastName}
-            </Text>
-            <Text style={s.textEmail}>{user.email}</Text>
           </View>
-          <Button
-            mode="outlined"
-            onPress={() => navigation.navigate("DatosPersonales")}
-          >
-            Mi Código QR
-          </Button>
-          <Button
-            mode="outlined"
-            onPress={() => navigation.navigate("DatosPersonales")}
-          >
-            MI CVU
-          </Button>
-          <Button
-            mode="outlined"
-            onPress={() => navigation.navigate("DatosPersonales")}
-          >
-            Datos Personales
-          </Button>
+          <Text style={s.textUser}>
+            {user.firstName} {user.lastName}
+          </Text>
+          <Text style={s.textEmail}>{user.email}</Text>
         </View>
-      </SafeAreaView>
+        <View style={s.menuContainer}>
+          <TouchableOpacity
+            style={s.buttonMenuContainer}
+            onPress={() => navigation.navigate("DatosPersonales")}
+          >
+            <LinearGradient
+              colors={["#F23B6C", "#F23B6C", "#cb3065"]}
+              style={s.buttonMenu}
+            >
+              <Text style={s.buttonText}>Mi Código QR</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={s.buttonMenuContainer}
+            onPress={() => navigation.navigate("DatosPersonales")}
+          >
+            <LinearGradient
+              colors={["#F23B6C", "#F23B6C", "#cb3065"]}
+              style={s.buttonMenu}
+            >
+              <Text style={s.buttonText}>MI CVU</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={s.buttonMenuContainer}
+            onPress={() => navigation.navigate("DatosPersonales")}
+          >
+            <LinearGradient
+              colors={["#F23B6C", "#F23B6C", "#cb3065"]}
+              style={s.buttonMenu}
+            >
+              <Text style={s.buttonText}>Datos Personales</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+        </View>
+      </View>
     </>
   );
 }
@@ -189,13 +208,20 @@ const s = StyleSheet.create({
     color: "#F23B6C",
     fontFamily: "Bree-Serif",
     fontSize: 18,
-    marginTop: 8,
   },
   textEmail: {
     color: "#cb3065",
     fontFamily: "Bree-Serif",
     fontSize: 14,
     marginBottom: 20,
+  },
+  iconContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  icon: {
+    padding: 5,
   },
   buttonRound: {
     borderWidth: 2,
@@ -206,5 +232,31 @@ const s = StyleSheet.create({
     height: 30,
     backgroundColor: "#fff",
     borderRadius: 50,
+  },
+  menuContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonMenuContainer: {
+    flex: 1,
+    width: "80%",
+  },
+  buttonMenu: {
+    flex: 1,
+    width: "80%",
+    margin: 8,
+    alignSelf: "center",
+    paddingLeft: 16,
+    paddingRight: 16,
+    borderRadius: 5,
+  },
+  buttonText: {
+    textAlign: "center",
+    margin: 5,
+    backgroundColor: "transparent",
+    color: "#ffffff",
+    fontSize: 16,
+    fontFamily: "Bree-Serif",
   },
 });

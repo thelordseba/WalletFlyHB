@@ -1,10 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
-
-import { View, TextInput, Text, Button, TouchableOpacity } from "react-native";
-
+import { View, TextInput, Text, TouchableOpacity } from "react-native";
 import stylesInputs from "./styles/inputs/s";
-
 import { Dialog, Paragraph } from "react-native-paper";
 
 export default function AuthEmail({ route, navigation }) {
@@ -60,6 +57,7 @@ export default function AuthEmail({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Ingrese el código"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange(value)}
           />
         </View>

@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  TextInput,
-  TouchableOpacity,
-  Text,
-  Alert,
-  Button,
-} from "react-native";
+import { View, TextInput, TouchableOpacity, Text, Alert } from "react-native";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../reducer/ActionCreator";
-import { Dialog, Paragraph, Appbar } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as LocalAuthentication from "expo-local-authentication";
 
-export default function Login() {
+export default function Login({ navigation }) {
   const [state, setState] = useState({
     email: "",
     password: "",
@@ -53,7 +45,7 @@ export default function Login() {
               payload: data,
             });
           })
-          .catch((err) => alert(`Error! ${err}`));
+          .catch((err) => Alert.alert(`Error! ${err}`));
       }
     } else {
       Alert.alert("Complete todos los campos por favor");
@@ -72,20 +64,28 @@ export default function Login() {
             payload: data,
           });
         })
-        .catch((err) => alert(`Error! ${err}`));
+        .catch((err) => Alert.alert(`Error! ${err}`));
     }
   };
   const validateUserLogin = () => {
-    active ? AuthWithFinger() : validateUser();
+    if (state.password === "" || state.email === "") {
+      return Alert.alert('Llene todos los campos')
+    } else {
+      axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${state.email}`)
+        .then(({ data }) => {
+          if (data) {
+            active ? AuthWithFinger() : validateUser();
+          }
+          else {
+            return Alert.alert('Usuario o Contraseña incorrecta')
+          }
+        })
+        .catch(err => {
+          return Alert.alert('Sucedio un error' + err)
+        })
+    }
   };
 
-  useEffect(() => {
-    if (!state.password || !state.email) {
-      setError("Este campo es obligatorio");
-    } else {
-      setError(null);
-    }
-  }, [state, setError]);
   return (
     <View style={stylesInputs.container}>
       <Text style={stylesInputs.inputsText}>Email</Text>
@@ -94,11 +94,12 @@ export default function Login() {
           name="account-outline"
           color={"#f23b6c"}
           size={30}
-          style={{ margin: "0.2rem" }}
+          style={{ margin: 3 }}
         />
         <TextInput
           style={stylesInputs.inputsLogin}
           placeholder="Ingrese su Email"
+          placeholderTextColor="#cb3065"
           onChangeText={(value) => handleTextChange("email", value)}
         />
       </View>
@@ -109,11 +110,12 @@ export default function Login() {
           name="lock-outline"
           color={"#f23b6c"}
           size={30}
-          style={{ margin: "0.2rem" }}
+          style={{ margin: 3 }}
         />
         <TextInput
           style={stylesInputs.inputsLogin}
           placeholder="Ingrese su Contraseña"
+          placeholderTextColor="#cb3065"
           secureTextEntry={true}
           onChangeText={(value) => handleTextChange("password", value)}
         />
@@ -122,22 +124,17 @@ export default function Login() {
       <Text style={stylesInputs.forgottenPassword}>
         ¿Olvidaste tu contraseña?
       </Text>
-
       <View style={stylesInputs.containerButton}>
         <TouchableOpacity
           style={stylesInputs.button}
-          onPress={() => validateUser()}
+          onPress={() => validateUserLogin()}
         >
           <Text style={stylesInputs.textButton}>Iniciar sesión</Text>
         </TouchableOpacity>
       </View>
-      <Text
-        style={
-          stylesInputs.help
-        } /* onPress={() => props.navigation.navigate("FAQ")} */
-      >
-        ¿Necesitas ayuda?
-      </Text>
+      <TouchableOpacity onPress={() => navigation.navigate("QuestionAndAnswers")}>
+        <Text style={stylesInputs.help}>¿Necesitas ayuda?</Text>
+      </TouchableOpacity>
     </View>
   );
 }

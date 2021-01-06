@@ -5,17 +5,14 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  Button,
   Alert,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import api from "../../../../reducer/ActionCreator";
 import Axios from "axios";
-
 import { Appbar } from "react-native-paper";
 import styleInputs from "../../../registro/screens/styles/inputs/s";
 import AsyncStorage from "@react-native-community/async-storage";
-
 import * as LocalAuthentication from "expo-local-authentication";
 
 export default function Enviar(props) {
@@ -35,38 +32,84 @@ export default function Enviar(props) {
   };
   const sendMoney = async () => {
     let contact;
-    if (active) {
-      if (text.amount < saldo) {
-        const res = await LocalAuthentication.hasHardwareAsync();
-        if (!res) {
-          return Alert.alert("Su dispositivo no soporta los metodos de login");
-        }
-        const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync(
-          {}
-        );
-        if (!autorization) return Alert.alert("No autorizado");
-        const huella = await LocalAuthentication.isEnrolledAsync();
-        if (!huella) return Alert.alert("No tiene autorizacion");
-        const login = await LocalAuthentication.authenticateAsync({
-          promptMessage: "Ingrese su huella por favor",
-        });
-        if (login.success) {
-
-          Axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`)
-
+    let saldoIngresado = parseInt(text.amount)
+    if (text.amount > 0) {
+      if (saldoIngresado <= saldo) {
+        if (active) {
+          const res = await LocalAuthentication.hasHardwareAsync();
+          if (!res) {
+            return Alert.alert(
+              "Su dispositivo no soporta los metodos de login"
+            );
+          }
+          const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync(
+            {}
+          );
+          if (!autorization) return Alert.alert("No autorizado");
+          const huella = await LocalAuthentication.isEnrolledAsync();
+          if (!huella) return Alert.alert("No tiene autorizacion");
+          const login = await LocalAuthentication.authenticateAsync({
+            promptMessage: "Ingrese su huella por favor",
+          });
+          if (login.success) {
+            Axios.get(
+              `https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`
+            )
+              .then(({ data }) => {
+                contact = data;
+              })
+              .then((data) => {
+                return Axios.post(
+                  `https://walletfly.glitch.me/transaction/${user.id}`,
+                  {
+                    title: text.title,
+                    description: text.description,
+                    type: "egreso",
+                    total: parseInt(text.amount, 10),
+                  }
+                );
+              })
+              .then(({ data }) => {
+                dispatch({
+                  type: SALDO,
+                  payload: data.balance,
+                });
+                return Axios.post(
+                  `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
+                  {
+                    title: text.title,
+                    description: text.description,
+                    type: "ingreso",
+                    total: parseInt(text.amount, 10),
+                  }
+                );
+              })
+              .then(({ data }) => {
+                props.navigation.navigate("Home");
+                Alert.alert("Envio de dinero realizado con exito");
+              })
+              .catch((err) => {
+                Alert.alert("Ocurrio un Error!");
+                console.log(err);
+              });
+          }
+        } else {
+          Axios.get(
+            `https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`
+          )
             .then(({ data }) => {
               contact = data;
             })
             .then((data) => {
-
-              return Axios.post(`https://walletfly.glitch.me/transaction/${user.id}`,
+              return Axios.post(
+                `https://walletfly.glitch.me/transaction/${user.id}`,
                 {
                   title: text.title,
                   description: text.description,
                   type: "egreso",
                   total: parseInt(text.amount, 10),
-                })
-
+                }
+              );
             })
             .then(({ data }) => {
               dispatch({
@@ -93,50 +136,16 @@ export default function Enviar(props) {
             });
         }
       } else {
-        Alert.alert("No tiene saldo suficiente");
+
+        return alert('Saldo insuficiente')
       }
     } else {
-      if (text.amount < saldo) {
-        Axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`)
-          .then(({ data }) => {
-            contact = data;
-          })
-          .then((data) => {
+      if (text.amount < 0) {
+        return alert("No puedes ingresar numeros negativos")
+      }
+      if (text.amount == 0) {
+        return alert('Ingresa un valor por favor')
 
-            return Axios.post(`https://walletfly.glitch.me/transaction/${user.id}`,
-              {
-                title: text.title,
-                description: text.description,
-                type: "egreso",
-                total: parseInt(text.amount, 10),
-              })
-
-          })
-          .then(({ data }) => {
-            dispatch({
-              type: SALDO,
-              payload: data.balance,
-            });
-            return Axios.post(
-              `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
-              {
-                title: text.title,
-                description: text.description,
-                type: "ingreso",
-                total: parseInt(text.amount, 10),
-              }
-            );
-          })
-          .then(({ data }) => {
-            props.navigation.navigate("Home");
-            Alert.alert("Envio de dinero realizado con exito");
-          })
-          .catch((err) => {
-            Alert.alert("Ocurrio un Error!");
-            console.log(err);
-          });
-      } else {
-        Alert.alert("No tiene saldo Suficiente");
       }
     }
   };
@@ -158,6 +167,7 @@ export default function Enviar(props) {
           <TextInput
             style={s.inputs}
             placeholder="Ingrese el email"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("email", value)}
           />
         </View>
@@ -166,6 +176,7 @@ export default function Enviar(props) {
           <TextInput
             style={s.inputs}
             placeholder="Ingrese un titulo"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("title", value)}
           />
         </View>
@@ -174,12 +185,14 @@ export default function Enviar(props) {
           <TextInput
             style={s.inputs}
             placeholder="Ingrese una descripcion"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("description", value)}
           />
         </View>
         <Text style={s.inputsText}>Monto del envio</Text>
         <View style={s.containerInput}>
           <TextInput
+            placeholderTextColor="#cb3065"
             style={s.inputs}
             placeholder="ingrese el monto"
             onChangeText={(value) => handleTextChange("amount", value)}
@@ -215,7 +228,6 @@ const s = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     fontFamily: "OpenSans-Regular",
-    placeholderTextColor: "#cb3065",
     borderColor: "#b58de8",
     width: "85%",
   },
@@ -239,7 +251,7 @@ const s = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderColor: "#f23b6c",
     width: "50%",
-    height: "2.5rem",
+    height: 40,
     borderWidth: 2,
     borderRadius: 10,
     padding: 5,
@@ -247,7 +259,7 @@ const s = StyleSheet.create({
   },
   textButton: {
     color: "#f23b6c",
-    fontSize: "1rem",
+    fontSize: 16,
     fontFamily: "Bree-Serif",
     textAlign: "center",
   },
