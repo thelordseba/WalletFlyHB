@@ -12,6 +12,7 @@ import api from "../../../../reducer/ActionCreator";
 import Axios from "axios";
 import { Appbar } from "react-native-paper";
 import styleInputs from "../../../registro/screens/styles/inputs/s";
+import AsyncStorage from "@react-native-community/async-storage";
 import * as LocalAuthentication from "expo-local-authentication";
 
 export default function Enviar(props) {

@@ -10,11 +10,12 @@ import {
 } from "react-native";
 import axios from "axios";
 import image from "../../assets/pagofacil.jpg";
-import { useDispatch, useSelector } from "react-redux";
-import api from "../reducer/ActionCreator";
-import { Button, Dialog, Paragraph } from "react-native-paper";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import { TouchableRipple, Switch } from "react-native-paper";
+import { useDispatch, useSelector } from 'react-redux';
+import api from '../reducer/ActionCreator';
+import { Button, Dialog, Paragraph } from 'react-native-paper';
+import stylesInputs from './registro/screens/styles/inputs/s';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { TouchableRipple, Switch } from 'react-native-paper';
 
 export default function ChargeMoney(props) {
   const [state, setState] = useState({
