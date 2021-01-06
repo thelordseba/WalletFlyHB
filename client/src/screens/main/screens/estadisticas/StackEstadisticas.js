@@ -198,11 +198,11 @@ const s = StyleSheet.create({
   buttonRelieve: {
     flex: 1,
     width: "80%",
-    marginTop: "1rem",
-    marginBottom: "1rem",
+    marginTop: 16,
+    marginBottom: 16,
     alignSelf: "center",
-    paddingLeft: "1rem",
-    paddingRight: "1rem",
+    paddingLeft: 16,
+    paddingRight: 16,
     borderRadius: 5,
   },
   balance: {
@@ -210,11 +210,11 @@ const s = StyleSheet.create({
     margin: 10,
     backgroundColor: "transparent",
     color: "#ffffff",
-    fontSize: "1.3rem",
+    fontSize: 20,
     fontFamily: "Bree-Serif",
   },
   grafico: {
     width: "100%",
-    height: "18rem",
+    height: 288,
   },
 });

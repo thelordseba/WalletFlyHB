@@ -86,11 +86,12 @@ export default function CreateUserScreen(props) {
             name="account-outline"
             color={"#f23b6c"}
             size={30}
-            style={{ margin: "0.2rem" }}
+            style={{ margin: 3 }}
           />
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Ingrese su Email"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("email", value)}
           />
         </View>
@@ -101,12 +102,13 @@ export default function CreateUserScreen(props) {
             name="lock-outline"
             color={"#f23b6c"}
             size={30}
-            style={{ margin: "0.2rem" }}
+            style={{ margin: 3 }}
           />
           <TextInput
             style={stylesInputs.inputsLogin}
             secureTextEntry={true}
             placeholder="Ingrese su contraseña"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("password", value)}
           />
         </View>
@@ -117,12 +119,13 @@ export default function CreateUserScreen(props) {
             name="lock-outline"
             color={"#f23b6c"}
             size={30}
-            style={{ margin: "0.2rem" }}
+            style={{ margin: 3 }}
           />
           <TextInput
             style={stylesInputs.inputsLogin}
             secureTextEntry={true}
             placeholder="Repita su contraseña"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("passwordRepeat", value)}
           />
         </View>

@@ -57,6 +57,7 @@ export default function AuthEmail({ route, navigation }) {
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Ingrese el código"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange(value)}
           />
         </View>

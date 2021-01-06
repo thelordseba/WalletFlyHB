@@ -178,7 +178,7 @@ const s = StyleSheet.create({
     justifyContent: "center",
     width: "50%",
     padding: 5,
-    height: "2.5rem",
+    height: 40,
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: 20,
@@ -187,7 +187,7 @@ const s = StyleSheet.create({
   },
   textButton: {
     color: "#f23b6c",
-    fontSize: "1rem",
+    fontSize: 16,
     fontFamily: "Bree-Serif",
     justifyContent: "center",
   },
