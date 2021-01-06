@@ -24,8 +24,9 @@ export default function Enviar(props) {
   };
   const sendMoney = async () => {
     let contact;
+    let saldoIngresado = parseInt(text.amount)
     if (text.amount > 0) {
-      if (text.amount <= saldo) {
+      if (saldoIngresado <= saldo) {
         if (active) {
           const res = await LocalAuthentication.hasHardwareAsync();
           if (!res) {
@@ -117,14 +118,14 @@ export default function Enviar(props) {
             });
         }
       } else {
-        return Alert.alert('Saldo insuficiente')
+        return alert('Saldo insuficiente')
       }
     } else {
-      if (text.amount <= 0) {
-        return Alert.alert("No puedes ingresar numeros negativos")
+      if (text.amount < 0) {
+        return alert("No puedes ingresar numeros negativos")
       }
       if (text.amount == 0) {
-        return Alert.alert('Ingresa un valor por favor')
+        return alert('Ingresa un valor por favor')
       }
     }
   };

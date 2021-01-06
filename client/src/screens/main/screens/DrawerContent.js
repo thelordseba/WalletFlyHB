@@ -50,7 +50,7 @@ export default function DrawerContent(props) {
         </View>
         <Drawer.Section style={s.drawerSection}>
           <DrawerItem
-            name="Inicio"
+            name="Home"
             icon={({ color, size }) => (
               <MaterialCommunityIcons
                 name="home"
@@ -59,10 +59,10 @@ export default function DrawerContent(props) {
               />
             )}
             label={() => <Text style={s.label}>Inicio</Text>}
-            onPress={() => props.navigation.navigate("Inicio")}
+            onPress={() => props.navigation.navigate("Home")}
           />
           <DrawerItem
-            name="Perfil"
+            name="Profile"
             icon={({ color, size }) => (
               <MaterialCommunityIcons
                 name="account"
@@ -71,7 +71,7 @@ export default function DrawerContent(props) {
               />
             )}
             label={() => <Text style={s.label}>Perfil</Text>}
-            onPress={() => props.navigation.navigate("Perfil")}
+            onPress={() => props.navigation.navigate("Profile")}
           />
           <DrawerItem
             icon={({ color, size }) => (
@@ -95,7 +95,7 @@ export default function DrawerContent(props) {
               />
             )}
             label={() => <Text style={s.label}>Estadísticas</Text>}
-            onPress={() => props.navigation.navigate("StackEstadisticas")}
+            onPress={() => props.navigation.navigate("Estadisticas")}
           />
           <DrawerItem
              icon={({ color, size }) => (
@@ -179,7 +179,7 @@ export default function DrawerContent(props) {
           )}
           label={() => <Text style={s.label}>Cerrar sesión</Text>}
           onPress={() => {
-            props.navigation.toggleDrawer();
+            props.navigation.closeDrawer();
             dispatch({
               type: USER,
               payload: false,
