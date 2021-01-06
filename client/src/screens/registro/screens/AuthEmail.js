@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { View, TextInput, Text, Button, TouchableOpacity } from "react-native";
 
 import stylesInputs from "./styles/inputs/s";
-import { APP_API } from "../../../../env";
 
 import { Dialog, Paragraph } from "react-native-paper";
 

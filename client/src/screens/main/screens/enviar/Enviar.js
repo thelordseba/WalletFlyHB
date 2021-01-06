@@ -14,7 +14,6 @@ import Axios from "axios";
 
 import { Appbar } from "react-native-paper";
 import styleInputs from "../../../registro/screens/styles/inputs/s";
-import { APP_API } from "../../../../../env";
 import AsyncStorage from "@react-native-community/async-storage";
 
 import * as LocalAuthentication from "expo-local-authentication";
