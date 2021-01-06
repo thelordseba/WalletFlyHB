@@ -91,7 +91,7 @@ export default function ModificarContacto({ navigation, route }) {
                 style={{
                   color: "#f23b6c",
                   fontFamily: "Bree-Serif",
-                  fontWeight: "700",
+                  fontWeight: "500",
                   marginRight: 5,
                 }}
               >
@@ -126,7 +126,7 @@ export default function ModificarContacto({ navigation, route }) {
               style={{
                 color: "#f23b6c",
                 fontFamily: "Bree-Serif",
-                fontWeight: "700",
+                fontWeight: "500",
               }}
             >
               Nombre:
@@ -138,7 +138,7 @@ export default function ModificarContacto({ navigation, route }) {
               style={{
                 color: "#f23b6c",
                 fontFamily: "Bree-Serif",
-                fontWeight: "700",
+                fontWeight: "500",
               }}
             >
               Email:

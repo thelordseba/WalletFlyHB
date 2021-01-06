@@ -57,6 +57,20 @@ export default function Home({ navigation }) {
         }
       });
   };
+
+  const Datos = (args) => {
+    switch (args) {
+      case 2:
+        return filtroMes(todo, dayMonth, month, currentYear);
+      case 3:
+        return filtroSeisMeses(todo, dayMonth, month, currentYear);
+      case 4:
+        return filtroUnAño(todo, dayMonth, month, currentYear);
+      default:
+        // return SieteDias(todo, dayMonth, month, currentYear);
+        return [1, 10, 20, 25, 50, 100, 30];
+    }
+  };
   const Label = (args) => {
     switch (args) {
       case 2:
@@ -98,7 +112,7 @@ export default function Home({ navigation }) {
   };
   useEffect(() => {
     axios
-      .get(`http://${APP_API}/transaction/${user.id}`)
+      .get(`https://walletfly.glitch.me/transaction/${user.id}`)
       .then(({ data }) => {
         dispatch({
           type: TRANSACCIONES,
@@ -123,7 +137,7 @@ export default function Home({ navigation }) {
         style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
       >
         <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-        <Appbar.Content title={"Home"} />
+        <Appbar.Content title={"Inicio"} />
       </Appbar.Header>
       <View style={s.container}>
         <View style={s.containerPerfil}>
@@ -333,7 +347,6 @@ const s = StyleSheet.create({
     justifyContent: "center",
     marginTop: "0.5rem",
   },
-
   buttonRelieve: {
     flex: 1,
     width: "80%",

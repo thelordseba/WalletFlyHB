@@ -15,18 +15,18 @@ const Tab = createMaterialBottomTabNavigator();
 export default function Footer() {
   return (
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Inicio"
       activeColor="#ffffff"
       labelStyle={{ fontFamily: "Bree-Serif" }}
-      style={{ backgroundColor: "rgb(242, 59, 108)" }}
+      barStyle={{ backgroundColor: "#F23B6C" }}
     >
       <Tab.Screen
-        name="Home"
+        name="Inicio"
         component={Home}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Inicio",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" size={26} color={"#cb3065"} />
+            <MaterialCommunityIcons name="home" size={26} color={"#ffffff"} />
           ),
         }}
       />
@@ -39,21 +39,21 @@ export default function Footer() {
             <MaterialCommunityIcons
               name="chart-bar"
               size={26}
-              color={"#cb3065"}
+              color={"#ffffff"}
             />
           ),
         }}
       />
       <Tab.Screen
-        name="Profile"
+        name="Perfil"
         component={UserProfile}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "Perfil",
           tabBarIcon: ({ color }) => (
             <MaterialCommunityIcons
               name="account"
               size={26}
-              color={"#cb3065"}
+              color={"#ffffff"}
             />
           ),
         }}
@@ -67,7 +67,7 @@ export default function Footer() {
             <MaterialCommunityIcons
               name="account-plus"
               size={26}
-              color={"#cb3065"}
+              color={"#ffffff"}
             />
           ),
         }}
