@@ -24,22 +24,61 @@ export default function Enviar(props) {
   };
   const sendMoney = async () => {
     let contact;
-    if (active) {
-      if (text.amount < saldo) {
-        const res = await LocalAuthentication.hasHardwareAsync();
-        if (!res) {
-          return Alert.alert("Su dispositivo no soporta los metodos de login");
-        }
-        const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync(
-          {}
-        );
-        if (!autorization) return Alert.alert("No autorizado");
-        const huella = await LocalAuthentication.isEnrolledAsync();
-        if (!huella) return Alert.alert("No tiene autorizacion");
-        const login = await LocalAuthentication.authenticateAsync({
-          promptMessage: "Ingrese su huella por favor",
-        });
-        if (login.success) {
+    if (text.amount > 0) {
+      if (text.amount <= saldo) {
+        if (active) {
+          const res = await LocalAuthentication.hasHardwareAsync();
+          if (!res) {
+            return Alert.alert("Su dispositivo no soporta los metodos de login");
+          }
+          const autorization = await LocalAuthentication.supportedAuthenticationTypesAsync(
+            {}
+          );
+          if (!autorization) return Alert.alert("No autorizado");
+          const huella = await LocalAuthentication.isEnrolledAsync();
+          if (!huella) return Alert.alert("No tiene autorizacion");
+          const login = await LocalAuthentication.authenticateAsync({
+            promptMessage: "Ingrese su huella por favor",
+          });
+          if (login.success) {
+            Axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`)
+              .then(({ data }) => {
+                contact = data;
+              })
+              .then((data) => {
+                return Axios.post(`https://walletfly.glitch.me/transaction/${user.id}`,
+                  {
+                    title: text.title,
+                    description: text.description,
+                    type: "egreso",
+                    total: parseInt(text.amount, 10),
+                  })
+              })
+              .then(({ data }) => {
+                dispatch({
+                  type: SALDO,
+                  payload: data.balance,
+                });
+                return Axios.post(
+                  `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
+                  {
+                    title: text.title,
+                    description: text.description,
+                    type: "ingreso",
+                    total: parseInt(text.amount, 10),
+                  }
+                );
+              })
+              .then(({ data }) => {
+                props.navigation.navigate("Home");
+                Alert.alert("Envio de dinero realizado con exito");
+              })
+              .catch((err) => {
+                Alert.alert("Ocurrio un Error!");
+                console.log(err);
+              });
+          }
+        } else {
           Axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`)
             .then(({ data }) => {
               contact = data;
@@ -78,48 +117,14 @@ export default function Enviar(props) {
             });
         }
       } else {
-        Alert.alert("No tiene saldo suficiente");
+        return Alert.alert('Saldo insuficiente')
       }
     } else {
-      if (text.amount < saldo) {
-        Axios.get(`https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`)
-          .then(({ data }) => {
-            contact = data;
-          })
-          .then((data) => {
-            return Axios.post(`https://walletfly.glitch.me/transaction/${user.id}`,
-              {
-                title: text.title,
-                description: text.description,
-                type: "egreso",
-                total: parseInt(text.amount, 10),
-              })
-          })
-          .then(({ data }) => {
-            dispatch({
-              type: SALDO,
-              payload: data.balance,
-            });
-            return Axios.post(
-              `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
-              {
-                title: text.title,
-                description: text.description,
-                type: "ingreso",
-                total: parseInt(text.amount, 10),
-              }
-            );
-          })
-          .then(({ data }) => {
-            props.navigation.navigate("Home");
-            Alert.alert("Envio de dinero realizado con exito");
-          })
-          .catch((err) => {
-            Alert.alert("Ocurrio un Error!");
-            console.log(err);
-          });
-      } else {
-        Alert.alert("No tiene saldo Suficiente");
+      if (text.amount <= 0) {
+        return Alert.alert("No puedes ingresar numeros negativos")
+      }
+      if (text.amount == 0) {
+        return Alert.alert('Ingresa un valor por favor')
       }
     }
   };

@@ -62,7 +62,6 @@ export default function Home({ navigation }) {
         return filtroUnAño(todo, dayMonth, month, currentYear)
       default:
         return SieteDias(todo, dayMonth, month, currentYear)
-      // return [1,2,3,4,5,6,7];
     }
   }
   const Label = (args) => {
