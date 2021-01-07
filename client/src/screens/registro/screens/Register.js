@@ -31,48 +31,31 @@ export default function CreateUserScreen(props) {
     }
   }, [state, setError]);
   const next = () => {
-    if (
-      state.email === "" ||
-      state.password === "" ||
-      state.passwordRepeat === ""
-    ) {
+    if (state.email === "" || state.password === "" || state.passwordRepeat === "") {
       setAlertMessage("Revisa todos los campos antes de continuar.");
-      setVisible(!visible);
-    }
-
-    if (
-      !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
-        state.email
-      )
-    ) {
+      return setVisible(!visible);
+    } else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(state.email)) {
+      setAlertMessage("Has introducido una dirección de email no valida.");
       setAlertMessage2("Has introducido una dirección de email no valida.");
-    } else {
-      setAlertMessage2("");
-    }
-
-    if (state.password !== state.passwordRepeat) {
-      setAlertMessage3("Comprueba tu contraseña.");
-      setVisible(!visible);
-    } else {
-      setAlertMessage3("");
-    }
-
-    if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(state.password)) {
+      return setVisible(!visible);
+    } else if (state.password !== state.passwordRepeat) {
+      setAlertMessage("Las contraseñas no coinciden.");
+      setAlertMessage3("Las contraseñas no coinciden.");
+      return setVisible(!visible);
+    } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(state.password)) {
+      setAlertMessage("Debes ingresar una contraseña de 8 caracteres alfanumericos y como mínimo una mayúscula.");
       setAlertMessage4(
         "Debes ingresar una contraseña de 8 caracteres alfanumericos y como mínimo una mayúscula."
       );
-      setVisible(!visible);
-    } else {
-      setAlertMessage4("");
+      return setVisible(!visible);
     }
-
     axios
       .post(`https://walletfly.glitch.me/userEmail`, state)
       .then(({ data }) => {
         props.navigation.navigate("AuthEmail", { id: data.user.id, state });
       })
       .catch((error) => {
-        setAlertMessage(`Error! ${error}`);
+        setAlertMessage(`Ocurrio un Error`);
         setVisible(!visible);
       });
   };
@@ -86,11 +69,12 @@ export default function CreateUserScreen(props) {
             name="account-outline"
             color={"#f23b6c"}
             size={30}
-            style={{ margin: "0.2rem" }}
+            style={{ margin: 3 }}
           />
           <TextInput
             style={stylesInputs.inputsLogin}
             placeholder="Ingrese su Email"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("email", value)}
           />
         </View>
@@ -101,12 +85,13 @@ export default function CreateUserScreen(props) {
             name="lock-outline"
             color={"#f23b6c"}
             size={30}
-            style={{ margin: "0.2rem" }}
+            style={{ margin: 3 }}
           />
           <TextInput
             style={stylesInputs.inputsLogin}
             secureTextEntry={true}
             placeholder="Ingrese su contraseña"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("password", value)}
           />
         </View>
@@ -117,12 +102,13 @@ export default function CreateUserScreen(props) {
             name="lock-outline"
             color={"#f23b6c"}
             size={30}
-            style={{ margin: "0.2rem" }}
+            style={{ margin: 3 }}
           />
           <TextInput
             style={stylesInputs.inputsLogin}
             secureTextEntry={true}
             placeholder="Repita su contraseña"
+            placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("passwordRepeat", value)}
           />
         </View>
@@ -132,13 +118,9 @@ export default function CreateUserScreen(props) {
             <Text style={stylesInputs.textButton}>Registrarse</Text>
           </TouchableOpacity>
         </View>
-        <Text
-          style={
-            stylesInputs.help
-          } /* onPress={() => props.navigation.navigate("FAQ")} */
-        >
-          ¿Necesitas ayuda?
-        </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("QuestionAndAnswers")}>
+          <Text style={stylesInputs.help}>¿Necesitas ayuda?</Text>
+        </TouchableOpacity>
       </View>
       <Dialog visible={visible} onDismiss={hideDialog}>
         <Dialog.Content>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Appbar, Avatar } from "react-native-paper";
@@ -7,6 +7,11 @@ import axios from "axios";
 import api from "../../../../reducer/ActionCreator";
 import { useDispatch, useSelector } from "react-redux";
 
+import firebase from "firebase/app";
+import "firebase/storage";
+import Enviar from "../enviar/Enviar";
+
+
 export default function ModificarContacto({ navigation, route }) {
   const { CONTACTOS } = api;
   const dispatch = useDispatch();
@@ -14,11 +19,21 @@ export default function ModificarContacto({ navigation, route }) {
   const userId = route.params.idUser;
   const Name = route.params.firstName + " " + route.params.lastName;
   const alias = route.params.alias;
-  const user = useSelector((state) => state.user);
-  const userImage = useSelector((state) => state.userImage);
+  const user = useSelector((state) => state.user); 
   const email = route.params.email;
   const [value, setValue] = useState("");
   const [active, setActive] = useState(false);
+  const [contactImage, setContactImage] = useState(null);
+
+  useEffect(()=>{
+    firebase.storage().ref(`/profileImage/${email}`).getDownloadURL()
+      .then((image) => {  
+        setContactImage(image)
+      })
+      .catch((error) => {
+        setContactImage(null)     
+      });
+  }, [email]);
 
   const handleEdit = (value) => {
     axios
@@ -29,6 +44,7 @@ export default function ModificarContacto({ navigation, route }) {
         }
       )
       .then(({ data }) => {
+        setActive(!active);
         dispatch({
           type: CONTACTOS,
           payload: data,
@@ -41,8 +57,6 @@ export default function ModificarContacto({ navigation, route }) {
   };
 
   const handleDelete = () => {
-    console.log(userId);
-    console.log(contactId);
     axios
       .delete(
         `https://walletfly.glitch.me/contacts/${userId}?contactId=${contactId}`
@@ -73,11 +87,9 @@ export default function ModificarContacto({ navigation, route }) {
           <Avatar.Image
             size={100}
             source={{
-              uri: userImage
-                ? userImage
-                : require("../../../../images/Avatar.png"),
-            }}
-          />
+              uri: contactImage ? contactImage : require("../../../../images/Avatar.png"),
+            }}            
+          />         
           <View
             style={{
               display: "flex",
@@ -95,12 +107,13 @@ export default function ModificarContacto({ navigation, route }) {
                   marginRight: 5,
                 }}
               >
-                Alias:{" "}
+                Alias:
               </Text>
               {active ? (
                 <TextInput
                   autoFocus
                   onChangeText={(value) => setValue(value)}
+                  defaultValue={alias ? alias : Name}
                 />
               ) : (
                 <Text style={{ color: "#cb3065", fontFamily: "Bree-Serif" }}>
@@ -130,7 +143,7 @@ export default function ModificarContacto({ navigation, route }) {
               }}
             >
               Nombre:
-            </Text>{" "}
+            </Text>
             <Text style={{ color: "#cb3065", fontFamily: "Bree-Serif" }}>
               {Name}
             </Text>
@@ -142,14 +155,24 @@ export default function ModificarContacto({ navigation, route }) {
               }}
             >
               Email:
-            </Text>{" "}
+            </Text>
             <Text style={{ color: "#cb3065", fontFamily: "Bree-Serif" }}>
               {email}
             </Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => handleEdit(value)} style={s.button}>
-          <Text style={s.textButton}>Aceptar Cambios</Text>
+        {active ? (
+          <TouchableOpacity onPress={() => handleEdit(value)} style={s.button}>
+            <Text style={s.textButton}>Aceptar Cambios</Text>
+          </TouchableOpacity>
+        ) : (
+          <View />
+        )}
+        <TouchableOpacity
+          style={s.button}
+          onPress={() => navigation.navigate("Enviar", { email: email })}
+        >
+          <Text style={s.textButton}>Enviar Dinero</Text>
         </TouchableOpacity>
         <TouchableOpacity style={s.button} onPress={() => handleDelete()}>
           <Text style={s.textButton}>Borrar Contacto</Text>
@@ -178,7 +201,7 @@ const s = StyleSheet.create({
     justifyContent: "center",
     width: "50%",
     padding: 5,
-    height: "2.5rem",
+    height: 40,
     marginLeft: "auto",
     marginRight: "auto",
     marginBottom: 20,
@@ -187,7 +210,7 @@ const s = StyleSheet.create({
   },
   textButton: {
     color: "#f23b6c",
-    fontSize: "1rem",
+    fontSize: 16,
     fontFamily: "Bree-Serif",
     justifyContent: "center",
   },

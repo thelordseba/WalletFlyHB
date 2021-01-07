@@ -95,11 +95,11 @@ const s = StyleSheet.create({
   title: {
     fontFamily: "Bree-Serif",
     color: "#f23b6c",
-    fontSize: "2rem",
+    fontSize: 32,
     justifyContent: "center",
   },
   text: {
-    fontSize: "1rem",
+    fontSize: 16,
     textAlign: "center",
     marginLeft: "10%",
     marginRight: "10%",
@@ -111,21 +111,21 @@ const s = StyleSheet.create({
   textCode: {
     fontFamily: "Bree-Serif",
     color: "#f23b6c",
-    fontSize: "1.5rem",
+    fontSize: 24,
     textAlign: "center",
   },
   containerButton: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: "0.5rem",
+    marginTop: 8,
   },
   buttonSecondary: {
     alignItems: "center",
     backgroundColor: "#ffffff",
     borderColor: "#f23b6c",
     width: "50%",
-    height: "2.5rem",
+    height: 40,
     borderWidth: 2,
     borderRadius: 10,
     padding: 5,
@@ -134,12 +134,12 @@ const s = StyleSheet.create({
   code: {
     fontFamily: "Bree-Serif",
     color: "#cb3065",
-    fontSize: "3rem",
+    fontSize: 48,
     textAlign: "center",
   },
   textButtonSecondary: {
     color: "#f23b6c",
-    fontSize: "1rem",
+    fontSize: 16,
     fontFamily: "Bree-Serif",
     justifyContent: "center",
   },

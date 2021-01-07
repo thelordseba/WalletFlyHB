@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { APP_API } from "../../env";
 
 const actionCreators = {
     USER: "USER",
@@ -9,13 +8,13 @@ const actionCreators = {
     TRANSACCIONES: "TRANSACCIONES",
     HUELLA: "HUELLA",
     USER_IMAGE: 'USER_IMAGE',
-    getME: function(id){
-        return dispatch => {
-            // const promise = axios.get(`${process.env.REACT_APP_API_URL}/users/${id}`)
-            const promise = axios.get(`http://${APP_API}/users/${id}`)
-            this._dispatchPromise(promise, this.USER, dispatch)
-        }
-    },
+    // getME: function(id){
+    //     return dispatch => {
+    //         // const promise = axios.get(`${process.env.REACT_APP_API_URL}/users/${id}`)
+    //         const promise = axios.get(`http://${APP_API}/users/${id}`)
+    //         this._dispatchPromise(promise, this.USER, dispatch)
+    //     }
+    // },
     // dispatch
     _dispatchPromise: function(promise, type, dispatch){
         return promise
