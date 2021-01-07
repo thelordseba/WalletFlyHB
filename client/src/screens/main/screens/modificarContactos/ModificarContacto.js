@@ -6,8 +6,11 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import axios from "axios";
 import api from "../../../../reducer/ActionCreator";
 import { useDispatch, useSelector } from "react-redux";
+
 import firebase from "firebase/app";
 import "firebase/storage";
+import Enviar from "../enviar/Enviar";
+
 
 export default function ModificarContacto({ navigation, route }) {
   const { CONTACTOS } = api;
@@ -41,6 +44,7 @@ export default function ModificarContacto({ navigation, route }) {
         }
       )
       .then(({ data }) => {
+        setActive(!active);
         dispatch({
           type: CONTACTOS,
           payload: data,
@@ -53,8 +57,6 @@ export default function ModificarContacto({ navigation, route }) {
   };
 
   const handleDelete = () => {
-    console.log(userId);
-    console.log(contactId);
     axios
       .delete(
         `https://walletfly.glitch.me/contacts/${userId}?contactId=${contactId}`
@@ -105,12 +107,13 @@ export default function ModificarContacto({ navigation, route }) {
                   marginRight: 5,
                 }}
               >
-                Alias:{" "}
+                Alias:
               </Text>
               {active ? (
                 <TextInput
                   autoFocus
                   onChangeText={(value) => setValue(value)}
+                  defaultValue={alias ? alias : Name}
                 />
               ) : (
                 <Text style={{ color: "#cb3065", fontFamily: "Bree-Serif" }}>
@@ -158,8 +161,18 @@ export default function ModificarContacto({ navigation, route }) {
             </Text>
           </View>
         </View>
-        <TouchableOpacity onPress={() => handleEdit(value)} style={s.button}>
-          <Text style={s.textButton}>Aceptar Cambios</Text>
+        {active ? (
+          <TouchableOpacity onPress={() => handleEdit(value)} style={s.button}>
+            <Text style={s.textButton}>Aceptar Cambios</Text>
+          </TouchableOpacity>
+        ) : (
+          <View />
+        )}
+        <TouchableOpacity
+          style={s.button}
+          onPress={() => navigation.navigate("Enviar", { email: email })}
+        >
+          <Text style={s.textButton}>Enviar Dinero</Text>
         </TouchableOpacity>
         <TouchableOpacity style={s.button} onPress={() => handleDelete()}>
           <Text style={s.textButton}>Borrar Contacto</Text>

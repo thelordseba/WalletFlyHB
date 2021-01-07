@@ -65,7 +65,7 @@ export default function Contactos({ navigation }) {
         console.log(error);
       });
   }; */
-
+  console.log(user.id)
   useEffect(() => {
     axios
       .get(`https://walletfly.glitch.me/contacts/${user.id}`)
