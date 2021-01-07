@@ -11,7 +11,6 @@ import firebase from "firebase/app";
 import "firebase/storage";
 import Enviar from "../enviar/Enviar";
 
-
 export default function ModificarContacto({ navigation, route }) {
   const { CONTACTOS } = api;
   const dispatch = useDispatch();
@@ -19,19 +18,22 @@ export default function ModificarContacto({ navigation, route }) {
   const userId = route.params.idUser;
   const Name = route.params.firstName + " " + route.params.lastName;
   const alias = route.params.alias;
-  const user = useSelector((state) => state.user); 
+  const user = useSelector((state) => state.user);
   const email = route.params.email;
   const [value, setValue] = useState("");
   const [active, setActive] = useState(false);
   const [contactImage, setContactImage] = useState(null);
 
-  useEffect(()=>{
-    firebase.storage().ref(`/profileImage/${email}`).getDownloadURL()
-      .then((image) => {  
-        setContactImage(image)
+  useEffect(() => {
+    firebase
+      .storage()
+      .ref(`/profileImage/${email}`)
+      .getDownloadURL()
+      .then((image) => {
+        setContactImage(image);
       })
       .catch((error) => {
-        setContactImage(null)     
+        setContactImage(null);
       });
   }, [email]);
 
@@ -103,9 +105,11 @@ export default function ModificarContacto({ navigation, route }) {
           <Avatar.Image
             size={100}
             source={{
-              uri: contactImage ? contactImage : require("../../../../images/Avatar.png"),
-            }}            
-          />         
+              uri: contactImage
+                ? contactImage
+                : require("../../../../images/Avatar.png"),
+            }}
+          />
           <View
             style={{
               display: "flex",
@@ -186,7 +190,7 @@ export default function ModificarContacto({ navigation, route }) {
         )}
         <TouchableOpacity
           style={s.button}
-          onPress={() => navigation.navigate("Enviar", { email: email })}
+          onPress={() => navigation.navigate("EnviarContact", { email: email })}
         >
           <Text style={s.textButton}>Enviar Dinero</Text>
         </TouchableOpacity>
