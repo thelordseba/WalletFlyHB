@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, StatusBar, View } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import api from "../../../../reducer/ActionCreator";
 import { Appbar } from "react-native-paper";
@@ -30,13 +30,29 @@ export default function DatosPersonales({ navigation }) {
 
   return (
     <>
-      <Appbar.Header
-        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
-      >
-        <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
-        <Appbar.Content title="Datos Personales" />
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
+        <Appbar.Action
+          icon="arrow-left"
+          color="#F23B6C"
+          onPress={() => navigation.goBack()}
+        />
+        <Appbar.Content
+          title="Datos Personales"
+          color="#F23B6C"
+          titleStyle={{
+            textAlign: "center",
+            fontFamily: "Bree-Serif",
+            paddingRight: 54,
+          }}
+        />
       </Appbar.Header>
       <View style={s.containerAll}>
+        <TouchableOpacity style={s.header}></TouchableOpacity>
         <View style={s.container}>
           <Text style={s.title}>Email:</Text>
           <Text style={s.text}>{user.email}</Text>
@@ -112,6 +128,13 @@ const s = StyleSheet.create({
     fontFamily: "OpenSans-Regular",
     borderColor: "#b58de8",
     width: "85%",
+  },
+  header: {
+    width: "40%",
+    alignSelf: "center",
+    position: "absolute",
+    borderBottomWidth: 2,
+    borderBottomColor: "#f23b6c",
   },
   button: {
     borderWidth: 2,

@@ -18,7 +18,7 @@ import axios from "axios";
 
 export default function Enviar(props) {
   const [text, setText] = useState({
-    email: "",
+    email: props.route.params.email,
     amount: 0,
     title: "",
     description: "",

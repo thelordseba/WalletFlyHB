@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, StatusBar, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Appbar, Avatar } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -11,7 +11,6 @@ import firebase from "firebase/app";
 import "firebase/storage";
 import Enviar from "../enviar/Enviar";
 
-
 export default function ModificarContacto({ navigation, route }) {
   const { CONTACTOS } = api;
   const dispatch = useDispatch();
@@ -19,19 +18,22 @@ export default function ModificarContacto({ navigation, route }) {
   const userId = route.params.idUser;
   const Name = route.params.firstName + " " + route.params.lastName;
   const alias = route.params.alias;
-  const user = useSelector((state) => state.user); 
+  const user = useSelector((state) => state.user);
   const email = route.params.email;
   const [value, setValue] = useState("");
   const [active, setActive] = useState(false);
   const [contactImage, setContactImage] = useState(null);
 
-  useEffect(()=>{
-    firebase.storage().ref(`/profileImage/${email}`).getDownloadURL()
-      .then((image) => {  
-        setContactImage(image)
+  useEffect(() => {
+    firebase
+      .storage()
+      .ref(`/profileImage/${email}`)
+      .getDownloadURL()
+      .then((image) => {
+        setContactImage(image);
       })
       .catch((error) => {
-        setContactImage(null)     
+        setContactImage(null);
       });
   }, [email]);
 
@@ -76,20 +78,38 @@ export default function ModificarContacto({ navigation, route }) {
 
   return (
     <>
-      <Appbar.Header
-        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
-      >
-        <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
-        <Appbar.Content title={`Modificar a ${Name}`} />
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
+        <Appbar.Action
+          icon="arrow-left"
+          color="#F23B6C"
+          onPress={() => navigation.goBack()}
+        />
+        <Appbar.Content
+          title={`Modificar a ${Name}`}
+          color="#F23B6C"
+          titleStyle={{
+            textAlign: "center",
+            fontFamily: "Bree-Serif",
+            paddingRight: 54,
+          }}
+        />
       </Appbar.Header>
       <View style={s.container}>
+        <TouchableOpacity style={s.header}></TouchableOpacity>
         <View style={s.userContainer}>
           <Avatar.Image
             size={100}
             source={{
-              uri: contactImage ? contactImage : require("../../../../images/Avatar.png"),
-            }}            
-          />         
+              uri: contactImage
+                ? contactImage
+                : require("../../../../images/Avatar.png"),
+            }}
+          />
           <View
             style={{
               display: "flex",
@@ -170,7 +190,7 @@ export default function ModificarContacto({ navigation, route }) {
         )}
         <TouchableOpacity
           style={s.button}
-          onPress={() => navigation.navigate("Enviar", { email: email })}
+          onPress={() => navigation.navigate("EnviarContact", { email: email })}
         >
           <Text style={s.textButton}>Enviar Dinero</Text>
         </TouchableOpacity>
@@ -193,6 +213,13 @@ const s = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 50,
     marginLeft: 10,
+  },
+  header: {
+    width: "40%",
+    alignSelf: "center",
+    position: "absolute",
+    borderBottomWidth: 2,
+    borderBottomColor: "#f23b6c",
   },
   button: {
     borderWidth: 2,

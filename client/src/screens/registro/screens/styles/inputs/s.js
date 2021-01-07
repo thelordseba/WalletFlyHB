@@ -5,6 +5,13 @@ export default StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
   },
+  header: {
+    width: "40%",
+    alignSelf: "center",
+    position: "absolute",
+    borderBottomWidth: 2,
+    borderBottomColor: "#f23b6c",
+  },
   inputs: {
     height: 40,
     paddingLeft: 10,

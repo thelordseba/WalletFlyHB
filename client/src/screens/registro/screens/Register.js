@@ -118,7 +118,7 @@ export default function CreateUserScreen(props) {
             <Text style={stylesInputs.textButton}>Registrarse</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate("QuestionAndAnswers")}>
+        <TouchableOpacity onPress={() => props.navigation.navigate("QuestionAndAnswers")}>
           <Text style={stylesInputs.help}>¿Necesitas ayuda?</Text>
         </TouchableOpacity>
       </View>

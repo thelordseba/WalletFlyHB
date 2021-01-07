@@ -8,7 +8,7 @@ import {
   Alert,
   Dimensions,
   StatusBar,
-  TextInput
+  TextInput,
 } from "react-native";
 
 import { LineChart } from "react-native-chart-kit";
@@ -165,22 +165,29 @@ export default function Home({ navigation }) {
   }, []);
   return (
     <>
-      <StatusBar backgroundColor="#f23b6c" barStyle={"light-content"} />
-      <Appbar.Header
-        style={{
-          backgroundColor: "#ffffff",
-          borderBottomWidth: 2,
-          borderBottomColor: "#f23b6c",
-        }}
-      >
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
         <Appbar.Action
           icon="menu"
           color="#F23B6C"
           onPress={() => navigation.toggleDrawer()}
         />
-        <Appbar.Content title={"Inicio"} color="#F23B6C" />
+        <Appbar.Content
+          title={"Inicio"}
+          color="#F23B6C"
+          titleStyle={{
+            textAlign: "center",
+            fontFamily: "Bree-Serif",
+            paddingRight: 54,
+          }}
+        />
       </Appbar.Header>
       <View style={s.container}>
+        <TouchableOpacity style={s.header}></TouchableOpacity>
         <View style={s.containerPerfil}>
           <Avatar.Image
             size={50}
@@ -349,19 +356,19 @@ const s = StyleSheet.create({
     height: "100%",
     backgroundColor: "#ffffff",
   },
-  textBienvenida: {
-    textAlign: "center",
-    fontSize: 20,
-    // color: "#49e1f4",
-    marginTop: 16,
-    marginBottom: 16,
+  header: {
+    width: "40%",
+    alignSelf: "center",
+    position: "absolute",
+    borderBottomWidth: 2,
+    borderBottomColor: "#f23b6c",
   },
   containerPerfil: {
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 16,
-    marginBottom: 16,
+    marginTop: 24,
+    marginBottom: 24,
   },
   containerNameEmail: {
     display: "flex",
@@ -385,6 +392,7 @@ const s = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 8,
+    marginBottom: 24,
   },
   buttonRelieve: {
     flex: 1,
