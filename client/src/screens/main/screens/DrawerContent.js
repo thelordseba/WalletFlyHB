@@ -126,14 +126,6 @@ export default function DrawerContent(props) {
         </Drawer.Section>
         <Drawer.Section style={s.drawerSection}>
           <Text style={s.title}>Configuración</Text>
-          <TouchableRipple onPress={() => toggleTheme()}>
-            <View style={s.preference}>
-              <Text style={s.switch}>Tema Oscuro</Text>
-              <View pointerEvents="none">
-                <Switch value={isDarkTheme} color={"#F23B6C"} />
-              </View>
-            </View>
-          </TouchableRipple>
           <TouchableRipple
             onPress={() => {
               let codigoHuella = huella.code

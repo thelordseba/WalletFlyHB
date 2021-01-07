@@ -1,8 +1,14 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { View, TextInput, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  StatusBar,
+  TouchableOpacity,
+} from "react-native";
 import stylesInputs from "./styles/inputs/s";
-import { Dialog, Paragraph } from "react-native-paper";
+import { Dialog, Paragraph, Appbar } from "react-native-paper";
 
 export default function AuthEmail({ route, navigation }) {
   const [authCode, setAuthCode] = useState(0);
@@ -37,7 +43,20 @@ export default function AuthEmail({ route, navigation }) {
 
   return (
     <>
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
+        <Appbar.Content
+          title="Autenticar cuenta"
+          color="#F23B6C"
+          titleStyle={{ textAlign: "center", fontFamily: "Bree-Serif" }}
+        />
+      </Appbar.Header>
       <View style={stylesInputs.container}>
+        <TouchableOpacity style={stylesInputs.header}></TouchableOpacity>
         <Text
           style={{
             fontSize: 15,

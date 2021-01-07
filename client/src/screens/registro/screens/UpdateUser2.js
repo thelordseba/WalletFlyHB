@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { View, TextInput, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  TextInput,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import { useDispatch } from "react-redux";
 import api from "../../../reducer/ActionCreator";
-import { Dialog, Paragraph } from "react-native-paper";
+import { Dialog, Paragraph, Appbar } from "react-native-paper";
 import stylesInputs from "./styles/inputs/s";
 
 export default function UpdateUserScreen({ route, navigation }) {
@@ -110,7 +116,20 @@ export default function UpdateUserScreen({ route, navigation }) {
 
   return (
     <>
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
+        <Appbar.Content
+          title="Completar datos personales"
+          color="#F23B6C"
+          titleStyle={{ textAlign: "center", fontFamily: "Bree-Serif" }}
+        />
+      </Appbar.Header>
       <View style={stylesInputs.container}>
+        <TouchableOpacity style={stylesInputs.header}></TouchableOpacity>
         <Text style={stylesInputs.inputsText}>Dirección</Text>
         <View style={stylesInputs.containerInputSolo}>
           <TextInput

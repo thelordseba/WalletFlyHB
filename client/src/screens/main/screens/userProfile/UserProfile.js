@@ -3,6 +3,7 @@ import {
   View,
   Text,
   StyleSheet,
+  StatusBar,
   SafeAreaView,
   TouchableOpacity,
 } from "react-native";
@@ -105,14 +106,30 @@ export default function UserProfile({ navigation }) {
 
   return (
     <>
-      <Appbar.Header
-        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
-      >
-        <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-        <Appbar.Content title="Perfil" />
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
+        <Appbar.Action
+          icon="menu"
+          color="#F23B6C"
+          onPress={() => navigation.toggleDrawer()}
+        />
+        <Appbar.Content
+          title="Perfil"
+          color="#F23B6C"
+          titleStyle={{
+            textAlign: "center",
+            paddingRight: 54,
+            fontFamily: "Bree-Serif",
+          }}
+        />
       </Appbar.Header>
 
       <View style={s.container}>
+        <TouchableOpacity style={s.header}></TouchableOpacity>
         <View style={s.containerImg}>
           <Avatar.Image
             source={{
@@ -161,28 +178,6 @@ export default function UserProfile({ navigation }) {
               colors={["#F23B6C", "#F23B6C", "#cb3065"]}
               style={s.buttonMenu}
             >
-              <Text style={s.buttonText}>Mi Código QR</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={s.buttonMenuContainer}
-            onPress={() => navigation.navigate("DatosPersonales")}
-          >
-            <LinearGradient
-              colors={["#F23B6C", "#F23B6C", "#cb3065"]}
-              style={s.buttonMenu}
-            >
-              <Text style={s.buttonText}>MI CVU</Text>
-            </LinearGradient>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={s.buttonMenuContainer}
-            onPress={() => navigation.navigate("DatosPersonales")}
-          >
-            <LinearGradient
-              colors={["#F23B6C", "#F23B6C", "#cb3065"]}
-              style={s.buttonMenu}
-            >
               <Text style={s.buttonText}>Datos Personales</Text>
             </LinearGradient>
           </TouchableOpacity>
@@ -198,11 +193,18 @@ const s = StyleSheet.create({
     backgroundColor: "#ffffff",
     height: "100%",
   },
+  header: {
+    width: "40%",
+    alignSelf: "center",
+    position: "absolute",
+    borderBottomWidth: 2,
+    borderBottomColor: "#f23b6c",
+  },
   containerImg: {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 15,
+    marginTop: 24,
   },
   textUser: {
     color: "#F23B6C",

@@ -4,6 +4,7 @@ import {
   Text,
   TextInput,
   View,
+  StatusBar,
   TouchableOpacity,
   Image,
 } from "react-native";
@@ -65,7 +66,7 @@ export default function Contactos({ navigation }) {
         console.log(error);
       });
   }; */
-  console.log(user.id)
+  console.log(user.id);
   useEffect(() => {
     axios
       .get(`https://walletfly.glitch.me/contacts/${user.id}`)
@@ -85,95 +86,113 @@ export default function Contactos({ navigation }) {
   };
   return (
     <>
-      <Appbar.Header
-        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
-      >
-        <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-        <Appbar.Content title="Contactos" />
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
+        <Appbar.Action
+          icon="menu"
+          color="#F23B6C"
+          onPress={() => navigation.toggleDrawer()}
+        />
+        <Appbar.Content
+          title="Contactos"
+          color="#F23B6C"
+          titleStyle={{
+            textAlign: "center",
+            fontFamily: "Bree-Serif",
+            paddingRight: 54,
+          }}
+        />
       </Appbar.Header>
-      <View style={s.container}>
+      <View style={s.containerAll}>
+        <TouchableOpacity style={s.header}></TouchableOpacity>
         <ScrollView>
-          {contactos &&
-            contactos.map((el) => (
-              <TouchableOpacity
-                key={el.id}
-                onPress={() =>
-                  navigation.navigate("ModificarContacto", {
-                    id: el.contactId,
-                    idUser: user.id,
-                    firstName: el.user.firstName,
-                    lastName: el.user.lastName,
-                    alias: el.alias,
-                    email: el.user.email,
-                  })
-                }
-              >
-                <View style={s.containerView}>
-                  <View style={s.containerNameAvatar}>
-                    <Avatar.Image
-                      size={50}
-                      source={{
-                        uri: userImage ? userImage : emptyAvatar,
-                      }}
-                    />
-                    <View style={s.containerNameEmail}>
-                      {!el.alias ? (
-                        <Text style={s.name}>
-                          {el.user.firstName} {el.user.lastName}
-                        </Text>
-                      ) : (
-                        <Text style={s.name}>{el.alias}</Text>
-                      )}
-                      <Text style={s.textEmail}>{el.user.email}</Text>
+          <View style={s.container}>
+            {contactos &&
+              contactos.map((el) => (
+                <TouchableOpacity
+                  key={el.id}
+                  onPress={() =>
+                    navigation.navigate("ModificarContacto", {
+                      id: el.contactId,
+                      idUser: user.id,
+                      firstName: el.user.firstName,
+                      lastName: el.user.lastName,
+                      alias: el.alias,
+                      email: el.user.email,
+                    })
+                  }
+                >
+                  <View style={s.containerView}>
+                    <View style={s.containerNameAvatar}>
+                      <Avatar.Image
+                        size={50}
+                        source={{
+                          uri: userImage ? userImage : emptyAvatar,
+                        }}
+                      />
+                      <View style={s.containerNameEmail}>
+                        {!el.alias ? (
+                          <Text style={s.name}>
+                            {el.user.firstName} {el.user.lastName}
+                          </Text>
+                        ) : (
+                          <Text style={s.name}>{el.alias}</Text>
+                        )}
+                        <Text style={s.textEmail}>{el.user.email}</Text>
+                      </View>
                     </View>
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        justifyContent: "flex-end",
+                      }}
+                    ></View>
                   </View>
-                  <View
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      justifyContent: "flex-end",
-                    }}
-                  ></View>
-                </View>
-              </TouchableOpacity>
-            ))}
-          {contactos.length === 0 ? (
-            <>
-              <Text
-                style={{
-                  fontSize: 25,
-                  textAlign: "center",
-                  color: "#F23B6C",
-                  padding: 10,
-                  fontFamily: "Bree-Serif",
-                }}
-              >
-                Aún no tienes ningun amigo
-              </Text>
-              <Image
-                style={{
-                  width: 200,
-                  height: 200,
-                  marginLeft: "auto",
-                  marginRight: "auto",
-                }}
-                source={{
-                  uri: require("../../../images/Icon.png"),
-                }}
-              />
-              <Text
-                style={{
-                  fontSize: 16,
-                  textAlign: "center",
-                  padding: 5,
-                  fontFamily: "OpenSans-Regular",
-                  color: "#cb3065",
-                }}
-              >
-                ¿Que tal si comenzás agregando a las personas que conozcas?
-              </Text>
-            </>
-          ) : null}
+                </TouchableOpacity>
+              ))}
+            {contactos.length === 0 ? (
+              <>
+                <Text
+                  style={{
+                    fontSize: 25,
+                    textAlign: "center",
+                    color: "#F23B6C",
+                    padding: 10,
+                    fontFamily: "Bree-Serif",
+                  }}
+                >
+                  Aún no tienes ningun amigo
+                </Text>
+                <Image
+                  style={{
+                    width: 200,
+                    height: 200,
+                    marginLeft: "auto",
+                    marginRight: "auto",
+                  }}
+                  source={{
+                    uri: require("../../../images/Icon.png"),
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: 16,
+                    textAlign: "center",
+                    padding: 5,
+                    fontFamily: "OpenSans-Regular",
+                    color: "#cb3065",
+                  }}
+                >
+                  ¿Que tal si comenzás agregando a las personas que conozcas?
+                </Text>
+              </>
+            ) : null}
+          </View>
         </ScrollView>
 
         <Text
@@ -243,9 +262,20 @@ export default function Contactos({ navigation }) {
   );
 }
 const s = StyleSheet.create({
-  container: {
+  containerAll: {
     flex: 1,
     backgroundColor: "#ffffff",
+  },
+  container: {
+    marginTop: 24,
+  },
+
+  header: {
+    width: "40%",
+    alignSelf: "center",
+    position: "absolute",
+    borderBottomWidth: 2,
+    borderBottomColor: "#f23b6c",
   },
   containerNameAvatar: {
     display: "flex",

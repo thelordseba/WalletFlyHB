@@ -1,5 +1,11 @@
 import React from "react";
-import { TouchableOpacity, View, StyleSheet, Text } from "react-native";
+import {
+  TouchableOpacity,
+  View,
+  StatusBar,
+  StyleSheet,
+  Text,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../../reducer/ActionCreator";
 import { Appbar } from "react-native-paper";
@@ -48,15 +54,28 @@ export default function EnEfectivo(props) {
 
   return (
     <>
-      <Appbar.Header
-        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
-      >
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
         <Appbar.Action
           icon="arrow-left"
+          color="#F23B6C"
           onPress={() => props.navigation.goBack()}
         />
-        <Appbar.Content title="Recargar" />
+        <Appbar.Content
+          title="Recargar"
+          color="#F23B6C"
+          titleStyle={{
+            textAlign: "center",
+            fontFamily: "Bree-Serif",
+            paddingRight: 54,
+          }}
+        />
       </Appbar.Header>
+      <TouchableOpacity style={s.header}></TouchableOpacity>
       <View style={s.container}>
         <Text style={s.title}>Recarga de dinero</Text>
         <View>
@@ -91,6 +110,14 @@ const s = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#ffffff",
+  },
+  header: {
+    marginTop: 43,
+    width: "40%",
+    alignSelf: "center",
+    position: "absolute",
+    borderBottomWidth: 2,
+    borderBottomColor: "#f23b6c",
   },
   title: {
     fontFamily: "Bree-Serif",
