@@ -15,6 +15,7 @@ import styleInputs from "../../../registro/screens/styles/inputs/s";
 import * as LocalAuthentication from "expo-local-authentication";
 
 export default function Enviar(props) {
+  console.log(props);
   const [text, setText] = useState({
     email: "",
     amount: 0,
@@ -31,7 +32,7 @@ export default function Enviar(props) {
   };
   const sendMoney = async () => {
     let contact;
-    let saldoIngresado = parseInt(text.amount)
+    let saldoIngresado = parseInt(text.amount);
     if (text.amount > 0) {
       if (saldoIngresado <= saldo) {
         if (active) {
@@ -127,6 +128,7 @@ export default function Enviar(props) {
             })
             .then(({ data }) => {
               props.navigation.navigate("Home");
+
               Alert.alert("Envio de dinero realizado con exito");
             })
             .catch((err) => {
@@ -135,16 +137,14 @@ export default function Enviar(props) {
             });
         }
       } else {
-
-        return alert('Saldo insuficiente')
+        return alert("Saldo insuficiente");
       }
     } else {
       if (text.amount < 0) {
-        return alert("No puedes ingresar numeros negativos")
+        return alert("No puedes ingresar numeros negativos");
       }
       if (text.amount == 0) {
-        return alert('Ingresa un valor por favor')
-
+        return alert("Ingresa un valor por favor");
       }
     }
   };
@@ -163,12 +163,20 @@ export default function Enviar(props) {
       <View style={s.container}>
         <Text style={s.inputsText}>Email del destinatario</Text>
         <View style={s.containerInput}>
-          <TextInput
-            style={s.inputs}
-            placeholder="Ingrese el email"
-            placeholderTextColor="#cb3065"
-            onChangeText={(value) => handleTextChange("email", value)}
-          />
+          {!props.route.params ? (
+            <TextInput
+              style={s.inputs}
+              placeholder="Ingrese el email"
+              placeholderTextColor="#cb3065"
+              onChangeText={(value) => handleTextChange("email", value)}
+            />
+          ) : (
+            <TextInput
+              style={s.inputs}
+              defaultValue={props.route.params.email}
+              onChangeText={(value) => handleTextChange("email", value)}
+            />
+          )}
         </View>
         <Text style={s.inputsText}>Titulo</Text>
         <View style={s.containerInput}>
