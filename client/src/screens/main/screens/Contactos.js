@@ -113,7 +113,8 @@ export default function Contactos({ navigation }) {
                     <Avatar.Image
                       size={50}
                       source={{
-                        uri: userImage ? userImage : emptyAvatar,
+                        // uri: userImage ? userImage : emptyAvatar,
+                        uri: emptyAvatar,
                       }}
                     />
                     <View style={s.containerNameEmail}>
