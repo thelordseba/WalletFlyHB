@@ -67,7 +67,7 @@ const s = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 5,
     borderBottomWidth: 1,
-    borderBottomColor: "#b58de8",
+    borderBottomColor: "rgb(181,141,232)",
   },
   containerIconDireccion: {
     display: "flex",

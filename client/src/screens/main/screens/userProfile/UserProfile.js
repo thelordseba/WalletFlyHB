@@ -131,12 +131,16 @@ export default function UserProfile({ navigation }) {
       <View style={s.container}>
         <TouchableOpacity style={s.header}></TouchableOpacity>
         <View style={s.containerImg}>
-          <Avatar.Image
-            source={{
-              uri: userImage ? userImage : emptyAvatar,
-            }}
-            size={100}
-          />
+          {userImage ?
+            <Avatar.Image
+              size={100}
+              source={{uri:userImage}} />
+            :
+            <Avatar.Image
+              size={100}
+              source={emptyAvatar}
+            />
+          }
           <View style={s.iconContainer}>
             <TouchableOpacity
               onPress={() => getDeviceImage("gallery")}

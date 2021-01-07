@@ -189,12 +189,16 @@ export default function Home({ navigation }) {
       <View style={s.container}>
         <TouchableOpacity style={s.header}></TouchableOpacity>
         <View style={s.containerPerfil}>
+          {userImage ?
+            <Avatar.Image
+              size={50}
+              source={{uri: userImage}}/>
+          :
           <Avatar.Image
             size={50}
-            source={{
-              uri: userImage ? userImage : emptyAvatar,
-            }}
+            source={emptyAvatar}
           />
+        }
           <View style={s.containerNameEmail}>
             <Text style={s.textNombre}>
               {user.firstName} {user.lastName}
@@ -208,6 +212,7 @@ export default function Home({ navigation }) {
               colors={["#F23B6C", "#F23B6C", "#cb3065"]}
               style={s.buttonRelieve}
             >
+              {/* ver esto */}
               <Text style={s.balance}>
                 Saldo actual: ${todo && todo.balance} ARS
               </Text>
@@ -253,7 +258,7 @@ export default function Home({ navigation }) {
               propsForDots: {
                 r: "6",
                 strokeWidth: "2",
-                stroke: "#b58de8 ",
+                stroke: "rgb(181,141,232)",
               },
             }}
             bezier
@@ -391,8 +396,8 @@ const s = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 8,
-    marginBottom: 24,
+    marginTop: 40,
+    marginBottom: 10,
   },
   buttonRelieve: {
     flex: 1,

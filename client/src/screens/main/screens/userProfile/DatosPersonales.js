@@ -126,7 +126,7 @@ const s = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     fontFamily: "OpenSans-Regular",
-    borderColor: "#b58de8",
+    borderColor: "rgb(181,141,232)",
     width: "85%",
   },
   header: {

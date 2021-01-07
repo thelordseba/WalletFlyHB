@@ -23,19 +23,20 @@ export default function ModificarContacto({ navigation, route }) {
   const [value, setValue] = useState("");
   const [active, setActive] = useState(false);
   const [contactImage, setContactImage] = useState(null);
+  const emptyAvatar = require("../../../../../assets/Avatar.png");
 
-  useEffect(() => {
-    firebase
-      .storage()
-      .ref(`/profileImage/${email}`)
-      .getDownloadURL()
-      .then((image) => {
-        setContactImage(image);
-      })
-      .catch((error) => {
-        setContactImage(null);
-      });
-  }, [email]);
+  // useEffect(() => {
+  //   firebase
+  //     .storage()
+  //     .ref(`/profileImage/${email}`)
+  //     .getDownloadURL()
+  //     .then((image) => {
+  //       setContactImage(image);
+  //     })
+  //     .catch((error) => {
+  //       setContactImage(null);
+  //     });
+  // }, [email]);
 
   const handleEdit = (value) => {
     axios
@@ -57,7 +58,7 @@ export default function ModificarContacto({ navigation, route }) {
         console.log(error);
       });
   };
-
+  console.log(contactImage)
   const handleDelete = () => {
     axios
       .delete(
@@ -102,14 +103,17 @@ export default function ModificarContacto({ navigation, route }) {
       <View style={s.container}>
         <TouchableOpacity style={s.header}></TouchableOpacity>
         <View style={s.userContainer}>
-          <Avatar.Image
-            size={100}
-            source={{
-              uri: contactImage
-                ? contactImage
-                : require("../../../../images/Avatar.png"),
-            }}
-          />
+
+          {contactImage ?
+            <Avatar.Image
+              size={100}
+              source={{uri: contactImage}} />
+            :
+            <Avatar.Image
+              size={100}
+              source={emptyAvatar}
+            />
+          }
           <View
             style={{
               display: "flex",
@@ -136,10 +140,10 @@ export default function ModificarContacto({ navigation, route }) {
                   defaultValue={alias ? alias : Name}
                 />
               ) : (
-                <Text style={{ color: "#cb3065", fontFamily: "Bree-Serif" }}>
-                  {alias ? alias : Name}
-                </Text>
-              )}
+                  <Text style={{ color: "#cb3065", fontFamily: "Bree-Serif" }}>
+                    {alias ? alias : Name}
+                  </Text>
+                )}
             </View>
             <TouchableOpacity
               onPress={() => setActive(!active)}
@@ -186,8 +190,8 @@ export default function ModificarContacto({ navigation, route }) {
             <Text style={s.textButton}>Aceptar Cambios</Text>
           </TouchableOpacity>
         ) : (
-          <View />
-        )}
+            <View />
+          )}
         <TouchableOpacity
           style={s.button}
           onPress={() => navigation.navigate("EnviarContact", { email: email })}

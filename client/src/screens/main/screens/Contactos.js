@@ -6,7 +6,7 @@ import {
   View,
   StatusBar,
   TouchableOpacity,
-  Image,
+  Image
 } from "react-native";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,13 +18,12 @@ import { ScrollView } from "react-native-gesture-handler";
 export default function Contactos({ navigation }) {
   const [text, setText] = useState({ email: "", alias: "" });
   const user = useSelector((state) => state.user);
-  const userImage = useSelector((state) => state.userImage);
   const dispatch = useDispatch();
   const contactos = useSelector((state) => state.contactos);
   const { CONTACTOS } = api;
   const [visible, setVisible] = useState(false);
   const emptyAvatar = require("../../../../assets/Avatar.png");
-
+  const iconPng = require("../../../images/Icon.png")
   const addContact = () => {
     axios
       .get(
@@ -52,21 +51,6 @@ export default function Contactos({ navigation }) {
       });
   };
 
-  /* const handleDelete = (contacto) => {
-    axios
-      .delete(`http://${APP_API}/contacts/${user.id}?contactId=${contacto}`)
-
-      .then(({ data }) => {
-        dispatch({
-          type: CONTACTOS,
-          payload: data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }; */
-  console.log(user.id);
   useEffect(() => {
     axios
       .get(`https://walletfly.glitch.me/contacts/${user.id}`)
@@ -80,7 +64,7 @@ export default function Contactos({ navigation }) {
       })
       .catch((err) => console.error(err));
   }, []);
-
+  console.log(iconPng)
   const handleTextChange = (name, value) => {
     setText({ ...text, [name]: value });
   };
@@ -110,7 +94,7 @@ export default function Contactos({ navigation }) {
       <View style={s.containerAll}>
         <TouchableOpacity style={s.header}></TouchableOpacity>
         <ScrollView>
-        <View style={s.container}>
+        <TouchableOpacity style={s.container}>
           {contactos &&
             contactos.map((el) => (
               <TouchableOpacity
@@ -130,10 +114,7 @@ export default function Contactos({ navigation }) {
                   <View style={s.containerNameAvatar}>
                     <Avatar.Image
                       size={50}
-                      source={{
-                        // uri: userImage ? userImage : emptyAvatar,
-                        uri: emptyAvatar,
-                      }}
+                      source={emptyAvatar}
                     />
                     <View style={s.containerNameEmail}>
                       {!el.alias ? (
@@ -141,21 +122,21 @@ export default function Contactos({ navigation }) {
                           {el.user.firstName} {el.user.lastName}
                         </Text>
                       ) : (
-                        <Text style={s.name}>{el.alias}</Text>
-                      )}
+                          <Text style={s.name}>{el.alias}</Text>
+                        )}
                       <Text style={s.textEmail}>{el.user.email}</Text>
-</View>
-
                     </View>
-                    <View
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "flex-end",
-                      }}
-                    ></View>
                   </View>
-                </TouchableOpacity>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "flex-end",
+                    }}
+                  >
+                  </View>
+                </View>
+              </TouchableOpacity>
               ))}
             {contactos.length === 0 ? (
               <>
@@ -172,14 +153,12 @@ export default function Contactos({ navigation }) {
                 </Text>
                 <Image
                   style={{
-                    width: 200,
-                    height: 200,
+                    width: "100%",
+                    height: 400,
                     marginLeft: "auto",
                     marginRight: "auto",
                   }}
-                  source={{
-                    uri: require("../../../images/Icon.png"),
-                  }}
+                  source={iconPng}
                 />
                 <Text
                   style={{
@@ -194,7 +173,7 @@ export default function Contactos({ navigation }) {
                 </Text>
               </>
             ) : null}
-          </View>
+          </TouchableOpacity>
         </ScrollView>
 
         <Text
@@ -202,8 +181,8 @@ export default function Contactos({ navigation }) {
             fontSize: 18,
             textAlign: "center",
             color: "#F23B6C",
-            marginBottom: "20px",
-            marginRight: "50px",
+            marginBottom: 20,
+            marginRight: 50,
             fontFamily: "Bree-Serif",
           }}
         >

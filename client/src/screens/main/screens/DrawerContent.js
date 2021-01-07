@@ -37,12 +37,16 @@ export default function DrawerContent(props) {
         <View style={s.drawerContent}>
           <View style={s.userInfoSection}>
             <View style={{ flexDirection: "row", marginTop: 15 }}>
-              <Avatar.Image
-                size={50}
-                source={{
-                  uri: userImage ? userImage : emptyAvatar,
-                }}
-              />
+              {userImage ?
+                <Avatar.Image
+                  size={50}
+                  source={{uri: userImage}} />
+                :
+                <Avatar.Image
+                  size={50}
+                  source={emptyAvatar}
+                />
+              }
               <View style={s.containerNameEmail}>
                 <Text style={s.textNombre}>
                   {user.firstName} {user.lastName}
