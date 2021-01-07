@@ -110,40 +110,42 @@ export default function Contactos({ navigation }) {
       <View style={s.containerAll}>
         <TouchableOpacity style={s.header}></TouchableOpacity>
         <ScrollView>
-          <View style={s.container}>
-            {contactos &&
-              contactos.map((el) => (
-                <TouchableOpacity
-                  key={el.id}
-                  onPress={() =>
-                    navigation.navigate("ModificarContacto", {
-                      id: el.contactId,
-                      idUser: user.id,
-                      firstName: el.user.firstName,
-                      lastName: el.user.lastName,
-                      alias: el.alias,
-                      email: el.user.email,
-                    })
-                  }
-                >
-                  <View style={s.containerView}>
-                    <View style={s.containerNameAvatar}>
-                      <Avatar.Image
-                        size={50}
-                        source={{
-                          uri: userImage ? userImage : emptyAvatar,
-                        }}
-                      />
-                      <View style={s.containerNameEmail}>
-                        {!el.alias ? (
-                          <Text style={s.name}>
-                            {el.user.firstName} {el.user.lastName}
-                          </Text>
-                        ) : (
-                          <Text style={s.name}>{el.alias}</Text>
-                        )}
-                        <Text style={s.textEmail}>{el.user.email}</Text>
-                      </View>
+        <View style={s.container}>
+          {contactos &&
+            contactos.map((el) => (
+              <TouchableOpacity
+                key={el.id}
+                onPress={() =>
+                  navigation.navigate("ModificarContacto", {
+                    id: el.contactId,
+                    idUser: user.id,
+                    firstName: el.user.firstName,
+                    lastName: el.user.lastName,
+                    alias: el.alias,
+                    email: el.user.email,
+                  })
+                }
+              >
+                <View style={s.containerView}>
+                  <View style={s.containerNameAvatar}>
+                    <Avatar.Image
+                      size={50}
+                      source={{
+                        // uri: userImage ? userImage : emptyAvatar,
+                        uri: emptyAvatar,
+                      }}
+                    />
+                    <View style={s.containerNameEmail}>
+                      {!el.alias ? (
+                        <Text style={s.name}>
+                          {el.user.firstName} {el.user.lastName}
+                        </Text>
+                      ) : (
+                        <Text style={s.name}>{el.alias}</Text>
+                      )}
+                      <Text style={s.textEmail}>{el.user.email}</Text>
+</View>
+
                     </View>
                     <View
                       style={{
