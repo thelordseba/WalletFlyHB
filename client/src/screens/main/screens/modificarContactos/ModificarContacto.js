@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Appbar, Avatar } from "react-native-paper";
@@ -6,7 +6,11 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import axios from "axios";
 import api from "../../../../reducer/ActionCreator";
 import { useDispatch, useSelector } from "react-redux";
+
+import firebase from "firebase/app";
+import "firebase/storage";
 import Enviar from "../enviar/Enviar";
+
 
 export default function ModificarContacto({ navigation, route }) {
   const { CONTACTOS } = api;
@@ -15,11 +19,21 @@ export default function ModificarContacto({ navigation, route }) {
   const userId = route.params.idUser;
   const Name = route.params.firstName + " " + route.params.lastName;
   const alias = route.params.alias;
-  const user = useSelector((state) => state.user);
-  const userImage = useSelector((state) => state.userImage);
+  const user = useSelector((state) => state.user); 
   const email = route.params.email;
   const [value, setValue] = useState("");
   const [active, setActive] = useState(false);
+  const [contactImage, setContactImage] = useState(null);
+
+  useEffect(()=>{
+    firebase.storage().ref(`/profileImage/${email}`).getDownloadURL()
+      .then((image) => {  
+        setContactImage(image)
+      })
+      .catch((error) => {
+        setContactImage(null)     
+      });
+  }, [email]);
 
   const handleEdit = (value) => {
     axios
@@ -73,11 +87,9 @@ export default function ModificarContacto({ navigation, route }) {
           <Avatar.Image
             size={100}
             source={{
-              uri: userImage
-                ? userImage
-                : require("../../../../images/Avatar.png"),
-            }}
-          />
+              uri: contactImage ? contactImage : require("../../../../images/Avatar.png"),
+            }}            
+          />         
           <View
             style={{
               display: "flex",
