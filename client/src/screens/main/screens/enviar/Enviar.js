@@ -27,6 +27,8 @@ export default function Enviar(props) {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const saldo = useSelector((state) => state.saldo);
+  const { todo } = useSelector(state => state.transacciones)
+  console.log(todo)
   const { SALDO } = api;
   console.log(user);
   console.log("EL SALDO ES " + saldo);
@@ -56,7 +58,7 @@ export default function Enviar(props) {
       .catch((error) => console.log(error));
     let saldoIngresado = parseInt(text.amount);
     if (text.amount > 0) {
-      if (saldoIngresado <= saldo) {
+      if (saldoIngresado <= todo.balance) {
         if (active) {
           const res = await LocalAuthentication.hasHardwareAsync();
           if (!res) {
