@@ -6,7 +6,7 @@ import Gastos from "./screens/Gastos";
 import { Appbar } from "react-native-paper";
 import { PieChart } from "react-native-chart-kit";
 import { LinearGradient } from "expo-linear-gradient";
-import { Dimensions, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View, StatusBar } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 
@@ -57,13 +57,29 @@ export default function StackEstadisticas({ navigation }) {
   };
   return (
     <>
-      <Appbar.Header
-        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
-      >
-        <Appbar.Action icon="menu" onPress={() => navigation.toggleDrawer()} />
-        <Appbar.Content title="Estadisticas" />
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
+        <Appbar.Action
+          icon="menu"
+          color="#F23B6C"
+          onPress={() => navigation.toggleDrawer()}
+        />
+        <Appbar.Content
+          title="Estadisticas"
+          color="#F23B6C"
+          titleStyle={{
+            textAlign: "center",
+            fontFamily: "Bree-Serif",
+            paddingRight: 54,
+          }}
+        />
       </Appbar.Header>
       <View style={s.container}>
+        <TouchableOpacity style={s.header}></TouchableOpacity>
         <View>
           <LinearGradient
             colors={["#F23B6C", "#F23B6C", "#cb3065"]}
@@ -153,6 +169,7 @@ export default function StackEstadisticas({ navigation }) {
             inactiveTintColor: "#cB3065",
             indicatorStyle: { backgroundColor: "#F23B6C" },
             style: {
+              height: 45,
               boxShadow: "rgb(181 141 232 / 50%) 0px 1px 1px",
               backgroundColor: "#ffffff",
             },
@@ -172,6 +189,13 @@ const s = StyleSheet.create({
     width: "100%",
     height: "100%",
     backgroundColor: "#ffffff",
+  },
+  header: {
+    width: "40%",
+    alignSelf: "center",
+    position: "absolute",
+    borderBottomWidth: 2,
+    borderBottomColor: "#f23b6c",
   },
   containerIngresos: {
     display: "flex",
@@ -198,7 +222,7 @@ const s = StyleSheet.create({
   buttonRelieve: {
     flex: 1,
     width: "80%",
-    marginTop: 16,
+    marginTop: 24,
     marginBottom: 16,
     alignSelf: "center",
     paddingLeft: 16,

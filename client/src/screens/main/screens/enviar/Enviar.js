@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  StatusBar,
   Alert,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
@@ -179,16 +180,29 @@ export default function Enviar(props) {
 
   return (
     <>
-      <Appbar.Header
-        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
-      >
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
         <Appbar.Action
           icon="arrow-left"
+          color="#F23B6C"
           onPress={() => props.navigation.goBack()}
         />
-        <Appbar.Content title="Enviar Dinero" />
+        <Appbar.Content
+          title="Enviar Dinero"
+          color="#F23B6C"
+          titleStyle={{
+            textAlign: "center",
+            fontFamily: "Bree-Serif",
+            paddingRight: 54,
+          }}
+        />
       </Appbar.Header>
       <View style={s.container}>
+        <TouchableOpacity style={s.header}></TouchableOpacity>
         <Text style={s.inputsText}>Email del destinatario</Text>
         <View style={s.containerInput}>
           {!props.route.params ? (
@@ -248,6 +262,13 @@ const s = StyleSheet.create({
     width: "100%",
     height: "100%",
     backgroundColor: "#ffffff",
+  },
+  header: {
+    width: "40%",
+    alignSelf: "center",
+    position: "absolute",
+    borderBottomWidth: 2,
+    borderBottomColor: "#f23b6c",
   },
   inputsText: {
     fontSize: 16,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, StatusBar, TextInput, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Appbar, Avatar } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -76,13 +76,29 @@ export default function ModificarContacto({ navigation, route }) {
 
   return (
     <>
-      <Appbar.Header
-        style={{ backgroundColor: "#f23b6c", borderBottomColor: "#f23b6c" }}
-      >
-        <Appbar.Action icon="arrow-left" onPress={() => navigation.goBack()} />
-        <Appbar.Content title={`Modificar a ${Name}`} />
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
+        <Appbar.Action
+          icon="arrow-left"
+          color="#F23B6C"
+          onPress={() => navigation.goBack()}
+        />
+        <Appbar.Content
+          title={`Modificar a ${Name}`}
+          color="#F23B6C"
+          titleStyle={{
+            textAlign: "center",
+            fontFamily: "Bree-Serif",
+            paddingRight: 54,
+          }}
+        />
       </Appbar.Header>
       <View style={s.container}>
+        <TouchableOpacity style={s.header}></TouchableOpacity>
         <View style={s.userContainer}>
           <Avatar.Image
             size={100}
@@ -193,6 +209,13 @@ const s = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderRadius: 50,
     marginLeft: 10,
+  },
+  header: {
+    width: "40%",
+    alignSelf: "center",
+    position: "absolute",
+    borderBottomWidth: 2,
+    borderBottomColor: "#f23b6c",
   },
   button: {
     borderWidth: 2,

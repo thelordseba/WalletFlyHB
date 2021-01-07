@@ -3,6 +3,7 @@ import {
   View,
   TextInput,
   Image,
+  StatusBar,
   StyleSheet,
   TouchableOpacity,
   Text,
@@ -12,7 +13,7 @@ import axios from "axios";
 import image from "../../assets/pagofacil.jpg";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../reducer/ActionCreator";
-import { Button, Dialog, Paragraph } from "react-native-paper";
+import { Button, Dialog, Appbar, Paragraph } from "react-native-paper";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { TouchableRipple, Switch } from "react-native-paper";
 
@@ -95,50 +96,74 @@ export default function ChargeMoney(props) {
   };
 
   return (
-    <View style={s.container}>
-      <TouchableOpacity
-        onPress={() => cerrarPaypal()}
-        style={{ marginTop: 90, marginLeft: "auto" }}
-      >
-        <Text>
-          <MaterialCommunityIcons name="close" color={"#0054a6"} size={26} />
-        </Text>
-      </TouchableOpacity>
-      <View>
-        <Image style={{ width: "100%", height: 150 }} source={image} />
-        <View style={s.code}>
-          <Text style={s.codeText}>{recarga.code}</Text>
-        </View>
-        <TextInput
-          style={s.inputs}
-          keyboardType="numeric"
-          placeholder="Ingrese el monto de la recarga"
-          placeholderTextColor="#cb3065"
-          onChangeText={(value) => handleTextChange("monto", value)}
+    <>
+      <StatusBar
+        backgroundColor="#f23b6c"
+        barStyle={"light-content"}
+        style={{ alignSelf: "center" }}
+      />
+      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
+        <Appbar.Action
+          icon="arrow-left"
+          color="#F23B6C"
+          onPress={() => props.navigation.goBack}
         />
-        <View style={s.containerButton}>
-          <TouchableOpacity style={s.button} onPress={() => chargeMoney()}>
-            <Text style={s.textButton}>Recargar Dinero</Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableRipple onPress={() => onWappPress()}>
-          <View style={s.containerwhapp}>
-            <Text style={s.whapp}>Mensaje de Wasap</Text>
-            <View pointerEvents="none">
-              <Switch value={wApp} color={"#25d366"} />
-            </View>
+        <Appbar.Content
+          title={"Detalle de la Transacción"}
+          color="#F23B6C"
+          titleStyle={{
+            textAlign: "center",
+            fontFamily: "Bree-Serif",
+            paddingRight: 54,
+          }}
+        />
+      </Appbar.Header>
+      <View style={s.container}>
+        <TouchableOpacity style={s.header}></TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => cerrarPaypal()}
+          style={{ marginTop: 90, marginLeft: "auto" }}
+        >
+          <Text>
+            <MaterialCommunityIcons name="close" color={"#0054a6"} size={26} />
+          </Text>
+        </TouchableOpacity>
+        <View>
+          <Image style={{ width: "100%", height: 150 }} source={image} />
+          <View style={s.code}>
+            <Text style={s.codeText}>{recarga.code}</Text>
           </View>
-        </TouchableRipple>
+          <TextInput
+            style={s.inputs}
+            keyboardType="numeric"
+            placeholder="Ingrese el monto de la recarga"
+            placeholderTextColor="#cb3065"
+            onChangeText={(value) => handleTextChange("monto", value)}
+          />
+          <View style={s.containerButton}>
+            <TouchableOpacity style={s.button} onPress={() => chargeMoney()}>
+              <Text style={s.textButton}>Recargar Dinero</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableRipple onPress={() => onWappPress()}>
+            <View style={s.containerwhapp}>
+              <Text style={s.whapp}>Mensaje de Wasap</Text>
+              <View pointerEvents="none">
+                <Switch value={wApp} color={"#25d366"} />
+              </View>
+            </View>
+          </TouchableRipple>
+        </View>
+        <Dialog visible={visible} onDismiss={hideDialog}>
+          <Dialog.Content>
+            <Paragraph>{alertMessage}</Paragraph>
+          </Dialog.Content>
+          <Dialog.Actions>
+            <Button onPress={() => setVisible(!visible)}>Cerrar</Button>
+          </Dialog.Actions>
+        </Dialog>
       </View>
-      <Dialog visible={visible} onDismiss={hideDialog}>
-        <Dialog.Content>
-          <Paragraph>{alertMessage}</Paragraph>
-        </Dialog.Content>
-        <Dialog.Actions>
-          <Button onPress={() => setVisible(!visible)}>Cerrar</Button>
-        </Dialog.Actions>
-      </Dialog>
-    </View>
+    </>
   );
 }
 
@@ -154,15 +179,24 @@ const s = StyleSheet.create({
     padding: 5,
     margin: 10,
   },
+  header: {
+    width: "40%",
+    alignSelf: "center",
+    position: "absolute",
+    borderBottomWidth: 2,
+    borderBottomColor: "#f23b6c",
+  },
   whapp: {
     color: "#128c7e",
     fontFamily: "Bree-Serif",
     textAlign: "center",
+    paddingRight: 5,
   },
   containerwhapp: {
     flex: 1,
     marginTop: 5,
     display: "flex",
+    flexDirection: "row",
     justifyContent: "center",
   },
   containerButton: {
