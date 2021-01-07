@@ -15,7 +15,7 @@ export default function Registro(props) {
           labelStyle: { fontFamily: "Bree-Serif", fontSize: 14 },
           activeTintColor: "#F23B6C",
           inactiveTintColor: "#cB3065",
-          indicatorStyle: { backgroundColor: "#F23B6C", height: 45 },
+          indicatorStyle: { backgroundColor: "#ffffff", height: 45 },
           style: {
             boxShadow: "rgb(181 141 232 / 50%) 0px 1px 1px",
             backgroundColor: "#ffffff",

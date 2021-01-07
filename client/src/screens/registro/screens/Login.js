@@ -7,6 +7,7 @@ import stylesInputs from "./styles/inputs/s";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import * as LocalAuthentication from "expo-local-authentication";
 
+
 export default function Login({ navigation }) {
   const [state, setState] = useState({
     email: "",
@@ -160,22 +161,24 @@ export default function Login({ navigation }) {
         <View style={s.containerAgregar}>
           <View style={s.containerAgregar2}>
             <TouchableOpacity
+              style={s.buttonRound}
               onPress={() => setNewPassword(!newPassword)}
-              style={s.buttonClose}
             >
               <Text>
-                <MaterialCommunityIcons name="close" size={26} />
+                <MaterialCommunityIcons name="close" size={26} color="#f23b6c"/>
               </Text>
             </TouchableOpacity>
-            <Text style={{ marginTop: 40, marginBottom: 10 }}>
+            <Text style={{ marginTop: 40, marginBottom: 10, color: "#cb3065", fontFamily: "OpenSans-Regular" }}>
               Ingrese su Email, para poder enviarle un correo con los pasos a seguir.
             </Text>
             <TextInput
+              style={stylesInputs.inputsLogin}
               placeholder="Email"
+              placeholderTextColor="#cb3065"
               onChangeText={(value) => handleTextChange("email", value)}
             />
-            <TouchableOpacity onPress={() => enviarEmail()}>
-              <Text>Enviar Codigo</Text>
+            <TouchableOpacity style={stylesInputs.button} onPress={() => enviarEmail()}>
+              <Text style={{color: "#fff", fontFamily: "Bree-Serif"}}>Enviar Codigo</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -212,5 +215,16 @@ const s = StyleSheet.create({
     height: 40,
     backgroundColor: "#fff",
     borderRadius: 60,
+  },
+  buttonRound: {
+    borderWidth: 2,
+    borderColor: "#f23b6c",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 30,
+    height: 30,
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    marginLeft: 'auto'
   },
 })

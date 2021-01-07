@@ -93,7 +93,7 @@ export default function MyStack(props) {
             <Stack.Screen name="AuthEmail" component={AuthEmail} />
             <Stack.Screen name="UpdateUser" component={UpdateUser} />
             <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
-            <Stack.Screen name="ChangePassword" component={ChangePassword} />
+            <Stack.Screen name="ChangePassword" component={ChangePassword} options={{headerShown: false}}/>
             <Stack.Screen
               name="QuestionAndAnswers"
               component={QuestionAndAnswers}
