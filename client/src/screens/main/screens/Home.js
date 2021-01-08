@@ -30,6 +30,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import firebaseConfig from "../../../firebase/firebase-config.js";
 import firebase from "firebase/app";
 import "firebase/storage";
+import stylesInputs from '../../registro/screens/styles/inputs/s'
 
 if (!firebase.apps.length) {
   try {
@@ -237,7 +238,8 @@ export default function Home({ navigation }) {
               labels: Label(value),
               datasets: [{ data: Datos(value) }],
             }}
-            width={Dimensions.get("screen").width}
+            // width={100}
+            width={Dimensions.get("window").width}
             height={300}
             yAxisLabel="$"
             yAxisInterval={1}
@@ -299,15 +301,16 @@ export default function Home({ navigation }) {
                   },
                 });
               }}
-              style={s.buttonClose}
+              style={s.buttonRound}
             >
-              <Text>
-                <MaterialCommunityIcons name="close" size={26} />
-              </Text>
+              <MaterialCommunityIcons name="close" size={26} color="#f23b6c"/>
             </TouchableOpacity>
-            <Text style={{ marginTop: 40, marginBottom: 10 }}>
-              Por su seguridad, se le pedirá este codigo, si quiere desactivar
-              su huella digital. No la pierda!
+            <Text style={{ marginTop: 40, marginBottom: 10, color: "#cb3065", fontFamily: "OpenSans-Regular" }}>
+              Se le pedirá este codigo, si quiere desactivar
+              su huella digital.
+            </Text>
+            <Text style={{ marginTop: 20, marginBottom: 10, color: "#cb3065", fontFamily: "OpenSans-Regular", textAlign: 'center' }}>
+              No la pierda!
             </Text>
             <Text
               style={{ textAlign: "center", fontSize: 24, fontWeight: "bold" }}
@@ -317,6 +320,7 @@ export default function Home({ navigation }) {
           </View>
         </View>
       ) : null}
+      {/* 7242 */}
       {dialogVisible && enterCode ? (
         <View style={s.containerAgregar}>
           <View style={s.containerAgregar2}>
@@ -333,21 +337,21 @@ export default function Home({ navigation }) {
                   },
                 });
               }}
-              style={s.buttonClose}
+              style={s.buttonRound}
             >
-              <Text>
-                <MaterialCommunityIcons name="close" size={26} />
-              </Text>
+              <MaterialCommunityIcons name="close" size={26} color="#f23b6c"/>
             </TouchableOpacity>
-            <Text style={{ marginTop: 40, marginBottom: 10 }}>
+            <Text style={{ marginTop: 40, marginBottom: 10, color: "#cb3065", fontFamily: "OpenSans-Regular" }}>
               Ingrese el codigo de seguridad para desactivar su huella digital
             </Text>
             <TextInput
+              style={s.inputsLogin}
               placeholder="Ingrese el codigo"
+              placeholderTextColor="#cb3065"
               onChangeText={(e) => setCodeHuellaValue(e)}
             />
-            <TouchableOpacity onPress={() => onHandleHuella()}>
-              <Text>Ingresar Codigo</Text>
+            <TouchableOpacity style={s.buttonDialog} onPress={() => onHandleHuella()}>
+              <Text style={{ color: "#fff", fontFamily: "Bree-Serif" }}>Desactivar</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -396,11 +400,10 @@ const s = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "center",
-    marginTop: 40,
-    marginBottom: 10,
+    marginTop: 12,
+    marginBottom: 20,
   },
   buttonRelieve: {
-    flex: 1,
     width: "80%",
     alignSelf: "center",
     paddingLeft: 16,
@@ -486,5 +489,41 @@ const s = StyleSheet.create({
     backgroundColor: "#fff",
     borderRadius: 80,
     marginTop: 20,
+  },
+  inputsLogin: {
+    height: 40,
+    paddingLeft: 10,
+    borderWidth: 1,
+    borderRadius: 5,
+    fontFamily: "OpenSans-Regular",
+    borderColor: "rgb(181,141,232)",
+    width: Dimensions.get("window").width - 100,
+    textAlign: "center",
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  buttonDialog: {
+    alignItems: "center",
+    backgroundColor: "#f23b6c",
+    borderColor: "#f23b6c",
+    width: "50%",
+    height: 40,
+    borderWidth: 2,
+    borderRadius: 10,
+    padding: 5,
+    margin: 10,
+    marginLeft: 'auto',
+    marginRight: 'auto'
+  },
+  buttonRound: {
+    borderWidth: 2,
+    borderColor: "#f23b6c",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 30,
+    height: 30,
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    marginLeft: 'auto'
   },
 });

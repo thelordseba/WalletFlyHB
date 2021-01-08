@@ -90,7 +90,6 @@ export default function StackEstadisticas({ navigation }) {
             </Text>
           </LinearGradient>
         </View>
-
         <View>
           <LinearGradient
             colors={["#F23B6C", "#F23B6C", "#cb3065"]}
@@ -99,7 +98,7 @@ export default function StackEstadisticas({ navigation }) {
             {ingreso.length && (
               <PieChart
                 data={dataGrafico}
-                width={Dimensions.get("screen").width}
+                width={Dimensions.get("window").width}
                 height={200}
                 chartConfig={chartConfig}
                 accessor={"population"}
@@ -220,7 +219,6 @@ const s = StyleSheet.create({
     marginBottom: 20,
   },
   buttonRelieve: {
-    flex: 1,
     width: "80%",
     marginTop: 24,
     marginBottom: 16,

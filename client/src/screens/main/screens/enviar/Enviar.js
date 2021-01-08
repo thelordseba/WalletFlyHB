@@ -101,7 +101,7 @@ export default function Enviar(props) {
                 return Axios.post(
                   `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
                   {
-                    transactionUser: transactionUser,
+                    transactionUser: userTransaction,
                     title: text.title,
                     description: text.description,
                     type: "ingreso",
