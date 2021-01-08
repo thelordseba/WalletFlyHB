@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -12,9 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import api from "../../../../reducer/ActionCreator";
 import Axios from "axios";
 import { Appbar } from "react-native-paper";
-import styleInputs from "../../../registro/screens/styles/inputs/s";
 import * as LocalAuthentication from "expo-local-authentication";
-import axios from "axios";
 
 export default function Enviar(props) {
   const [text, setText] = useState({
@@ -23,7 +21,6 @@ export default function Enviar(props) {
     title: "",
     description: "",
   });
-  //const [account, setAccount] = useState();
   const { active } = useSelector((state) => state.huella);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -102,7 +99,7 @@ export default function Enviar(props) {
                 return Axios.post(
                   `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
                   {
-                    transactionUser: transactionUser,
+                    transactionUser: userTransaction,
                     title: text.title,
                     description: text.description,
                     type: "ingreso",
@@ -157,7 +154,6 @@ export default function Enviar(props) {
             })
             .then(({ data }) => {
               props.navigation.navigate("Home");
-
               Alert.alert("Envio de dinero realizado con exito");
             })
             .catch((err) => {

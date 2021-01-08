@@ -246,11 +246,9 @@ const s = StyleSheet.create({
     alignItems: "center",
   },
   buttonMenuContainer: {
-    flex: 1,
     width: "80%",
   },
   buttonMenu: {
-    flex: 1,
     width: "80%",
     margin: 8,
     alignSelf: "center",

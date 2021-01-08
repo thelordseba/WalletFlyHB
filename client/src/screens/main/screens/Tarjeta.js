@@ -44,14 +44,14 @@ export default function Tarjeta({ navigation }) {
           }}
         />
       </Appbar.Header>
-      <View style={s.container}>
         <TouchableOpacity style={s.header}></TouchableOpacity>
+      <View style={s.container}>
         <CreditCardDisplay
           onFocused
           cardStyles={{}}
           flipped={true}
           appStack
-          width={Dimensions.get("screen").width - 10}
+          width={Dimensions.get("window").width - 10}
           cvc={963}
           fontSize={15}
           since="   2020"
@@ -75,7 +75,8 @@ const s = StyleSheet.create({
     borderBottomColor: "#f23b6c",
   },
   container: {
-    width: "95%",
+    width: "100%",
+    alignItems: "center",
     height: "100%",
     backgroundColor: "#ffffff",
     marginLeft: "auto",
