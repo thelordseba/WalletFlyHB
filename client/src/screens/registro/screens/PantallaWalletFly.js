@@ -83,7 +83,7 @@ const s = StyleSheet.create({
   container: {
     width: "100%",
     height: "100%",
-    backgroundColor: "tramsàrtemt",
+    backgroundColor: "transparent",
   },
   header: {
     width: "100%",
