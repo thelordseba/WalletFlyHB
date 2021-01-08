@@ -13,7 +13,11 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
     },
     total: {
-      type: DataTypes.FLOAT,
+      type: DataTypes.DOUBLE,
+      allowNull: false
+    },
+    transactionUser: {
+      type: DataTypes.STRING,
       allowNull: false
     }
   });

@@ -21,14 +21,15 @@ server.get('/:userId', async (req, res, next) => {
 //Ruta para crear una transaction
 server.post('/:accountId', async (req, res, next) => {
     const accountId = req.params.accountId;
-    const { title, type, description, total } = req.body;
+    const { title, type, description, total, transactionUser } = req.body;
     try {
         const account = await Account.findByPk(accountId)
         const transaction = await Transaction.create({
             title: title,
             type: type,
             description: description,
-            total: total
+            total: total,
+            transactionUser: transactionUser
         });
         await transaction.setAccount(account);
 
@@ -53,7 +54,7 @@ server.post('/:accountId', async (req, res, next) => {
 
 server.post('/byUserEmail/:userEmail', async(req, res, next)=>{
     const userEmail = req.params.userEmail;
-    const {title, type, description, total} = req.body;
+    const {title, type, description, total, transactionUser } = req.body;
     try{
         const user = await User.findOne({
             where: { email: userEmail },
@@ -64,7 +65,8 @@ server.post('/byUserEmail/:userEmail', async(req, res, next)=>{
             title: title,
             type: type,
             description: description,
-            total: total            
+            total: total,
+            transactionUser: transactionUser           
         });
         await transaction.setAccount(account);
         //Esto actualiza el saldo de la cuenta cada vez que hacemos una transacción

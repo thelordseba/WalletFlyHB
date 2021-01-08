@@ -57,7 +57,7 @@ export default function Home({ navigation }) {
   let currentYear = date.getFullYear();
   let month = date.getMonth();
   const emptyAvatar = require("../../../../assets/Avatar.png");
-
+  navigation.closeDrawer();
   const CreatedAt = () => {
     todo &&
       todo.transactions.map((el) => {

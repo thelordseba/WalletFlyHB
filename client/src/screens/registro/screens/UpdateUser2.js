@@ -56,7 +56,6 @@ export default function UpdateUserScreen({ route, navigation }) {
           `https://apis.datos.gob.ar/georef/api/direcciones?direccion=${state.address} ${state.addressNumber}&localidad=${state.city}`
         )
         .then(({ data }) => {
-          console.log(data.direcciones[0]);
           if (!data.direcciones[0]) {
             setAlertMessage("Tu direccion no es valida");
             setVisible(!visible);
@@ -65,15 +64,9 @@ export default function UpdateUserScreen({ route, navigation }) {
             let addressNueva = data.direcciones[0].calle.nombre;
             let addressNumberNueva = data.direcciones[0].altura.valor;
             let cityNueva = data.direcciones[0].localidad_censal.nombre;
-            console.log({
-              "LA ADDRESS ES, ": addressNueva,
-              "EL NUMBER ES, ": addressNumberNueva,
-              "LA CITY ES, ": cityNueva,
-            });
             state.address = addressNueva;
             state.addressNumber = addressNumberNueva;
             state.city = cityNueva;
-            console.log("EL STATE ESTA ASI: ", state);
 
             axios
               .put(
@@ -87,9 +80,6 @@ export default function UpdateUserScreen({ route, navigation }) {
                 });
               });
           }
-        })
-        .then((data) => {
-          console.log("OK");
         })
         .catch((err) => {
           setAlertMessage(`Error! ${err}`);

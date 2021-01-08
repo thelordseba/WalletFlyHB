@@ -11,14 +11,13 @@ const initialState = {
     user: false,
     saldo: 0,
     recarga: {},
-    contactos: false,
+    contactos: [],
     transacciones: false,
     huella: {},
     userImage: false
 }
 
 const reducer = (state = initialState, action) => {
-    // console.log(action.payload)
     switch (action.type) {
         case USER:
             return {

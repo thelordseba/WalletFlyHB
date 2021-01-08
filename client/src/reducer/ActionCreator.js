@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 const actionCreators = {
     USER: "USER",
     SALDO: "SALDO",
@@ -8,14 +6,6 @@ const actionCreators = {
     TRANSACCIONES: "TRANSACCIONES",
     HUELLA: "HUELLA",
     USER_IMAGE: 'USER_IMAGE',
-    // getME: function(id){
-    //     return dispatch => {
-    //         // const promise = axios.get(`${process.env.REACT_APP_API_URL}/users/${id}`)
-    //         const promise = axios.get(`http://${APP_API}/users/${id}`)
-    //         this._dispatchPromise(promise, this.USER, dispatch)
-    //     }
-    // },
-    // dispatch
     _dispatchPromise: function(promise, type, dispatch){
         return promise
         .then(({data}) => {

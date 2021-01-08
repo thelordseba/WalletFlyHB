@@ -27,7 +27,7 @@ export default function Ingresos({ navigation }) {
                       color={"#ffffff"}
                     />
                   </View>
-                  <Text style={s.textDireccion}>{el.title}</Text>
+                  <Text style={s.textDireccion}>{el.transactionUser}</Text>
                 </View>
                 <Text style={s.ingresaDinero}>${el.total} ARS</Text>
               </View>

@@ -25,18 +25,18 @@ export default function ModificarContacto({ navigation, route }) {
   const [contactImage, setContactImage] = useState(null);
   const emptyAvatar = require("../../../../../assets/Avatar.png");
 
-  // useEffect(() => {
-  //   firebase
-  //     .storage()
-  //     .ref(`/profileImage/${email}`)
-  //     .getDownloadURL()
-  //     .then((image) => {
-  //       setContactImage(image);
-  //     })
-  //     .catch((error) => {
-  //       setContactImage(null);
-  //     });
-  // }, [email]);
+  useEffect(() => {
+    firebase
+      .storage()
+      .ref(`/profileImage/${email}`)
+      .getDownloadURL()
+      .then((image) => {
+        setContactImage(image);
+      })
+      .catch((error) => {
+        setContactImage(null);
+      });
+  }, [email]);
 
   const handleEdit = (value) => {
     axios
@@ -58,7 +58,6 @@ export default function ModificarContacto({ navigation, route }) {
         console.log(error);
       });
   };
-  console.log(contactImage)
   const handleDelete = () => {
     axios
       .delete(

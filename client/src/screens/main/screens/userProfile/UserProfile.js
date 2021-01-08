@@ -23,9 +23,7 @@ export default function UserProfile({ navigation }) {
   const dispatch = useDispatch();
   const { USER_IMAGE } = api;
   const emptyAvatar = require("../../../../../assets/Avatar.png");
-  useEffect(() => {
-    loadImage();
-  }, [userImage]);
+ 
 
   const uploadImageFirebase = (uri) => {
     return new Promise((resolve, reject) => {
@@ -103,6 +101,9 @@ export default function UserProfile({ navigation }) {
         //console.log(error);
       });
   };
+  useEffect(() => {
+    loadImage();
+  }, [userImage]);
 
   return (
     <>

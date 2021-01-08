@@ -42,7 +42,7 @@ export default function Todo({ navigation }) {
                       />
                     )}
                   </View>
-                  <Text style={s.textDireccion}>{el.title}</Text>
+                  <Text style={s.textDireccion}>{el.transactionUser}</Text>
                 </View>
                 <Text
                   style={el.type === "ingreso" ? s.ingresaDinero : s.saleDinero}

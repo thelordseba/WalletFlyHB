@@ -20,7 +20,6 @@ export default function AuthEmail({ route, navigation }) {
   const hideDialog = () => {
     setVisible(!visible);
   };
-  console.log(route);
   const authenticateEmail = () => {
     const userId = route.params.id;
 
@@ -88,13 +87,6 @@ export default function AuthEmail({ route, navigation }) {
             <Text style={stylesInputs.textButtonSecondary}>Autenticar</Text>
           </TouchableOpacity>
         </View>
-        <Text
-          style={
-            stylesInputs.help
-          } /* onPress={() => props.navigation.navigate("FAQ")} */
-        >
-          ¿Necesitas ayuda?
-        </Text>
       </View>
       <Dialog visible={visible} onDismiss={hideDialog}>
         <Dialog.Content>

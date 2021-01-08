@@ -28,9 +28,11 @@ export default function Enviar(props) {
   const saldo = useSelector((state) => state.saldo);
   const { todo } = useSelector((state) => state.transacciones);
   const { SALDO } = api;
+  const userTransaction = user.firstName + " " + user.lastName
   const handleTextChange = (name, value) => {
     setText({ ...text, [name]: value });
   };
+
 
   /* useEffect(() => {
     var accountId;
@@ -79,9 +81,11 @@ export default function Enviar(props) {
                 contact = data;
               })
               .then((data) => {
+                let contactUser = contact.firstName + " " + contact.lastName
                 return Axios.post(
                   `https://walletfly.glitch.me/transaction/${account}`,
                   {
+                    transactionUser: contactUser,
                     title: text.title,
                     description: text.description,
                     type: "egreso",
@@ -97,6 +101,7 @@ export default function Enviar(props) {
                 return Axios.post(
                   `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
                   {
+                    transactionUser: transactionUser,
                     title: text.title,
                     description: text.description,
                     type: "ingreso",
@@ -121,9 +126,11 @@ export default function Enviar(props) {
               contact = data;
             })
             .then((data) => {
+              let contactUser = contact.firstName + " " + contact.lastName
               return Axios.post(
                 `https://walletfly.glitch.me/transaction/${account}`,
                 {
+                  transactionUser: contactUser,
                   title: text.title,
                   description: text.description,
                   type: "egreso",
@@ -136,9 +143,11 @@ export default function Enviar(props) {
                 type: SALDO,
                 payload: data.balance,
               });
+              
               return Axios.post(
                 `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
                 {
+                  transactionUser: userTransaction,
                   title: text.title,
                   description: text.description,
                   type: "ingreso",

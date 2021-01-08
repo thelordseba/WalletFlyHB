@@ -55,7 +55,8 @@ export default function ChargeMoney(props) {
   const chargeMoney = () => {
     if (state.monto > 0) {
       const data = {
-        title: "PagoFacil",
+        transactionUser: 'PagoFacil',
+        title: "Recarga",
         type: "ingreso",
         description: "Recarga de dinero a tavés de Pago Facil.",
         total: parseInt(state.monto, 10),
@@ -98,28 +99,11 @@ export default function ChargeMoney(props) {
   return (
     <>
       <StatusBar
-        backgroundColor="#f23b6c"
-        barStyle={"light-content"}
+        backgroundColor="rgb(255, 221, 0)"
+        barStyle={"dark-content"}
         style={{ alignSelf: "center" }}
       />
-      <Appbar.Header style={{ backgroundColor: "#ffffff", height: 45 }}>
-        <Appbar.Action
-          icon="arrow-left"
-          color="#F23B6C"
-          onPress={() => props.navigation.goBack}
-        />
-        <Appbar.Content
-          title={"Detalle de la Transacción"}
-          color="#F23B6C"
-          titleStyle={{
-            textAlign: "center",
-            fontFamily: "Bree-Serif",
-            paddingRight: 54,
-          }}
-        />
-      </Appbar.Header>
       <View style={s.container}>
-        <TouchableOpacity style={s.header}></TouchableOpacity>
         <TouchableOpacity
           onPress={() => cerrarPaypal()}
           style={{ marginTop: 90, marginLeft: "auto" }}
@@ -145,9 +129,9 @@ export default function ChargeMoney(props) {
               <Text style={s.textButton}>Recargar Dinero</Text>
             </TouchableOpacity>
           </View>
-          <TouchableRipple onPress={() => onWappPress()}>
+          <TouchableRipple  onPress={() => onWappPress()}>
             <View style={s.containerwhapp}>
-              <Text style={s.whapp}>Mensaje de Wasap</Text>
+              <Text style={s.whapp}>Mensaje de WhatsApp</Text>
               <View pointerEvents="none">
                 <Switch value={wApp} color={"#25d366"} />
               </View>
@@ -193,7 +177,6 @@ const s = StyleSheet.create({
     paddingRight: 5,
   },
   containerwhapp: {
-    flex: 1,
     marginTop: 5,
     display: "flex",
     flexDirection: "row",
