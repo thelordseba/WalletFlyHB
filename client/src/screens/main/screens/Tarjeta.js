@@ -55,6 +55,7 @@ export default function Tarjeta({ navigation }) {
           cvc={963}
           fontSize={15}
           since="   2020"
+          height={225}
           name={`${user.firstName} ${user.lastName}`}
           number={stringNumber.replace(/(.{4})/g, "$1 ").trim()}
           expiration="   04/21"
@@ -74,7 +75,7 @@ const s = StyleSheet.create({
     borderBottomColor: "#f23b6c",
   },
   container: {
-    width: "100%",
+    width: "95%",
     height: "100%",
     backgroundColor: "#ffffff",
     marginLeft: "auto",

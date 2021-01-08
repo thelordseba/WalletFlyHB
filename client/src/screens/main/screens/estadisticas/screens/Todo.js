@@ -42,7 +42,7 @@ export default function Todo({ navigation }) {
                       />
                     )}
                   </View>
-                  <Text style={s.textDireccion}>{el.title}</Text>
+                  <Text style={s.textDireccion}>{el.transactionUser}</Text>
                 </View>
                 <Text
                   style={el.type === "ingreso" ? s.ingresaDinero : s.saleDinero}
@@ -67,7 +67,7 @@ const s = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 5,
     borderBottomWidth: 1,
-    borderBottomColor: "#b58de8",
+    borderBottomColor: "rgb(181,141,232)",
   },
   containerIconDireccion: {
     display: "flex",

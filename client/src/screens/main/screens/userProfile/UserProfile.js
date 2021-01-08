@@ -23,9 +23,7 @@ export default function UserProfile({ navigation }) {
   const dispatch = useDispatch();
   const { USER_IMAGE } = api;
   const emptyAvatar = require("../../../../../assets/Avatar.png");
-  useEffect(() => {
-    loadImage();
-  }, [userImage]);
+ 
 
   const uploadImageFirebase = (uri) => {
     return new Promise((resolve, reject) => {
@@ -103,6 +101,9 @@ export default function UserProfile({ navigation }) {
         //console.log(error);
       });
   };
+  useEffect(() => {
+    loadImage();
+  }, [userImage]);
 
   return (
     <>
@@ -131,12 +132,16 @@ export default function UserProfile({ navigation }) {
       <View style={s.container}>
         <TouchableOpacity style={s.header}></TouchableOpacity>
         <View style={s.containerImg}>
-          <Avatar.Image
-            source={{
-              uri: userImage ? userImage : emptyAvatar,
-            }}
-            size={100}
-          />
+          {userImage ?
+            <Avatar.Image
+              size={100}
+              source={{uri:userImage}} />
+            :
+            <Avatar.Image
+              size={100}
+              source={emptyAvatar}
+            />
+          }
           <View style={s.iconContainer}>
             <TouchableOpacity
               onPress={() => getDeviceImage("gallery")}

@@ -12,9 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import api from "../../../../reducer/ActionCreator";
 import Axios from "axios";
 import { Appbar } from "react-native-paper";
-import styleInputs from "../../../registro/screens/styles/inputs/s";
 import * as LocalAuthentication from "expo-local-authentication";
-import axios from "axios";
 
 export default function Enviar(props) {
   const [text, setText] = useState({
@@ -23,19 +21,18 @@ export default function Enviar(props) {
     title: "",
     description: "",
   });
-  //const [account, setAccount] = useState();
+
   const { active } = useSelector((state) => state.huella);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const saldo = useSelector((state) => state.saldo);
   const { todo } = useSelector((state) => state.transacciones);
-  console.log(todo);
   const { SALDO } = api;
-  console.log(user);
-  console.log("EL SALDO ES " + saldo);
+  const userTransaction = user.firstName + " " + user.lastName
   const handleTextChange = (name, value) => {
     setText({ ...text, [name]: value });
   };
+
 
   /* useEffect(() => {
     var accountId;
@@ -82,13 +79,13 @@ export default function Enviar(props) {
             )
               .then(({ data }) => {
                 contact = data;
-                console.log("Esta es la cuenta de tu hermana");
-                console.log(account);
               })
               .then((data) => {
+                let contactUser = contact.firstName + " " + contact.lastName
                 return Axios.post(
                   `https://walletfly.glitch.me/transaction/${account}`,
                   {
+                    transactionUser: contactUser,
                     title: text.title,
                     description: text.description,
                     type: "egreso",
@@ -104,6 +101,7 @@ export default function Enviar(props) {
                 return Axios.post(
                   `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
                   {
+                    transactionUser: transactionUser,
                     title: text.title,
                     description: text.description,
                     type: "ingreso",
@@ -117,7 +115,7 @@ export default function Enviar(props) {
               })
               .catch((err) => {
                 Alert.alert("Ocurrio un Error!");
-                console.log(err);
+            
               });
           }
         } else {
@@ -126,13 +124,13 @@ export default function Enviar(props) {
           )
             .then(({ data }) => {
               contact = data;
-              console.log("Esta es la cuenta de tu hermana");
-              console.log(account);
             })
             .then((data) => {
+              let contactUser = contact.firstName + " " + contact.lastName
               return Axios.post(
                 `https://walletfly.glitch.me/transaction/${account}`,
                 {
+                  transactionUser: contactUser,
                   title: text.title,
                   description: text.description,
                   type: "egreso",
@@ -145,9 +143,11 @@ export default function Enviar(props) {
                 type: SALDO,
                 payload: data.balance,
               });
+              
               return Axios.post(
                 `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
                 {
+                  transactionUser: userTransaction,
                   title: text.title,
                   description: text.description,
                   type: "ingreso",
@@ -157,12 +157,10 @@ export default function Enviar(props) {
             })
             .then(({ data }) => {
               props.navigation.navigate("Home");
-
               Alert.alert("Envio de dinero realizado con exito");
             })
             .catch((err) => {
               Alert.alert("Ocurrio un Error!");
-              console.log(err);
             });
         }
       } else {
@@ -284,7 +282,7 @@ const s = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     fontFamily: "OpenSans-Regular",
-    borderColor: "#b58de8",
+    borderColor: "rgb(181,141,232)",
     width: "85%",
   },
   containerButton: {

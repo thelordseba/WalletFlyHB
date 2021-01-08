@@ -14,7 +14,6 @@ export default function DetallesEstadistica({ navigation, route }) {
   const { todo } = useSelector((state) => state.transacciones);
   const transactionSelected =
     todo && todo.transactions.filter((el) => el.id === route.params.id);
-  console.log(transactionSelected);
 
   return (
     <>
@@ -53,6 +52,10 @@ export default function DetallesEstadistica({ navigation, route }) {
           <View style={s.container}>
             <Text style={s.title}>Tipo de transacción:</Text>
             <Text style={s.text}>{transactionSelected[0].type}</Text>
+          </View>
+          <View style={s.container}>
+            <Text style={s.title}>{transactionSelected[0].type === "ingreso" ? "Origen" : "Destino"}</Text>
+            <Text style={s.text}>{transactionSelected[0].transactionUser}</Text>
           </View>
           <View style={s.container}>
             <Text style={s.title}>Titulo:</Text>

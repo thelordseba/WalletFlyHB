@@ -27,7 +27,7 @@ export default function Ingresos({ navigation }) {
                       color={"#ffffff"}
                     />
                   </View>
-                  <Text style={s.textDireccion}>{el.title}</Text>
+                  <Text style={s.textDireccion}>{el.transactionUser}</Text>
                 </View>
                 <Text style={s.ingresaDinero}>${el.total} ARS</Text>
               </View>
@@ -48,7 +48,7 @@ const s = StyleSheet.create({
     alignItems: "center",
     paddingBottom: 5,
     borderBottomWidth: 1,
-    borderBottomColor: "#b58de8",
+    borderBottomColor: "rgb(181,141,232)",
   },
   containerIconDireccion: {
     display: "flex",
