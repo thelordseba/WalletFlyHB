@@ -149,6 +149,7 @@ const s = StyleSheet.create({
     marginBottom: 20,
     backgroundColor: "#ffffff",
     borderRadius: 10,
+    marginTop: 15
   },
   textButton: {
     color: "#f23b6c",

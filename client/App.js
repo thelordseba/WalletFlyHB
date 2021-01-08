@@ -13,9 +13,10 @@ const fetchFonts = () => {
     "OpenSans-Regular": require("./assets/fonts/OpenSans-Regular.ttf"),
     "OpenSans-Light": require("./assets/fonts/OpenSans-Light.ttf"),
   });
-};
-
+}
+console.disableYellowBox = true;
 const { store, persistor } = getStore();
+
 export default function App() {
   const [dataLoaded, setDataLoaded] = useState(false);
 

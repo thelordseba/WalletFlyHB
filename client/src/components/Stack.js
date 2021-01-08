@@ -22,6 +22,8 @@ import StackEstadisticas from "../screens/main/screens/estadisticas/StackEstadis
 import DetallesEstadistica from "../screens/main/screens/estadisticas/screens/DetallesEstadistica";
 import Tarjeta from "../screens/main/screens/Tarjeta";
 import ChangePassword from "../screens/registro/screens/ChangePassword";
+import PantallaWalletFly from '../screens/registro/screens/PantallaWalletFly';
+
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -89,7 +91,8 @@ export default function MyStack(props) {
                 ),
             })}
           >
-            <Stack.Screen name="WalletFly" component={RegistroLogin} />
+            <Stack.Screen name="PantallaWalletFly" component={PantallaWalletFly} options={{headerShown: false}}/>
+            <Stack.Screen name="WalletFly" component={RegistroLogin} options={{headerLeft: false}}/>
             <Stack.Screen name="AuthEmail" component={AuthEmail} />
             <Stack.Screen name="UpdateUser" component={UpdateUser} />
             <Stack.Screen name="UpdateUser2" component={UpdateUser2} />
