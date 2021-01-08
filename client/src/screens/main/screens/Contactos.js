@@ -50,7 +50,6 @@ export default function Contactos({ navigation }) {
         console.log(error);
       });
   };
-
   useEffect(() => {
     axios
       .get(`https://walletfly.glitch.me/contacts/${user.id}`)
@@ -60,11 +59,16 @@ export default function Contactos({ navigation }) {
             type: CONTACTOS,
             payload: data,
           });
+        }else {
+          dispatch({
+            type: CONTACTOS,
+            payload: [],
+          });
         }
       })
       .catch((err) => console.error(err));
   }, []);
-  console.log(iconPng)
+
   const handleTextChange = (name, value) => {
     setText({ ...text, [name]: value });
   };

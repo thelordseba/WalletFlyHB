@@ -27,7 +27,7 @@ export default function Gastos({ navigation }) {
                       color={"#ffffff"}
                     />
                   </View>
-                  <Text style={s.textDireccion}>{el.title}</Text>
+                  <Text style={s.textDireccion}>{el.transactionUser}</Text>
                 </View>
                 <Text style={s.saleDinero}>${el.total} ARS</Text>
               </View>

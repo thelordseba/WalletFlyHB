@@ -29,10 +29,8 @@ export default function Enviar(props) {
   const dispatch = useDispatch();
   const saldo = useSelector((state) => state.saldo);
   const { todo } = useSelector((state) => state.transacciones);
-  console.log(todo);
+  const userTransaction = user.firstName + " " + user.lastName
   const { SALDO } = api;
-  console.log(user);
-  console.log("EL SALDO ES " + saldo);
   const handleTextChange = (name, value) => {
     setText({ ...text, [name]: value });
   };
@@ -82,13 +80,13 @@ export default function Enviar(props) {
             )
               .then(({ data }) => {
                 contact = data;
-                console.log("Esta es la cuenta de tu hermana");
-                console.log(account);
               })
               .then((data) => {
+                let contactUser = contact.firstName + " " + contact.lastName
                 return Axios.post(
                   `https://walletfly.glitch.me/transaction/${account}`,
                   {
+                    transactionUser: contactUser,
                     title: text.title,
                     description: text.description,
                     type: "egreso",
@@ -104,6 +102,7 @@ export default function Enviar(props) {
                 return Axios.post(
                   `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
                   {
+                    transactionUser: transactionUser,
                     title: text.title,
                     description: text.description,
                     type: "ingreso",
@@ -126,13 +125,13 @@ export default function Enviar(props) {
           )
             .then(({ data }) => {
               contact = data;
-              console.log("Esta es la cuenta de tu hermana");
-              console.log(account);
             })
             .then((data) => {
+              let contactUser = contact.firstName + " " + contact.lastName
               return Axios.post(
                 `https://walletfly.glitch.me/transaction/${account}`,
                 {
+                  transactionUser: contactUser,
                   title: text.title,
                   description: text.description,
                   type: "egreso",
@@ -148,6 +147,7 @@ export default function Enviar(props) {
               return Axios.post(
                 `https://walletfly.glitch.me/transaction/${contact.accounts[0].id}`,
                 {
+                  transactionUser: userTransaction,
                   title: text.title,
                   description: text.description,
                   type: "ingreso",
