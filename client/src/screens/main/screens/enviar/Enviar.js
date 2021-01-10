@@ -1,13 +1,5 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-  StatusBar,
-  Alert,
-} from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, TextInput, StatusBar, Alert, } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import api from "../../../../reducer/ActionCreator";
 import Axios from "axios";
@@ -17,11 +9,10 @@ import * as LocalAuthentication from "expo-local-authentication";
 export default function Enviar(props) {
   const [text, setText] = useState({
     email: "",
-    amount: 0,
+    amount: "",
     title: "",
     description: "",
   });
-
   const { active } = useSelector((state) => state.huella);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -29,10 +20,11 @@ export default function Enviar(props) {
   const { todo } = useSelector((state) => state.transacciones);
   const { SALDO } = api;
   const userTransaction = user.firstName + " " + user.lastName
+  let email = props.route.params ? props.route.params.email : false
+
   const handleTextChange = (name, value) => {
     setText({ ...text, [name]: value });
   };
-
 
   /* useEffect(() => {
     var accountId;
@@ -75,7 +67,7 @@ export default function Enviar(props) {
           });
           if (login.success) {
             Axios.get(
-              `https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`
+              `https://walletfly.glitch.me/users/getUserByEmail?email=${email ? email : text.email}`
             )
               .then(({ data }) => {
                 contact = data;
@@ -110,17 +102,24 @@ export default function Enviar(props) {
                 );
               })
               .then(({ data }) => {
+                email = false
+                setText({
+                  email: "",
+                  amount: "",
+                  title: "",
+                  description: "",
+                })
                 props.navigation.navigate("Home");
-                Alert.alert("Envio de dinero realizado con exito");
+                alert("Envio de dinero realizado con exito");
               })
               .catch((err) => {
-                Alert.alert("Ocurrio un Error!");
+                alert("Ocurrio un Error!");
             
               });
           }
         } else {
           Axios.get(
-            `https://walletfly.glitch.me/users/getUserByEmail?email=${text.email}`
+            `https://walletfly.glitch.me/users/getUserByEmail?email=${email ? email : text.email}`
           )
             .then(({ data }) => {
               contact = data;
@@ -156,11 +155,24 @@ export default function Enviar(props) {
               );
             })
             .then(({ data }) => {
+              email = false
+              setText({
+                email: "",
+                amount: "",
+                title: "",
+                description: "",
+              })
               props.navigation.navigate("Home");
-              Alert.alert("Envio de dinero realizado con exito");
+              alert("Envio de dinero realizado con exito");
             })
             .catch((err) => {
-              Alert.alert("Ocurrio un Error!");
+              setText({
+                email: "",
+                amount: "",
+                title: "",
+                description: "",
+              })
+              alert("Ocurrio un Error!");
             });
         }
       } else {
@@ -206,6 +218,7 @@ export default function Enviar(props) {
           {!props.route.params ? (
             <TextInput
               style={s.inputs}
+              value={text.email}
               placeholder="Ingrese el email"
               placeholderTextColor="#cb3065"
               onChangeText={(value) => handleTextChange("email", value)}
@@ -222,6 +235,7 @@ export default function Enviar(props) {
         <View style={s.containerInput}>
           <TextInput
             style={s.inputs}
+            value={text.title}
             placeholder="Ingrese un titulo"
             placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("title", value)}
@@ -231,6 +245,7 @@ export default function Enviar(props) {
         <View style={s.containerInput}>
           <TextInput
             style={s.inputs}
+            value={text.description}
             placeholder="Ingrese una descripcion"
             placeholderTextColor="#cb3065"
             onChangeText={(value) => handleTextChange("description", value)}
@@ -241,6 +256,7 @@ export default function Enviar(props) {
           <TextInput
             placeholderTextColor="#cb3065"
             style={s.inputs}
+            value={text.amount}
             placeholder="ingrese el monto"
             onChangeText={(value) => handleTextChange("amount", value)}
           />

@@ -5,6 +5,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
+  Alert
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import api from "../../../../reducer/ActionCreator";

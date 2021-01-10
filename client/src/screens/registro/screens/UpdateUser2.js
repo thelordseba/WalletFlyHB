@@ -40,52 +40,68 @@ export default function UpdateUserScreen({ route, navigation }) {
     setState({ ...state, [name]: value });
   };
   const createUser = () => {
-    if (
-      state.address === "" ||
-      state.addressNumber === "" ||
-      state.postalCode === "" ||
-      state.city === "" ||
-      state.province === "" ||
-      state.country === ""
-    ) {
+    if (state.address === "" || state.addressNumber === "" || state.postalCode === "" || state.city === "" || state.province === "" || state.country === "") {
       setAlertMessage("Debes completar todos los campos antes de continuar.");
       setVisible(!visible);
     } else {
-      axios
-        .get(
-          `https://apis.datos.gob.ar/georef/api/direcciones?direccion=${state.address} ${state.addressNumber}&localidad=${state.city}`
-        )
+      axios.put(`https://walletfly.glitch.me/users/${state.id}/userAccount`, state)
         .then(({ data }) => {
-          if (!data.direcciones[0]) {
-            setAlertMessage("Tu direccion no es valida");
-            setVisible(!visible);
-            return;
-          } else {
-            let addressNueva = data.direcciones[0].calle.nombre;
-            let addressNumberNueva = data.direcciones[0].altura.valor;
-            let cityNueva = data.direcciones[0].localidad_censal.nombre;
-            state.address = addressNueva;
-            state.addressNumber = addressNumberNueva;
-            state.city = cityNueva;
-
-            axios
-              .put(
-                `https://walletfly.glitch.me/users/${state.id}/userAccount`,
-                state
-              )
-              .then(({ data }) => {
-                dispatch({
-                  type: USER,
-                  payload: data,
-                });
-              });
-          }
+          dispatch({
+            type: USER,
+            payload: data,
+          });
         })
         .catch((err) => {
           setAlertMessage(`Error! ${err}`);
           setVisible(!visible);
         });
     }
+    // if (
+    //   state.address === "" ||
+    //   state.addressNumber === "" ||
+    //   state.postalCode === "" ||
+    //   state.city === "" ||
+    //   state.province === "" ||
+    //   state.country === ""
+    // ) {
+    //   setAlertMessage("Debes completar todos los campos antes de continuar.");
+    //   setVisible(!visible);
+    // } else {
+    //   axios
+    //     .get(
+    //       `https://apis.datos.gob.ar/georef/api/direcciones?direccion=${state.address} ${state.addressNumber}&localidad=${state.city}`
+    //     )
+    //     .then(({ data }) => {
+    //       if (!data.direcciones[0]) {
+    //         setAlertMessage("Tu direccion no es valida");
+    //         setVisible(!visible);
+    //         return;
+    //       } else {
+    //         let addressNueva = data.direcciones[0].calle.nombre;
+    //         let addressNumberNueva = data.direcciones[0].altura.valor;
+    //         let cityNueva = data.direcciones[0].localidad_censal.nombre;
+    //         state.address = addressNueva;
+    //         state.addressNumber = addressNumberNueva;
+    //         state.city = cityNueva;
+
+    //         axios
+    //           .put(
+    //             `https://walletfly.glitch.me/users/${state.id}/userAccount`,
+    //             state
+    //           )
+    //           .then(({ data }) => {
+    //             dispatch({
+    //               type: USER,
+    //               payload: data,
+    //             });
+    //           });
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       setAlertMessage(`Error! ${err}`);
+    //       setVisible(!visible);
+    //     });
+    // }
   };
 
   const [error, setError] = useState("");

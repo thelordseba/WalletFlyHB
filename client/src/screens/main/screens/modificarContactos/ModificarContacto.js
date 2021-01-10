@@ -193,7 +193,7 @@ export default function ModificarContacto({ navigation, route }) {
           )}
         <TouchableOpacity
           style={s.button}
-          onPress={() => navigation.navigate("EnviarContact", { email: email })}
+          onPress={() => navigation.navigate("Enviar", { email: email })}
         >
           <Text style={s.textButton}>Enviar Dinero</Text>
         </TouchableOpacity>
