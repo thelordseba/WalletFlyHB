@@ -1,24 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import Register from "./screens/Register";
 import Login from "./screens/Login";
-// import { Image } from 'react-native';
-
+import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 const Tab = createMaterialTopTabNavigator();
 export default function Registro(props) {
 
-  // const iconPng = require("../../images/Icon.png")
+  const [ account, setAccount ] = useState(true)
+
   return (
     <>
-      {/* <Image
-        style={{
-          width: "100%",
-          height: 250,
-          marginLeft: "auto",
-          marginRight: "auto",
-        }}
-        source={iconPng}
-      /> */}
       <Tab.Navigator
         tabBarOptions={{
           labelStyle: { fontFamily: "Bree-Serif", fontSize: 14 },
@@ -34,6 +26,55 @@ export default function Registro(props) {
         <Tab.Screen name="Iniciar sesión" component={Login} />
         <Tab.Screen name="Registrarse" component={Register} />
       </Tab.Navigator>
+      {account &&
+        <View style={s.containerAgregar}>
+          <View style={s.containerAgregar2}>
+            <TouchableOpacity
+              style={s.buttonRound}
+              onPress={() => setAccount(!account)}
+            >
+              <Text>
+                <MaterialCommunityIcons name="close" size={26} color="#f23b6c" />
+              </Text>
+            </TouchableOpacity>
+            <Text style={{ marginTop: 40, marginBottom: 10, color: "#cb3065", fontFamily: "OpenSans-Regular" }}>
+              Email: Test@gmail.com
+            </Text>
+            <Text style={{ marginTop: 40, marginBottom: 10, color: "#cb3065", fontFamily: "OpenSans-Regular" }}>
+              Password: Test1234567
+            </Text>
+          </View>
+        </View>
+      }
     </>
   );
 }
+const s = StyleSheet.create({
+  containerAgregar: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
+    top: 0,
+    backgroundColor: "rgba(0,0,0,0.6)",
+    width: "100%",
+  },
+  containerAgregar2: {
+    display: "flex",
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    padding: 20,
+  },
+  buttonRound: {
+    borderWidth: 2,
+    borderColor: "#f23b6c",
+    alignItems: "center",
+    justifyContent: "center",
+    width: 30,
+    height: 30,
+    backgroundColor: "#fff",
+    borderRadius: 50,
+    marginLeft: 'auto'
+  },
+})
